@@ -1,2 +1,2 @@
-# SpringboardCapstone
-Repo for all work related to springboard capstone
+# RideBuddy
+An app for bikers (MTB, Gravel, Road) to plan and join rides. 

@@ -9,6 +9,15 @@ function NavBar() {
     // get current route for styling logic
     const pathname = usePathname();
 
+    const onLogout = async (e) => {
+        e.preventDefault();
+        // TODO - add logout db logic here
+        // also add try, catch, finally logic
+        // + loading logic, button disabling logic
+        // + any redirect logic after successful logout
+        console.log('clicked log out!');
+    }
+
     return (
             <nav className={styles.nav}>
                 <Link
@@ -61,7 +70,7 @@ function NavBar() {
                     }>
                     Feed
                 </Link>
-
+                <button onClick={onLogout}>Logout</button>
             </nav>
     )
 }

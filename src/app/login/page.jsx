@@ -4,7 +4,8 @@
 // import Link from "next/link";
 import { useState } from "react";
 // import {useRouter} from "next/navigation";
-// import {axios} from "axios";
+import axios from "axios";
+
 
 // TODO - add this logic back again after adding client logic to a child component
 // export const metadata = {
@@ -22,15 +23,30 @@ export default function Login() {
 
     const [user, setUser] = useState(defaultUser);
 
+
+
     const onLogin = async (e) => {
-        e.preventDefault();
         // TODO - add login db logic here
         // also add try, catch, finally logic
         // + loading logic, button disabling logic
         // + any redirect logic after successful login
-        console.log(user);
-        // reset user
-        setUser(defaultUser);
+
+        try {
+            e.preventDefault();
+
+
+            console.log(user);
+
+            // reset user to defaults
+            setUser(defaultUser);
+
+            const response = await axios.post('/api/auth/login', user);
+            console.log('login success', response);
+
+        } catch (err) {
+            console.log('login failed:', err);
+        }
+
     }
 
     return (
@@ -57,7 +73,6 @@ export default function Login() {
                 </input>
                 <button onClick={onLogin}>Log In</button>
             </form>
-
         </div>
     )
 }

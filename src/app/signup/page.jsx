@@ -3,7 +3,7 @@
 // import Link from "next/link";
 import { useState } from "react";
 // import {useRouter} from "next/navigation";
-// import {axios} from "axios";
+import axios from "axios";
 
 // export const metadata = {
 //   title: "Sign Up",
@@ -23,14 +23,25 @@ export default function SignUp() {
     const [user, setUser] = useState(defaultUser);
 
     const onSignUp = async (e) => {
-        e.preventDefault();
         // TODO - add sign up db logic here
         // also add try, catch, finally logic
         // + loading logic, button disabling logic
         // + any redirect logic after successful sign up
-        console.log(user);
-        // reset user
-        setUser(defaultUser);
+        try {
+            e.preventDefault();
+
+            console.log(user);
+
+            // reset user
+            setUser(defaultUser);
+
+            const response = await axios.post('/api/auth/signup', user);
+            console.log('signup success', response);
+
+        } catch (err) {
+            console.log('sign up failed:', err);
+        }
+
     }
 
     return (

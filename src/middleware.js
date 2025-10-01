@@ -1,6 +1,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "./lib/auth";
+// import { verifyToken } from "./lib/auth";
+import { verifyToken } from "@/lib/auth";
 
 export function middleware(req) {
 

@@ -2,12 +2,16 @@ import { connectToDb } from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcrypt"
 import { NextRequest, NextResponse } from "next/server";
+import {maxAge, createToken} from "@/lib/auth";
 
 connectToDb();
 
 export async function POST(request) {
 
     try {
+        // need to explicitly connect to db within function?
+        await connectToDb();
+
         const reqBody = await request.json();
 
         const {email, password} = reqBody;
@@ -30,12 +34,24 @@ export async function POST(request) {
 
         // check password
         const auth = await bcrypt.compare(password, user.password);
+
         if (auth) {
-            return NextResponse.json({
-                message: 'user logged in successfully',
-                email: user.email,
-                userId: user._id},
-                {status: 200})
+            // login user by creating jwt token
+            const token = createToken(user._id);
+
+            const response =  NextResponse.json({
+                    message: 'user logged in successfully',
+                    email: user.email,
+                    userId: user._id},
+                    {status: 200})
+            // set jwt token
+            response.cookies.set('token', token, {
+                httpOnly: true,
+                maxAge: maxAge,
+                path: "/"
+            })
+
+            return response;
         }
 
         return NextResponse.json({error: 'incorrect password'}, {status: 401});

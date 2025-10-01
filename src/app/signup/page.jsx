@@ -36,7 +36,7 @@ export default function SignUp() {
             setUser(defaultUser);
 
             const response = await axios.post('/api/auth/signup', user);
-            console.log('signup success', response);
+            console.log(response);
 
         } catch (err) {
             console.log('sign up failed:', err);

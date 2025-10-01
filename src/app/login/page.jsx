@@ -34,19 +34,17 @@ export default function Login() {
         try {
             e.preventDefault();
 
-
             console.log(user);
 
             // reset user to defaults
             setUser(defaultUser);
 
             const response = await axios.post('/api/auth/login', user);
-            console.log('login success', response);
+            console.log(response);
 
         } catch (err) {
             console.log('login failed:', err);
         }
-
     }
 
     return (

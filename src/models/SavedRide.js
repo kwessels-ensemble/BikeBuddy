@@ -20,7 +20,7 @@ const locationSchema = new Schema({
     }
 });
 
-const rideSchema = new Schema({
+const savedRideSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -59,6 +59,6 @@ const rideSchema = new Schema({
 }, {timestamps: true})
 
 
-const Ride = mongoose.models.Ride || mongoose.model("Ride", rideSchema);
+const SavedRide = mongoose.models.SavedRide || mongoose.model("SavedRide", savedRideSchema);
 
-export default Ride;
+export default SavedRide;

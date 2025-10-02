@@ -6,11 +6,11 @@ import axios from "axios";
 // TODO-  rename this to "saved rides"
 
 // export const metadata = {
-//   title: "Rides",
-//   description: "Track and add to your wishlist rides."
+//   title: "Saved Rides",
+//   description: "Track and add to your saved rides."
 // };
 
-export default function Rides() {
+export default function SavedRides() {
 
     // define state
     const [rides, setRides] = useState([]);
@@ -19,7 +19,7 @@ export default function Rides() {
     useEffect( () => {
         async function getRides () {
             try {
-                const response = await axios.get('/api/rides');
+                const response = await axios.get('/api/saved-rides');
                 console.log(response);
 
             } catch (err) {
@@ -29,14 +29,19 @@ export default function Rides() {
     }, []);
 
     if (!rides.length) {
-        return <p> No saved rides found. </p>
+        return (
+            <div>
+                <h1>Saved Rides</h1>
+                <p> No saved rides found. </p>
+            </div>
+        )
     }
 
     // TODO - move ride display logic into a child component
     // add more details to each ride
     return (
         <div>
-            <h1>Rides</h1>
+            <h1>Saved Rides</h1>
             <ul>
                 {rides.map(ride => (
                     <li key={ride._id}>

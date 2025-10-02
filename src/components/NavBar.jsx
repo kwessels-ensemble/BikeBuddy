@@ -3,19 +3,33 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./NavBar.module.css";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
+// TODO - move logout botton/onclick to own component
 
-function NavBar() {
+export default function NavBar() {
     // get current route for styling logic
     const pathname = usePathname();
+    // router for redirect
+    const router = useRouter();
 
     const onLogout = async (e) => {
-        e.preventDefault();
-        // TODO - add logout db logic here
-        // also add try, catch, finally logic
-        // + loading logic, button disabling logic
-        // + any redirect logic after successful logout
-        console.log('clicked log out!');
+        // TODO - add loading logic, button disabling logic + any redirect logic after logout
+        try {
+            e.preventDefault();
+            // console.log('clicked log out!');
+            const response = await axios.post('/api/auth/logout', {}, {withCredentials: true});
+            console.log(response);
+            //redirect
+            router.push('/login');
+
+        } catch (err) {
+            console.error('logout error:', err)
+
+        } finally {
+            console.log('in finally block. TODO - add functionality')
+        }
     }
 
     return (
@@ -74,5 +88,3 @@ function NavBar() {
             </nav>
     )
 }
-
-export default NavBar;

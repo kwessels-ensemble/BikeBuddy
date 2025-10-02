@@ -6,10 +6,9 @@ import {maxAge, createToken} from "@/lib/auth";
 export async function POST(request) {
 
     try {
-        // need to explicitly connect to db within function?
-        await connectToDb();
 
         //logout by resetting token
+        // console.log('logout route hit')
         const response = NextResponse.json({message: 'logged out'}, {status: 200});
         response.cookies.set('token', '', {
             httpOnly: true,
@@ -18,7 +17,6 @@ export async function POST(request) {
         });
 
         return response;
-
 
     } catch (error) {
         console.error('logout error:', error);

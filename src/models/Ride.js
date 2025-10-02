@@ -1,14 +1,29 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-
-// TODO - update type/references etc on "userId"
-// TODO- check types below Like url?, set types in a drop down
-// location, etc.
+const locationSchema = new Schema({
+    city: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    coordinates: {
+        lat: {
+            type: Number
+        },
+        lng: {
+            type: Number
+        }
+    }
+});
 
 const rideSchema = new Schema({
     userId: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "User",
         required: true
     },
     title: {
@@ -16,7 +31,7 @@ const rideSchema = new Schema({
         required: true
     },
     description: {
-        type: String,
+        type: String
     },
     link: {
         type: String
@@ -32,7 +47,8 @@ const rideSchema = new Schema({
         type: String
     },
     location: {
-        type: String
+        type: locationSchema,
+        required: true
     },
     isDeleted: {
         type: Boolean,

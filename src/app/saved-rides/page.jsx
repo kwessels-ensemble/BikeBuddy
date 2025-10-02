@@ -13,22 +13,25 @@ import axios from "axios";
 export default function SavedRides() {
 
     // define state
-    const [rides, setRides] = useState([]);
+    const [savedRides, setSavedRides] = useState([]);
 
-    // useEffect to get rides on mount-
-    useEffect( () => {
-        async function getRides () {
+    async function getSavedRides () {
             try {
                 const response = await axios.get('/api/saved-rides');
                 console.log(response);
+                setSavedRides(response.data.savedRides);
 
             } catch (err) {
-                console.log('failed to get rides:', err);
+                console.log('failed to get saved rides:', err);
             }
         }
+
+    useEffect( () => {
+        getSavedRides();
     }, []);
 
-    if (!rides.length) {
+
+    if (!savedRides.length) {
         return (
             <div>
                 <h1>Saved Rides</h1>
@@ -43,7 +46,7 @@ export default function SavedRides() {
         <div>
             <h1>Saved Rides</h1>
             <ul>
-                {rides.map(ride => (
+                {savedRides.map(ride => (
                     <li key={ride._id}>
                         {ride.title}
                         {ride.description}

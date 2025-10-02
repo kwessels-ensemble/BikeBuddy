@@ -5,12 +5,12 @@ import { verifyToken } from "@/lib/auth";
 
 export function middleware(req) {
 
-    // verify token
+    // redirect if no token for protected paths
     console.log('middleware running');
     const token = req.cookies.get('token')?.value;
     console.log(token);
-    const verified = token && verifyToken(token);
-    console.log(verified);
+    // const verified = token && verifyToken(token);
+    // console.log(verified);
 
     // TODO - confirm we don't want to add the api routes to protectedPaths and instead handle in route itself
     const protectedPaths = ["/rides", "/scheduled-rides", '/feed'];
@@ -19,11 +19,14 @@ export function middleware(req) {
     // handle redirect to login if not a valid token for any protected paths
     if (protectedPaths.some((protectedPath) => pathname.startsWith(protectedPath))) {
         console.log("detected a protected path")
-        if (!verified) {
+        // if (!verified) {
+        //     return NextResponse.redirect(new URL('/login', req.url));
+        // }
+        if (!token) {
             return NextResponse.redirect(new URL('/login', req.url));
         }
     }
 
-    // proceed if valid token or if route not protected
+    // proceed if token present or if route not protected
     return NextResponse.next();
 }

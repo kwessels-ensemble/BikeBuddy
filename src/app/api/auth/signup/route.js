@@ -3,12 +3,12 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs"
 import { NextRequest, NextResponse } from "next/server";
 
-connectToDb();
+// connectToDb();
 
 export async function POST(request) {
 
     try {
-        // need to explicitly connect to db first?
+        // need to explicitly connect to db within function?
         await connectToDb();
 
         const reqBody = await request.json();

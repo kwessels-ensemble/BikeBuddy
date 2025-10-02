@@ -8,7 +8,7 @@ export async function GET(req) {
     await connectToDb();
 
     const token = req.cookies.get('token')?.value;
-    const decoded = token && verifyToken(token);
+    const decoded = verifyToken(token);
 
     if (!decoded) {
         return NextResponse.json({user: null}, {status: 401})
@@ -16,4 +16,5 @@ export async function GET(req) {
 
     const user = await User.findById(decoded.id).select("-password");
     return NextResponse.json({user}, {status: 200});
+
 }

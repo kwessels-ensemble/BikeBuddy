@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 import { NextRequest, NextResponse } from "next/server";
 import {maxAge, createToken} from "@/lib/auth";
 
-connectToDb();
+// connectToDb();
 
 export async function POST(request) {
 

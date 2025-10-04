@@ -32,11 +32,11 @@ export default function SignUp() {
 
             console.log(user);
 
-            // reset user
-            setUser(defaultUser);
-
             const response = await axios.post('/api/auth/signup', user);
             console.log(response);
+
+            // reset user
+            setUser(defaultUser);
 
         } catch (err) {
             console.log('sign up failed:', err);

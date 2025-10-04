@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import axios from "axios";
 
 // TODO-  rename this to "saved rides"
@@ -35,6 +36,9 @@ export default function SavedRides() {
         return (
             <div>
                 <h1>Saved Rides</h1>
+                <Link href="/save-new-ride">
+                    <button>Create New Ride!</button>
+                </Link>
                 <p> No saved rides found. </p>
             </div>
         )
@@ -45,6 +49,9 @@ export default function SavedRides() {
     return (
         <div>
             <h1>Saved Rides</h1>
+            <Link href="/save-new-ride">
+                <button>Create New Ride!</button>
+            </Link>
             <ul>
                 {savedRides.map(ride => (
                     <li key={ride._id}>

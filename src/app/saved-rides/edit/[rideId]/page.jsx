@@ -95,14 +95,14 @@ export default function EditRide() {
                 </input>
 
                 <label htmlFor="description">Description</label>
-                <input
+                <textarea
                     id="description"
                     type="text"
                     placeholder="description"
                     value={ride.description}
                     onChange={(e) => setRide({...ride, description: e.target.value})}
                     >
-                </input>
+                </textarea>
 
                 <label htmlFor="type">Type</label>
                 <select
@@ -130,14 +130,14 @@ export default function EditRide() {
                 </input>
 
                 <label htmlFor="notes">Notes</label>
-                <input
+                <textarea
                     id="notes"
                     type="text"
                     placeholder="notes"
                     value={ride.notes}
                     onChange={(e) => setRide({...ride, notes: e.target.value})}
                     >
-                </input>
+                </textarea>
 
                 <label htmlFor="location">Location</label>
                 <select

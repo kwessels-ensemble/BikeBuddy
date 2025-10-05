@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 // export const metadata = {
@@ -11,6 +12,8 @@ import axios from "axios";
 // };
 
 export default function SavedRides() {
+
+    const router = useRouter();
 
     // define state
     const [savedRides, setSavedRides] = useState([]);
@@ -72,9 +75,14 @@ export default function SavedRides() {
                     <li>Type: {ride.type}</li>
                     <li>Tags: {ride.tags}</li>
                     <li>Notes: {ride.notes}</li>
-                    <li>Location: {ride.locaiton}</li>
-                    <button>Edit</button>
-                    <button onClick={() => handleDelete(ride._id)}>Delete</button>
+                    <li>Location: {`${ride.location.city}, ${ride.location.state}`}</li>
+
+                    <button onClick={() => router.push(`/saved-rides/edit/${ride._id}`)}>
+                        Edit
+                    </button>
+                    <button onClick={() => handleDelete(ride._id)}>
+                        Delete
+                    </button>
 
                 </ul>
             )))

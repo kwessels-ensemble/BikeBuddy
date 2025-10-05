@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 
-// TODO-  rename this to "saved rides"
 
 // export const metadata = {
 //   title: "Saved Rides",
@@ -15,8 +14,9 @@ export default function SavedRides() {
 
     // define state
     const [savedRides, setSavedRides] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    async function getSavedRides () {
+    async function fetchSavedRides () {
             try {
                 const response = await axios.get('/api/saved-rides');
                 console.log(response);
@@ -24,26 +24,31 @@ export default function SavedRides() {
 
             } catch (err) {
                 console.log('failed to get saved rides:', err);
+            } finally {
+                setIsLoading(false);
             }
         }
 
     useEffect( () => {
-        getSavedRides();
+        fetchSavedRides();
     }, []);
 
-    // TODO - add loading logic and avoid initial display of "no saved rides found"
+    async function handleDelete(rideId) {
+        console.log('inside delete')
+        try {
+            const confirmed = window.confirm('Are you sure you want to delete this ride?');
+            if (!confirmed) {
+                return;
+            }
+            const response = await axios.delete(`/api/saved-rides/${rideId}`);
+            console.log(response);
+            // reload
+            setSavedRides((prev) =>
+                prev.filter((ride) =>ride._id !== rideId));
 
-    // TODO - add this logic into 1 return statement for the repeated tags/link
-    if (!savedRides.length) {
-        return (
-            <div>
-                <h1>Saved Rides</h1>
-                <Link href="/save-new-ride">
-                    <button>Create New Ride!</button>
-                </Link>
-                <p> No saved rides found. </p>
-            </div>
-        )
+        } catch (err) {
+            console.log('failed to delete ride:', err);
+        }
     }
 
     // TODO - move ride display logic into a child component
@@ -55,7 +60,12 @@ export default function SavedRides() {
                 <button>Create New Ride!</button>
             </Link>
 
-            {savedRides.map(ride => (
+            {isLoading === true ? (
+                <p>Loading...</p>
+            ) : (savedRides.length === 0 ? (
+                <p>No saved rides found</p>
+            ) :
+            (savedRides.map(ride => (
                 <ul key={ride._id}> {ride.title}
                     <li>Description: {ride.description}</li>
                     <li>Link: {ride.link}</li>
@@ -63,9 +73,12 @@ export default function SavedRides() {
                     <li>Tags: {ride.tags}</li>
                     <li>Notes: {ride.notes}</li>
                     <li>Location: {ride.locaiton}</li>
-                </ul>
-            ))}
+                    <button>Edit</button>
+                    <button onClick={() => handleDelete(ride._id)}>Delete</button>
 
+                </ul>
+            )))
+            )}
         </div>
     )
 };

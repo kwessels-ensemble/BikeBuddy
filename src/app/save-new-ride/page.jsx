@@ -43,6 +43,8 @@ export default function SaveNewRide() {
         {city: 'Fairfax', state: 'CA'}
     ]
 
+    const typeOptions = ['mtb', 'gravel', 'road'];
+
 
     const onSubmit = async (e) => {
         // TODO - add loading logic, button disabling logic
@@ -93,6 +95,21 @@ export default function SaveNewRide() {
                     >
                 </input>
 
+                <label htmlFor="type">Type</label>
+                <select
+                    id="type"
+                    value={ride.type}
+                    onChange={(e) => setRide({...ride, type: e.target.value})}
+                    >
+                        <option value="">Select ride type</option>
+                        {typeOptions.map((type) => (
+                            <option key={type}
+                                    value={type}>
+                                    {type}
+                                </option>
+                        ))}
+                </select>
+
                 <label htmlFor="link">Link</label>
                 <input
                     id="link"
@@ -100,16 +117,6 @@ export default function SaveNewRide() {
                     placeholder="link"
                     value={ride.link}
                     onChange={(e) => setRide({...ride, link: e.target.value})}
-                    >
-                </input>
-
-                <label htmlFor="type">Type</label>
-                <input
-                    id="type"
-                    type="text"
-                    placeholder="type"
-                    value={ride.type}
-                    onChange={(e) => setRide({...ride, type: e.target.value})}
                     >
                 </input>
 

@@ -19,7 +19,7 @@ export async function GET(request) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
 
-        const savedRides = await SavedRide.find({userId: decoded.id});
+        const savedRides = await SavedRide.find({userId: decoded.id, isDeleted: false});
         return NextResponse.json({savedRides}, {status: 200});
 
     } catch (error) {

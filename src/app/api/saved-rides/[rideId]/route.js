@@ -27,7 +27,7 @@ export async function GET(request, { params }) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
 
-        const ride = await SavedRide.findById(rideId);
+        const ride = await SavedRide.findOne({_id: rideId, isDeleted: false});
 
         if (!ride) {
             return NextResponse.json({message: "Ride not found"}, {status: 404})
@@ -66,7 +66,7 @@ export async function DELETE(request, { params}) {
 
         const ride = await SavedRide.findById(rideId);
 
-        if (!ride) {
+        if (!ride || ride.isDeleted) {
             return NextResponse.json({message: "Ride not found"}, {status: 404})
         }
 
@@ -74,7 +74,12 @@ export async function DELETE(request, { params}) {
             return NextResponse.json({error: "Forbidden"}, {status: 403});
         }
 
-        await ride.deleteOne();
+        // await ride.deleteOne();
+
+        // delete ride by setting isDeleted=true
+        ride.isDeleted = true;
+
+        await ride.save();
 
         return NextResponse.json({message: 'Ride successfully deleted'}, {status: 200});
 
@@ -113,7 +118,7 @@ export async function PATCH(request, { params }) {
         const ride = await SavedRide.findById(rideId);
 
         // check ride exists
-        if (!ride) {
+        if (!ride || ride.isDeleted) {
             return NextResponse.json({message: "Ride not found"}, {status: 404})
         }
 

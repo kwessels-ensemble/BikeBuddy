@@ -3,27 +3,6 @@ import locationSchema from '../schemas/location';
 
 const Schema = mongoose.Schema;
 
-// const locationSchema = new Schema({
-//     city: {
-//         type: String,
-//         required: true
-//     },
-//     state: {
-//         type: String,
-//         required: true
-//     },
-//     coordinates: {
-//         lat: {
-//             type: Number
-//         },
-//         lng: {
-//             type: Number
-//         }
-//     }
-// },
-// {_id: false}
-// );
-
 const savedRideSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
@@ -45,7 +24,7 @@ const savedRideSchema = new Schema({
         required: true
     },
     tags: {
-        type: Array
+        type: [String]
     },
     notes: {
         type: String

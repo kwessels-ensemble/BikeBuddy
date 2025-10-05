@@ -31,7 +31,9 @@ export default function SavedRides() {
         getSavedRides();
     }, []);
 
+    // TODO - add loading logic and avoid initial display of "no saved rides found"
 
+    // TODO - add this logic into 1 return statement for the repeated tags/link
     if (!savedRides.length) {
         return (
             <div>
@@ -45,21 +47,25 @@ export default function SavedRides() {
     }
 
     // TODO - move ride display logic into a child component
-    // add more details to each ride
+    // choose which details to display for each ride
     return (
         <div>
             <h1>Saved Rides</h1>
             <Link href="/save-new-ride">
                 <button>Create New Ride!</button>
             </Link>
-            <ul>
-                {savedRides.map(ride => (
-                    <li key={ride._id}>
-                        {ride.title}
-                        {ride.description}
-                    </li>
-                ))}
-            </ul>
+
+            {savedRides.map(ride => (
+                <ul key={ride._id}> {ride.title}
+                    <li>Description: {ride.description}</li>
+                    <li>Link: {ride.link}</li>
+                    <li>Type: {ride.type}</li>
+                    <li>Tags: {ride.tags}</li>
+                    <li>Notes: {ride.notes}</li>
+                    <li>Location: {ride.locaiton}</li>
+                </ul>
+            ))}
+
         </div>
     )
 };

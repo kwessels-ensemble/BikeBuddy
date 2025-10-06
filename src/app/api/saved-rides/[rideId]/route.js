@@ -140,7 +140,7 @@ export async function PATCH(request, { params }) {
         return NextResponse.json(ride, {status: 200});
 
     } catch (error) {
-        console.error('error fetching ride:', error);
+        console.error('error updating ride:', error);
         return NextResponse.json({error: 'server error'}, {status: 500});
     }
 }

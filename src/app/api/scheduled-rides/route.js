@@ -22,7 +22,9 @@ export async function GET(request) {
         // TODO - build out function for getting cancelled rides too.. maybe api query string
         // by default, get rides that have not been cancelled
         // by default, this route is to get the auth user's scheduled rides that they own as "organizer"
-        const scheduledRides = await ScheduledRide.find({organizer: decoded.id, isCancelled: false});
+        const scheduledRides = await ScheduledRide.find({organizer: decoded.id, isCancelled: false})
+            .populate('organizer', 'username')
+            .populate('participants', 'username');
         return NextResponse.json({scheduledRides}, {status: 200});
 
     } catch (error) {
@@ -60,6 +62,7 @@ export async function POST(request) {
             organizer: decoded.id,
             isPublic: reqBody.isPublic, // by default false
             eventTime: reqBody.eventTime,
+            timeZone: reqBody.timeZone,
             // participants by default [] at creation time
             // isCancelled by default false at creation time
             // other cancelled fields null at creation time

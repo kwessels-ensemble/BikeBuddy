@@ -56,6 +56,10 @@ const scheduledRideSchema = new Schema({
             message: "Event time must be in the future"
         }
     },
+    timeZone: {
+        type: String,
+        required: true
+    },
     participants: {
         type: [Schema.Types.ObjectId],
         default: []

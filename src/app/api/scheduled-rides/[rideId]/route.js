@@ -1,5 +1,4 @@
 import { connectToDb } from "@/lib/mongodb";
-import User from "@/models/User";
 import ScheduledRide from "@/models/ScheduledRide";
 import { NextResponse } from "next/server";
 import {verifyToken} from "@/lib/auth";
@@ -27,7 +26,12 @@ export async function GET(request, { params }) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
 
-        const ride = await ScheduledRide.findOne({_id: rideId, isCancelled: false});
+        // const ride = await ScheduledRide.findOne({organizer: decoded.id, _id: rideId, isCancelled: false});
+
+        const ride = await ScheduledRide.findOne({organizer: decoded.id, _id: rideId, isCancelled: false})
+            .populate('organizer', 'username')
+            .populate('participants', 'username');
+
 
         if (!ride) {
             return NextResponse.json({message: "Scheduled ride not found"}, {status: 404})
@@ -66,10 +70,12 @@ export async function DELETE(request, { params}) {
 
         const ride = await ScheduledRide.findById(rideId);
 
+        // handling ride cancelled or not found -
         if (!ride || ride.isCancelled) {
             return NextResponse.json({message: "Scheduled ride not found"}, {status: 404})
         }
 
+        // handling auth user not being the owner -
         if (decoded.id?.toString() !== ride.organizer?.toString()) {
             return NextResponse.json({error: "Forbidden"}, {status: 403});
         }
@@ -125,7 +131,7 @@ export async function PATCH(request, { params }) {
             return NextResponse.json({message: "Scheduled ride not found"}, {status: 404})
         }
 
-        // check user owns ride
+        // check auth user is the ride organizer
         if (decoded.id?.toString() !== ride.organizer?.toString()) {
             return NextResponse.json({error: "Forbidden"}, {status: 403});
         }

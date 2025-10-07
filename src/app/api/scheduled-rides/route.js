@@ -1,5 +1,4 @@
 import { connectToDb } from "@/lib/mongodb";
-import User from "@/models/User";
 import ScheduledRide from "@/models/ScheduledRide";
 import { NextResponse } from "next/server";
 import {verifyToken} from "@/lib/auth";
@@ -25,10 +24,11 @@ export async function GET(request) {
         const scheduledRides = await ScheduledRide.find({organizer: decoded.id, isCancelled: false})
             .populate('organizer', 'username')
             .populate('participants', 'username');
+
         return NextResponse.json({scheduledRides}, {status: 200});
 
     } catch (error) {
-        console.error('rides error:', error);
+        console.error('fetch rides error:', error);
         return NextResponse.json({error: 'server error'}, {status: 500});
     }
 }

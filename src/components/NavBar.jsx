@@ -76,13 +76,13 @@ export default function NavBar() {
                     Scheduled Rides
                 </Link>
 
-                <Link href="/feed"
+                <Link href="/ride-feed"
                     className={
-                        pathname === "/feed"
+                        pathname === "/ride-feed"
                         ? `${styles.navLink} ${styles.navLinkActive}`
                         : styles.navLink
                     }>
-                    Feed
+                    Ride Feed
                 </Link>
                 <button onClick={onLogout}>Logout</button>
             </nav>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { DateTime } from "luxon";
 
@@ -18,6 +18,8 @@ export default function ScheduleNewRide() {
 
     // TODO - add tags functionality if desired for MVP
 
+    const searchParams = useSearchParams();
+    const savedRideId = searchParams.get('savedRideId');
     const router = useRouter();
 
     // store ride in state
@@ -52,6 +54,37 @@ export default function ScheduleNewRide() {
 
     const typeOptions = ['mtb', 'gravel', 'road'];
 
+    // handle case when we have search query param of savedRideId to pre-populate form
+    useEffect(() => {
+        if (savedRideId) {
+            const fetchRide = async () => {
+                try {
+                    const response = await axios.get(`/api/saved-rides/${savedRideId}`);
+                    console.log(response);
+                    const data = response.data;
+                    setRide((prev) => ({
+                        ...prev,
+                        rideDetails: {
+                            ...prev.rideDetails,
+                            title: data.title ?? prev.rideDetails.title,
+                            description: data.description ?? prev.rideDetails.description,
+                            link: data.link ?? prev.rideDetails.link,
+                            type: data.type ?? prev.rideDetails.type,
+                            tags: data.tags ?? prev.rideDetails.tags,
+                            notes: data.notes ?? prev.rideDetails.notes,
+                            location: {...prev.rideDetails.location, ...(data.location || {})}
+                        }
+                    }));
+                } catch (err) {
+                    console.error('error fetching ride:', err);
+                }
+
+            };
+            fetchRide();
+        }
+    }, [savedRideId]);
+
+    // TODO add onchange handler that's general and re-usable for form jsx below
 
     const onSubmit = async (e) => {
         // TODO - add loading logic, button disabling logic

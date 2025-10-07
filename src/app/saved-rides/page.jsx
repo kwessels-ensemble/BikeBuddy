@@ -83,6 +83,9 @@ export default function SavedRides() {
                     <button onClick={() => handleDelete(ride._id)}>
                         Delete
                     </button>
+                    <button onClick={() => router.push(`/schedule-new-ride/?savedRideId=${ride._id}`)}>
+                        Schedule this Ride
+                    </button>
 
                 </ul>
             )))

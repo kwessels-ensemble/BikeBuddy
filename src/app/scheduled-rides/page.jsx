@@ -99,6 +99,9 @@ export default function ScheduledRides() {
                     <button onClick={() => handleCancel(ride._id)}>
                         Cancel Ride
                     </button>
+                    <button onClick={() => router.push(`/scheduled-rides/${ride._id}`)}>
+                        View Ride Details
+                    </button>
 
                 </ul>
             )))

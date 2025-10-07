@@ -86,6 +86,9 @@ export default function SavedRides() {
                     <button onClick={() => router.push(`/scheduled-rides/new?savedRideId=${ride._id}`)}>
                         Schedule this Ride
                     </button>
+                    <button onClick={() => router.push(`/saved-rides/${ride._id}`)}>
+                        View Ride Details
+                    </button>
 
                 </ul>
             )))

@@ -1,13 +1,13 @@
 
 export const metadata = {
-  title: "Feed",
+  title: "Ride Feed",
   description: "View and join publicly scheduled rides in your area."
 };
 
-export default function Feed() {
+export default function rideFeed() {
     return (
         <div>
-            <h1>Feed</h1>
+            <h1>Ride Feed</h1>
         </div>
     )
 }

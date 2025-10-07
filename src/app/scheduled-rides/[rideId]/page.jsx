@@ -15,7 +15,7 @@ import { DateTime } from "luxon";
 export default function ScheduledRide() {
 
     const router = useRouter();
-    const { scheduledRideId } = useParams();
+    const { rideId } = useParams();
 
     // define state
     const [scheduledRide, setScheduledRide] = useState(null);
@@ -24,7 +24,7 @@ export default function ScheduledRide() {
     async function fetchScheduledRide () {
 
         try {
-            const response = await axios.get(`/api/scheduled-rides/${scheduledRideId}`);
+            const response = await axios.get(`/api/scheduled-rides/${rideId}`);
             console.log(response);
 
             const rideData = response.data;
@@ -45,17 +45,17 @@ export default function ScheduledRide() {
         fetchScheduledRide();
     }, []);
 
-    async function handleCancel(scheduledRideId) {
+    async function handleCancel(rideId) {
         try {
             const confirmed = window.confirm('Are you sure you want to cancel this ride?');
             if (!confirmed) {
                 return;
             }
-            const response = await axios.delete(`/api/scheduled-rides/${scheduledRideId}`);
+            const response = await axios.delete(`/api/scheduled-rides/${rideId}`);
             console.log(response);
             // reload
             // setScheduledRide((prev) =>
-            //     prev.filter((ride) =>ride._id !== scheduledRideId));
+            //     prev.filter((ride) =>ride._id !== rideId));
             // redirect back to scheduled rides
             router.push('/scheduled-rides');
             // TODO - consider adding a message to inform user deletion was successfuly

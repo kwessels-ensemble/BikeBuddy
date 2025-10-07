@@ -13,7 +13,7 @@ import axios from "axios";
 
 export default function EditScheduledRide() {
 
-    const { scheduledRideId } = useParams();
+    const { rideId } = useParams();
     const router = useRouter();
     // default is null, then populate on first load
     const [ride, setRide] = useState(null);
@@ -34,7 +34,7 @@ export default function EditScheduledRide() {
 
     async function fetchScheduledRide () {
         try {
-            const response = await axios.get(`/api/scheduled-rides/${scheduledRideId}`);
+            const response = await axios.get(`/api/scheduled-rides/${rideId}`);
             console.log(response);
             setRide(response.data);
 
@@ -46,7 +46,7 @@ export default function EditScheduledRide() {
 
     useEffect( () => {
         fetchScheduledRide();
-    }, [scheduledRideId]);
+    }, [rideId]);
 
 
 
@@ -58,7 +58,7 @@ export default function EditScheduledRide() {
 
             console.log(ride);
 
-            const response = await axios.patch(`/api/scheduled-rides/${scheduledRideId}`, ride);
+            const response = await axios.patch(`/api/scheduled-rides/${rideId}`, ride);
             console.log(response);
 
             // reset ride

@@ -13,7 +13,7 @@ export function middleware(req) {
     // console.log(verified);
 
     // TODO - confirm we don't want to add the api routes to protectedPaths and instead handle in route itself
-    const protectedPaths = ["/saved-rides", "/scheduled-rides", '/feed'];
+    const protectedPaths = ["/saved-rides", "/scheduled-rides", '/ride-feed'];
     const { pathname } = req.nextUrl;
 
     // handle redirect to login if not a valid token for any protected paths

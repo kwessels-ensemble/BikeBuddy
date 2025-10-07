@@ -11,12 +11,12 @@ export async function GET(request, { params }) {
 
     try {
 
-        const { scheduledRideId } = await params;
+        const { rideId } = await params;
 
         await connectToDb();
 
-        if (!mongoose.Types.ObjectId.isValid(scheduledRideId)) {
-            return NextResponse.json({error: "Invalid scheduledRideId provided"}, {status: 400});
+        if (!mongoose.Types.ObjectId.isValid(rideId)) {
+            return NextResponse.json({error: "Invalid rideId provided"}, {status: 400});
         }
 
         // get auth user
@@ -27,7 +27,7 @@ export async function GET(request, { params }) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
 
-        const ride = await ScheduledRide.findOne({_id: scheduledRideId, isCancelled: false});
+        const ride = await ScheduledRide.findOne({_id: rideId, isCancelled: false});
 
         if (!ride) {
             return NextResponse.json({message: "Scheduled ride not found"}, {status: 404})
@@ -48,12 +48,12 @@ export async function GET(request, { params }) {
 export async function DELETE(request, { params}) {
     try {
 
-        const { scheduledRideId } = await params;
+        const { rideId } = await params;
 
         await connectToDb();
 
-        if (!mongoose.Types.ObjectId.isValid(scheduledRideId)) {
-            return NextResponse.json({error: "invalid scheduledRideId provided"}, {status: 400});
+        if (!mongoose.Types.ObjectId.isValid(rideId)) {
+            return NextResponse.json({error: "invalid rideId provided"}, {status: 400});
         }
 
         // get auth user
@@ -64,7 +64,7 @@ export async function DELETE(request, { params}) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
 
-        const ride = await ScheduledRide.findById(scheduledRideId);
+        const ride = await ScheduledRide.findById(rideId);
 
         if (!ride || ride.isCancelled) {
             return NextResponse.json({message: "Scheduled ride not found"}, {status: 404})
@@ -98,12 +98,12 @@ export async function PATCH(request, { params }) {
 
     try {
 
-        const { scheduledRideId } = await params;
+        const { rideId } = await params;
 
         await connectToDb();
 
-        if (!mongoose.Types.ObjectId.isValid(scheduledRideId)) {
-            return NextResponse.json({error: "invalid scheduledRideId provided"}, {status: 400});
+        if (!mongoose.Types.ObjectId.isValid(rideId)) {
+            return NextResponse.json({error: "invalid rideId provided"}, {status: 400});
         }
 
         // get auth user
@@ -118,7 +118,7 @@ export async function PATCH(request, { params }) {
         const rideUpdates = await request.json();
 
         // find corresponding ride
-        const ride = await ScheduledRide.findById(scheduledRideId);
+        const ride = await ScheduledRide.findById(rideId);
 
         // check ride exists
         if (!ride || ride.isCancelled) {

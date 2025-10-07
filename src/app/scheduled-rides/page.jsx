@@ -46,22 +46,21 @@ export default function ScheduledRides() {
         fetchScheduledRides();
     }, []);
 
-    async function handleUnschedule(rideId) {
-        console.log('inside unschedule')
-        // try {
-        //     const confirmed = window.confirm('Are you sure you want to unschedule this ride?');
-        //     if (!confirmed) {
-        //         return;
-        //     }
-        //     const response = await axios.delete(`/api/scheduled-rides/${rideId}`);
-        //     console.log(response);
-        //     // reload
-        //     setScheduledRides((prev) =>
-        //         prev.filter((ride) =>ride._id !== rideId));
+    async function handleCancel(scheduledRideId) {
+        try {
+            const confirmed = window.confirm('Are you sure you want to cancel this ride?');
+            if (!confirmed) {
+                return;
+            }
+            const response = await axios.delete(`/api/scheduled-rides/${scheduledRideId}`);
+            console.log(response);
+            // reload
+            setScheduledRides((prev) =>
+                prev.filter((ride) =>ride._id !== scheduledRideId));
 
-        // } catch (err) {
-        //     console.log('failed to unschedule ride:', err);
-        // }
+        } catch (err) {
+            console.log('failed to cancel ride:', err);
+        }
     }
 
     // TODO - move ride display logic into a child component
@@ -94,11 +93,11 @@ export default function ScheduledRides() {
                     <li>Time: {ride.eventTime}</li>
 
 
-                    {/* <button onClick={() => router.push(`/scheduled-rides/edit/${ride._id}`)}>
-                        Edit
-                    </button> */}
-                    <button onClick={() => handleUnschedule(ride._id)}>
-                        Unschedule
+                    <button onClick={() => router.push(`/scheduled-rides/edit/${ride._id}`)}>
+                        Edit Ride
+                    </button>
+                    <button onClick={() => handleCancel(ride._id)}>
+                        Cancel Ride
                     </button>
 
                 </ul>

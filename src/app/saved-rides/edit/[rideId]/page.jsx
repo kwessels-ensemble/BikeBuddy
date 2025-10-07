@@ -81,7 +81,7 @@ export default function EditRide() {
 
     return (
         <div>
-            <h1>Create New Ride</h1>
+            <h1>Update Ride</h1>
             <form onSubmit={handleSubmit} className="edit-ride-form">
 
                 <label htmlFor="title">Title</label>

@@ -59,7 +59,7 @@ export default function SavedRides() {
     return (
         <div>
             <h1>Saved Rides</h1>
-            <Link href="/save-new-ride">
+            <Link href="/saved-rides/new">
                 <button>Create New Ride!</button>
             </Link>
 
@@ -83,7 +83,7 @@ export default function SavedRides() {
                     <button onClick={() => handleDelete(ride._id)}>
                         Delete
                     </button>
-                    <button onClick={() => router.push(`/schedule-new-ride/?savedRideId=${ride._id}`)}>
+                    <button onClick={() => router.push(`/scheduled-rides/new?savedRideId=${ride._id}`)}>
                         Schedule this Ride
                     </button>
 

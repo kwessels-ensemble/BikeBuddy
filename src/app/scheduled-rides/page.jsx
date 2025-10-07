@@ -68,7 +68,7 @@ export default function ScheduledRides() {
     return (
         <div>
             <h1>Scheduled Rides</h1>
-            <Link href="/schedule-new-ride">
+            <Link href="/scheduled-rides/new">
                 <button>Schedule New Ride!</button>
             </Link>
 

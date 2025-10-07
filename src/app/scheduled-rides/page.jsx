@@ -93,7 +93,7 @@ export default function ScheduledRides() {
                     <li>Time: {ride.eventTime}</li>
 
 
-                    <button onClick={() => router.push(`/scheduled-rides/edit/${ride._id}`)}>
+                    <button onClick={() => router.push(`/scheduled-rides/${ride._id}/edit`)}>
                         Edit Ride
                     </button>
                     <button onClick={() => handleCancel(ride._id)}>

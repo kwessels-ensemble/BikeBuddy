@@ -77,7 +77,7 @@ export default function SavedRides() {
                     <li>Notes: {ride.notes}</li>
                     <li>Location: {`${ride.location.city}, ${ride.location.state}`}</li>
 
-                    <button onClick={() => router.push(`/saved-rides/edit/${ride._id}`)}>
+                    <button onClick={() => router.push(`/saved-rides/${ride._id}/edit`)}>
                         Edit
                     </button>
                     <button onClick={() => handleDelete(ride._id)}>

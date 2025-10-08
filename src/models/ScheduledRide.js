@@ -60,10 +60,9 @@ const scheduledRideSchema = new Schema({
         type: String,
         required: true
     },
-    participants: {
-        type: [Schema.Types.ObjectId],
-        default: []
-    },
+    participants:
+        [{type: Schema.Types.ObjectId, ref: 'User'}]
+    ,
     isCancelled: {
         type: Boolean,
         default: false,

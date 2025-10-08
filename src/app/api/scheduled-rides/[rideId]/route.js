@@ -28,16 +28,17 @@ export async function GET(request, { params }) {
 
         // const ride = await ScheduledRide.findOne({organizer: decoded.id, _id: rideId, isCancelled: false});
 
-        const ride = await ScheduledRide.findOne({organizer: decoded.id, _id: rideId, isCancelled: false})
+        const ride = await ScheduledRide.findById(rideId)
             .populate('organizer', 'username')
             .populate('participants', 'username');
 
-
-        if (!ride) {
+        // check if the ride id exists (and is not cancelled)
+        if (!ride || ride.isCancelled) {
             return NextResponse.json({message: "Scheduled ride not found"}, {status: 404})
         }
 
-        if (decoded.id?.toString() !== ride.organizer?.toString()) {
+        // check if the auth user has access to this ride (ie. is the organizer)
+        if (decoded.id?.toString() !== ride.organizer._id?.toString()) {
             return NextResponse.json({error: "Forbidden"}, {status: 403});
         }
 

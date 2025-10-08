@@ -88,7 +88,7 @@ export default function ScheduledRides() {
                     <li>Organizer: {ride.organizer.username}</li>
                     <li>Visibility: {ride.isPublic ? 'Public' : 'Private'}</li>
                     <li>Participants: {ride.participants.length ?
-                        ride.participants.map((user) => user.username).join(', ')
+                        ride.participants.map((user) => user.username)
                         : 'No participants yet.'}</li>
                     <li>Time: {ride.eventTime}</li>
 

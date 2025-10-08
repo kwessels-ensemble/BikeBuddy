@@ -63,7 +63,8 @@ export async function POST(request) {
             isPublic: reqBody.isPublic, // by default false
             eventTime: reqBody.eventTime,
             timeZone: reqBody.timeZone,
-            // participants by default [] at creation time
+            // add organizer as first participant
+            participants: [decoded.id],
             // isCancelled by default false at creation time
             // other cancelled fields null at creation time
             rideDetails: reqBody.rideDetails

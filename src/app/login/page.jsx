@@ -3,7 +3,7 @@
 
 // import Link from "next/link";
 import { useState } from "react";
-// import {useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 import axios from "axios";
 
 
@@ -14,6 +14,8 @@ import axios from "axios";
 // };
 
 export default function Login() {
+
+    const router = useRouter();
 
     // store user in state
     const defaultUser = {
@@ -41,6 +43,8 @@ export default function Login() {
 
             const response = await axios.post('/api/auth/login', user);
             console.log(response);
+            // redirect to saved rides
+            router.push('/saved-rides');
 
         } catch (err) {
             console.log('login failed:', err);

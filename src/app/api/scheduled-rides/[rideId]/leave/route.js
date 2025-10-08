@@ -45,7 +45,11 @@ export async function DELETE(request, { params }) {
 
         await ride.save();
 
-        return NextResponse.json({message: 'Successfully left the ride.'}, {status: 200});
+        // populate ride w/ usernames
+        await ride.populate('organizer', 'username')
+        await ride.populate('participants', 'username');
+
+        return NextResponse.json(ride, {status: 200});
 
     } catch (error) {
         console.error('error leaving the scheduled ride:', error);

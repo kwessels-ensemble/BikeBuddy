@@ -44,7 +44,11 @@ export async function POST(request, { params }) {
 
         await ride.save();
 
-        return NextResponse.json({message: 'Successfully joined the ride'}, {status: 201});
+        // populate ride w/ usernames
+        await ride.populate('organizer', 'username')
+        await ride.populate('participants', 'username');
+
+        return NextResponse.json(ride, {status: 201});
 
     } catch (error) {
         console.error('error joining the scheduled ride:', error);

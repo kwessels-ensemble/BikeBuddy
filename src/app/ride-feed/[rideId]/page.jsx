@@ -46,6 +46,49 @@ export default function PublicRide() {
     }, []);
 
 
+    const handleJoinRide = async (rideId) => {
+        try {
+            setIsLoading(true);
+            console.log('clicked join!');
+            const response = await axios.post(`/api/scheduled-rides/${rideId}/join`);
+            console.log(response);
+            const updatedRide = response.data;
+            // update data on page
+            setPublicRide(prev => prev._id.toString() === rideId.toString()
+                            ? {...updatedRide,
+                                eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
+                                                    .setZone(updatedRide.timeZone)
+                                                    .toFormat('ff')}
+                            : prev)
+
+        } catch (err) {
+            console.log('failed to join ride:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const handleLeaveRide = async (rideId) => {
+        try {
+            setIsLoading(true);
+            console.log('clicked leave!');
+            const response = await axios.delete(`/api/scheduled-rides/${rideId}/leave`);
+            console.log(response);
+            const updatedRide = response.data;
+            // update data on page
+            setPublicRide(prev => prev._id.toString() === rideId.toString()
+                            ? {...updatedRide,
+                                eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
+                                                    .setZone(updatedRide.timeZone)
+                                                    .toFormat('ff')}
+                            : prev)
+
+        } catch (err) {
+            console.log('failed to leave ride:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     // TODO - move ride display logic into a child component
     // choose which details to display for each ride
@@ -73,10 +116,10 @@ export default function PublicRide() {
                         : 'No participants yet.'}</li>
                     <li>Time: {publicRide.eventTime}</li>
 
-                    <button onClick={() => (console.log('clicked join ride!'))}>
+                    <button onClick={() => handleJoinRide(publicRide._id)}>
                         Join Ride
                     </button>
-                    <button onClick={() => (console.log('lciked leave ride!'))}>
+                    <button onClick={() => handleLeaveRide(publicRide._id)}>
                         Leave Ride
                     </button>
 

@@ -49,6 +49,56 @@ export default function rideFeed() {
     }, []);
 
 
+    const handleJoinRide = async (rideId) => {
+        try {
+            setIsLoading(true);
+            console.log('clicked join!');
+            const response = await axios.post(`/api/scheduled-rides/${rideId}/join`);
+            console.log(response);
+            const updatedRide = response.data;
+            // update data on page
+            setPublicRides(prev =>
+                prev.map(ride => ride._id.toString() === rideId.toString()
+                ? {...updatedRide,
+                    eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
+                                                    .setZone(updatedRide.timeZone)
+                                                    .toFormat('ff')
+                }
+                : ride)
+            )
+        } catch (err) {
+            console.log('failed to join ride:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const handleLeaveRide = async (rideId) => {
+        try {
+            setIsLoading(true);
+            console.log('clicked leave!');
+            const response = await axios.delete(`/api/scheduled-rides/${rideId}/leave`);
+            console.log(response);
+            const updatedRide = response.data;
+            // update data on page
+            setPublicRides(prev =>
+                prev.map(ride => ride._id === rideId
+                ? {...updatedRide,
+                    eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
+                                                    .setZone(updatedRide.timeZone)
+                                                    .toFormat('ff')
+                }
+                : ride)
+            )
+
+        } catch (err) {
+            console.log('failed to leave ride:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+
     // TODO - move ride display logic into a child component
     // choose which details to display for each ride
     return (
@@ -80,11 +130,10 @@ export default function rideFeed() {
                         : 'No participants yet.'}</li>
                     <li>Time: {ride.eventTime}</li>
 
-
-                    <button onClick={() => (console.log('clicked join ride!'))}>
+                    <button onClick={() => handleJoinRide(ride._id)}>
                         Join Ride
                     </button>
-                    <button onClick={() => (console.log('clicked leave ride!'))}>
+                    <button onClick={() => handleLeaveRide(ride._id)}>
                         Leave Ride
                     </button>
                     <button onClick={() => router.push(`/ride-feed/${ride._id}`)}>

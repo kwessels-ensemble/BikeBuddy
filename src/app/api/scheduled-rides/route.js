@@ -10,6 +10,12 @@ export async function GET(request) {
 
         await connectToDb();
 
+        // get query params
+        const { searchParams } = new URL(request.url);
+        const time = searchParams.get('time'); //past, upcoming (otherwise default to all rides)
+        const type = searchParams.get('type');
+        const now = new Date();
+
         // get auth user
         const token = request.cookies.get('token')?.value;
         const decoded = verifyToken(token);
@@ -18,12 +24,35 @@ export async function GET(request) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
 
-        // TODO - build out function for getting cancelled rides too.. maybe api query string
-        // by default, get rides that have not been cancelled
-        // by default, this route is to get the auth user's scheduled rides that they own as "organizer"
-        const scheduledRides = await ScheduledRide.find({organizer: decoded.id, isCancelled: false})
+        // build ride query
+        // defaults
+        const query = { organizer: decoded.id, isCancelled: false};
+        // time filter (note - 'all' means no date filter needed)
+        if (time === 'upcoming') {
+            query.eventTime = {$gte: now};
+        } else if (time === 'past') {
+            query.eventTime = {$lte: now};
+        }
+        // type filter
+        if (type && ['mtb', 'gravel', 'road'].includes(type)) {
+            query['rideDetails.type'] = type;
+        }
+        // no filter needed if type is 'all'
+
+        // sorting logic dependent on time filter
+        let sortOption = {};
+        if (time === 'past') {
+            sortOption.eventTime = -1;
+        // TODO - add logic to handle separated past and upcoming on 'all' page
+        } else {
+            sortOption.eventTime = 1;
+        }
+
+        // TODO - add limit and pagination
+        const scheduledRides = await ScheduledRide.find(query)
             .populate('organizer', 'username')
-            .populate('participants', 'username');
+            .populate('participants', 'username')
+            .sort(sortOption);
 
         return NextResponse.json({scheduledRides}, {status: 200});
 

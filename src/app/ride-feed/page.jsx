@@ -6,7 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { DateTime } from "luxon";
-
+import styles from './page.module.css';
 
 // export const metadata = {
 //   title: "Ride Feed",
@@ -22,10 +22,19 @@ export default function rideFeed() {
     // define state
     const [publicRides, setPublicRides] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [timeFilter, setTimeFilter] = useState('upcoming'); // 'upcoming' or 'past' or 'all
+    const [typeFilter, setTypeFilter] = useState('all'); // 'mtb, 'gravel', 'road', 'all'
+
 
     async function fetchPublicRides () {
             try {
-                const response = await axios.get('/api/public-rides');
+                const response = await axios.get('/api/public-rides', {
+                    params: {
+                        time: timeFilter,
+                        type: typeFilter
+                    }
+                });
+
                 console.log(response);
 
                 const rideData = response.data.publicRides;
@@ -46,7 +55,7 @@ export default function rideFeed() {
 
     useEffect( () => {
         fetchPublicRides();
-    }, []);
+    }, [timeFilter, typeFilter]);
 
 
     const handleJoinRide = async (rideId) => {
@@ -109,6 +118,31 @@ export default function rideFeed() {
             {/* <Link href="/scheduled-rides/new">
                 <button>Schedule New Ride!</button>
             </Link> */}
+
+
+            <div className={styles.timeFilters}>
+                {['upcoming', 'past', 'all'].map(time => (
+                    <button
+                        key={time}
+                        onClick={() => setTimeFilter(time)}
+                        className={`${styles.filterButton} ${timeFilter === time ? styles.active : ''}`}
+                    >
+                        {time}
+                    </button>
+                ))}
+            </div>
+
+            <div className={styles.typeFilters}>
+                {['mtb', 'gravel', 'road', 'all'].map(type => (
+                    <button
+                        key={type}
+                        onClick={() => setTypeFilter(type)}
+                        className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
+                    >
+                        {type}
+                    </button>
+                ))}
+            </div>
 
             {isLoading === true ? (
                 <p>Loading...</p>

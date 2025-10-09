@@ -11,6 +11,10 @@ export async function GET(request) {
 
         await connectToDb();
 
+        // get query params
+        const { searchParams } = new URL(request.url);
+        const type = searchParams.get('type');
+
         // get auth user
         const token = request.cookies.get('token')?.value;
         const decoded = verifyToken(token);
@@ -19,7 +23,17 @@ export async function GET(request) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
 
-        const savedRides = await SavedRide.find({userId: decoded.id, isDeleted: false});
+        // build ride query
+        // defaults
+        const query = { userId: decoded.id, isDeleted: false };
+        // type filter
+        if (type && ['mtb', 'gravel', 'road'].includes(type)) {
+            query.type = type;
+        }
+
+        const savedRides = await SavedRide.find(query)
+                                            .sort({createdAt: -1});
+
         return NextResponse.json({savedRides}, {status: 200});
 
     } catch (error) {

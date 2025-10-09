@@ -6,7 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { DateTime } from "luxon";
-
+import styles from './page.module.css';
 
 // export const metadata = {
 //   title: "Scheduled Rides",
@@ -20,10 +20,18 @@ export default function ScheduledRides() {
     // define state
     const [scheduledRides, setScheduledRides] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [timeFilter, setTimeFilter] = useState('upcoming'); // 'upcoming', 'past', 'all'
+    const [typeFilter, setTypeFilter] = useState('all'); // 'mtb, 'gravel', 'road', 'all'
 
     async function fetchScheduledRides () {
             try {
-                const response = await axios.get('/api/scheduled-rides');
+                const response = await axios.get('/api/scheduled-rides', {
+                    params: {
+                        time: timeFilter,
+                        type: typeFilter
+                    }
+                });
+
                 console.log(response);
 
                 const rideData = response.data.scheduledRides;
@@ -36,7 +44,7 @@ export default function ScheduledRides() {
                                                 .toFormat('ff')
                 })));
             } catch (err) {
-                console.log('failed to get scheduled rides:', err);
+                    console.error('failed to get scheduled rides:', err);
             } finally {
                 setIsLoading(false);
             }
@@ -44,7 +52,7 @@ export default function ScheduledRides() {
 
     useEffect( () => {
         fetchScheduledRides();
-    }, []);
+    }, [timeFilter, typeFilter]);
 
     async function handleCancel(scheduledRideId) {
         try {
@@ -68,9 +76,34 @@ export default function ScheduledRides() {
     return (
         <div>
             <h1>Scheduled Rides</h1>
+
             <Link href="/scheduled-rides/new">
                 <button>Schedule New Ride!</button>
             </Link>
+
+            <div className={styles.timeFilters}>
+                {['upcoming', 'past', 'all'].map(time => (
+                    <button
+                        key={time}
+                        onClick={() => setTimeFilter(time)}
+                        className={`${styles.filterButton} ${timeFilter === time ? styles.active : ''}`}
+                    >
+                        {time}
+                    </button>
+                ))}
+            </div>
+
+            <div className={styles.typeFilters}>
+                {['mtb', 'gravel', 'road', 'all'].map(type => (
+                    <button
+                        key={type}
+                        onClick={() => setTypeFilter(type)}
+                        className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
+                    >
+                        {type}
+                    </button>
+                ))}
+            </div>
 
             {isLoading === true ? (
                 <p>Loading...</p>

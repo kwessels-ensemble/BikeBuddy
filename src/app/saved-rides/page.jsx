@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
+import styles from './page.module.css';
 
 // export const metadata = {
 //   title: "Saved Rides",
@@ -18,10 +18,16 @@ export default function SavedRides() {
     // define state
     const [savedRides, setSavedRides] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [typeFilter, setTypeFilter] = useState('all'); // 'mtb, 'gravel', 'road', 'all'
 
     async function fetchSavedRides () {
             try {
-                const response = await axios.get('/api/saved-rides');
+                const response = await axios.get('/api/saved-rides', {
+                    params: {
+                        type: typeFilter
+                    }
+                });
+
                 console.log(response);
                 setSavedRides(response.data.savedRides);
 
@@ -34,7 +40,7 @@ export default function SavedRides() {
 
     useEffect( () => {
         fetchSavedRides();
-    }, []);
+    }, [typeFilter]);
 
     async function handleDelete(rideId) {
         console.log('inside delete')
@@ -62,6 +68,18 @@ export default function SavedRides() {
             <Link href="/saved-rides/new">
                 <button>Create New Ride!</button>
             </Link>
+
+            <div className={styles.typeFilters}>
+                {['mtb', 'gravel', 'road', 'all'].map(type => (
+                    <button
+                        key={type}
+                        onClick={() => setTypeFilter(type)}
+                        className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
+                    >
+                        {type}
+                    </button>
+                ))}
+            </div>
 
             {isLoading === true ? (
                 <p>Loading...</p>

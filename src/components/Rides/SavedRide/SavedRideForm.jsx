@@ -22,16 +22,30 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
 
     const typeOptions = ['mtb', 'gravel', 'road'];
 
+    const validateLink = (link) => {
+        try {
+            new URL(link);
+            return true;
+        } catch {
+            return false;
+        }
+    }
 
     const validate = () => {
         const newErrors = {};
-
-        if (!ride.title.trim()) {
-            newErrors.title = 'Title is required.'
+        // handle required fields -
+        const requiredTextFields = ['title', 'type'];
+        for (let field of requiredTextFields) {
+            if (!ride[field].trim()) {
+                newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`
+            }
+        // handling location logic
+        if (!ride.location || !(ride.location.city.trim() && ride.location.state.trim()))
+            newErrors.location = 'Location (city, state) is required.';
         }
-
-        if (!ride.description.trim()) {
-            newErrors.description = 'Description is required.'
+        // handling link validation
+        if (ride.link && !validateLink(ride.link)) {
+            newErrors.link = 'Link is invalid.';
         }
 
         return newErrors;
@@ -56,7 +70,10 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
 
     return (
         <form className={styles.form}>
-            <label htmlFor="title">Title</label>
+
+            <p className={styles.note}>* Required fields</p>
+
+            <label htmlFor="title">Title <span className={styles.required}>*</span></label>
             <input
                 id="title"
                 type="text"
@@ -81,7 +98,7 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
             </textarea>
             {errors.description && <span className={styles.error}>{errors.description}</span>}
 
-            <label htmlFor="type">Type</label>
+            <label htmlFor="type">Type <span className={styles.required}>*</span></label>
             <select
                 id="type"
                 value={ride.type}
@@ -122,7 +139,7 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
             </textarea>
             {errors.notes && <span className={styles.error}>{errors.notes}</span>}
 
-            <label htmlFor="location">Location</label>
+            <label htmlFor="location">Location <span className={styles.required}>*</span></label>
             <select
                 id="location"
                 value = {

@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { DateTime } from "luxon";
 import styles from './page.module.css';
+import ScheduledRideCard from "@/components/Rides/ScheduledRide/ScheduledRideCard";
 
 // export const metadata = {
 //   title: "Scheduled Rides",
@@ -71,8 +72,7 @@ export default function ScheduledRides() {
         }
     }
 
-    // TODO - move ride display logic into a child component
-    // choose which details to display for each ride
+
     return (
         <div>
             <h1>Scheduled Rides</h1>
@@ -110,33 +110,15 @@ export default function ScheduledRides() {
             ) : (scheduledRides.length === 0 ? (
                 <p>No scheduled rides found</p>
             ) :
-            (scheduledRides.map(ride => (
-                <ul key={ride._id}> {ride.rideDetails.title}
-                    <li>Description: {ride.rideDetails.description}</li>
-                    <li>Link: {ride.rideDetails.link}</li>
-                    <li>Type: {ride.rideDetails.type}</li>
-                    <li>Notes: {ride.rideDetails.notes}</li>
-                    <li>Location: {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</li>
-                    <li>Organizer: {ride.organizer.username}</li>
-                    <li>Visibility: {ride.isPublic ? 'Public' : 'Private'}</li>
-                    <li>Participants: {ride.participants.length ?
-                        ride.participants.map((user) => user.username).join(', ')
-                        : 'No participants yet.'}</li>
-                    <li>Time: {ride.eventTime}</li>
+                (scheduledRides.map(ride => (
+                    <ScheduledRideCard
+                        key={ride._id}
+                        ride={ride}
+                        handleCancel={handleCancel}
+                        >
+                    </ScheduledRideCard>
+                )))
 
-
-                    <button onClick={() => router.push(`/scheduled-rides/${ride._id}/edit`)}>
-                        Edit Ride
-                    </button>
-                    <button onClick={() => handleCancel(ride._id)}>
-                        Cancel Ride
-                    </button>
-                    <button onClick={() => router.push(`/scheduled-rides/${ride._id}`)}>
-                        View Ride Details
-                    </button>
-
-                </ul>
-            )))
             )}
         </div>
     )

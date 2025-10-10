@@ -45,11 +45,11 @@ export default function EditScheduledRide() {
 
 
 
-    const handleUpdate = async (e) => {
+    const handleUpdate = async () => {
         // TODO - add loading logic, button disabling logic
         // add handling to catch form submit without any required fields
         try {
-            e.preventDefault();
+            // e.preventDefault();
 
             console.log(ride);
 

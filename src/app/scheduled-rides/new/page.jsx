@@ -70,11 +70,11 @@ export default function ScheduleNewRide() {
     }, [savedRideId]);
 
 
-    const handleCreate = async (e) => {
+    const handleCreate = async () => {
         // TODO - add loading logic, button disabling logic
         // add handling to catch form submit without any required fields
         try {
-            e.preventDefault();
+            // e.preventDefault();
 
             console.log(ride);
 

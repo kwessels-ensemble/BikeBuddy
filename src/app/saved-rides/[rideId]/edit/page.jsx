@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
+import SavedRideForm from "@/components/Rides/SavedRide/SavedRideForm";
 
 // export const metadata = {
 //   title: "Update ride Ride",
@@ -15,21 +16,11 @@ export default function EditRide() {
 
     const { rideId } = useParams();
     const router = useRouter();
+
     // default is null, then populate on first load
     const [ride, setRide] = useState(null);
 
-    // default location options fro MVP
-    // TODO - also add coordinates for the default location list
-    const locationOptions = [
-        {city: 'San Francisco', state: 'CA'},
-        {city: 'Santa Cruz', state: 'CA'},
-        {city: 'Pacifica', state: 'CA'},
-        {city: 'Berkeley', state: 'CA'},
-        {city: 'Oakland', state: 'CA'},
-        {city: 'Fairfax', state: 'CA'}
-    ]
-
-    const typeOptions = ['mtb', 'gravel', 'road'];
+    const submitButtonText='Save Changes';
 
 
     async function fetchRide () {
@@ -50,7 +41,7 @@ export default function EditRide() {
 
 
 
-    const handleSubmit = async (e) => {
+    const handleUpdate = async (e) => {
         // TODO - add loading logic, button disabling logic
         // add handling to catch form submit without any required fields
         try {
@@ -83,87 +74,15 @@ export default function EditRide() {
         <div>
             <button onClick={() => router.push('/saved-rides')}>Back to Saved Rides</button>
             <h1>Update Ride</h1>
-            <form onSubmit={handleSubmit} className="edit-ride-form">
 
-                <label htmlFor="title">Title</label>
-                <input
-                    id="title"
-                    type="text"
-                    placeholder="title"
-                    value={ride.title}
-                    onChange={(e) => setRide({...ride, title: e.target.value})}
-                    >
-                </input>
+            <SavedRideForm
+                ride={ride}
+                setRide={setRide}
+                onSubmit={handleUpdate}
+                submitButtonText={submitButtonText}
+                >
+            </SavedRideForm>
 
-                <label htmlFor="description">Description</label>
-                <textarea
-                    id="description"
-                    type="text"
-                    placeholder="description"
-                    value={ride.description}
-                    onChange={(e) => setRide({...ride, description: e.target.value})}
-                    >
-                </textarea>
-
-                <label htmlFor="type">Type</label>
-                <select
-                    id="type"
-                    value={ride.type}
-                    onChange={(e) => setRide({...ride, type: e.target.value})}
-                    >
-                        <option value="">Select ride type</option>
-                        {typeOptions.map((type) => (
-                            <option key={type}
-                                    value={type}>
-                                    {type}
-                                </option>
-                        ))}
-                </select>
-
-                <label htmlFor="link">Link</label>
-                <input
-                    id="link"
-                    type="text"
-                    placeholder="link"
-                    value={ride.link}
-                    onChange={(e) => setRide({...ride, link: e.target.value})}
-                    >
-                </input>
-
-                <label htmlFor="notes">Notes</label>
-                <textarea
-                    id="notes"
-                    type="text"
-                    placeholder="notes"
-                    value={ride.notes}
-                    onChange={(e) => setRide({...ride, notes: e.target.value})}
-                    >
-                </textarea>
-
-                <label htmlFor="location">Location</label>
-                <select
-                    id="location"
-                    value = {
-                        (ride.location.city && ride.location.state)
-                        ? `${ride.location.city}, ${ride.location.state}`
-                        : ""
-                    }
-                    onChange={(e) => {
-                        const [city, state] = e.target.value.split(',').map((str) => str.trim());
-                        setRide({...ride, location: {city, state}})
-                    }}
-                    >
-                        <option value="">Select a city</option>
-                        {locationOptions.map((location) => (
-                            <option key={`${location.city}-${location.state}`}
-                                    value={`${location.city}, ${location.state}`}>
-                                    {location.city}, {location.state}
-                                </option>
-                        ))}
-                </select>
-
-                <button type="submit">Save Changes</button>
-            </form>
         </div>
     )
 }

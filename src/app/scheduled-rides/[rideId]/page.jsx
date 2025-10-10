@@ -83,7 +83,6 @@ export default function ScheduledRide() {
                     >
                 </ScheduledRideDetail>
             )
-
             )}
 
         </div>

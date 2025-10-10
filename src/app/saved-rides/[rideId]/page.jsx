@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
+import SavedRideDetail from "@/components/Rides/SavedRide/SavedRideDetail";
 
 
 // export const metadata = {
@@ -46,9 +47,6 @@ export default function SavedRide() {
             }
             const response = await axios.delete(`/api/saved-rides/${rideId}`);
             console.log(response);
-            // reload
-            // setSavedRides((prev) =>
-            //     prev.filter((ride) =>ride._id !== rideId));
             // redirect back to saved rides
             router.push('/saved-rides');
             // TODO - decide if we want to add a message to confirm to user delete was successful
@@ -58,8 +56,7 @@ export default function SavedRide() {
         }
     }
 
-    // TODO - move ride display logic into a child component
-    // choose which details to display for each ride
+
     return (
         <div>
             <h1>Saved Ride</h1>
@@ -68,25 +65,14 @@ export default function SavedRide() {
                 <p>Loading...</p>
             ) : (!savedRide ? (
                 <p>No saved ride found</p>
-            ) :
-                <ul key={savedRide._id}> {savedRide.title}
-                    <li>Description: {savedRide.description}</li>
-                    <li>Link: {savedRide.link}</li>
-                    <li>Type: {savedRide.type}</li>
-                    <li>Notes: {savedRide.notes}</li>
-                    <li>Location: {`${savedRide.location.city}, ${savedRide.location.state}`}</li>
+            ) : (
+                <SavedRideDetail
+                    savedRide={savedRide}
+                    handleDelete={handleDelete}
+                    >
+                </SavedRideDetail>
+            )
 
-                    <button onClick={() => router.push(`/saved-rides/${savedRide._id}/edit`)}>
-                        Edit
-                    </button>
-                    <button onClick={() => handleDelete(savedRide._id)}>
-                        Delete
-                    </button>
-                    <button onClick={() => router.push(`/scheduled-rides/new?savedRideId=${savedRide._id}`)}>
-                        Schedule this Ride
-                    </button>
-
-                </ul>
             )}
 
         </div>

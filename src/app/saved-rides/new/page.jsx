@@ -71,6 +71,7 @@ export default function SaveNewRide() {
 
     return (
         <div>
+            <button onClick={() => router.push('/saved-rides')}>Back to Saved Rides</button>
             <h1>Create New Ride</h1>
             <form className="create-new-ride-form">
                 <label htmlFor="title">Title</label>

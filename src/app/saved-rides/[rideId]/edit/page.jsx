@@ -81,6 +81,7 @@ export default function EditRide() {
 
     return (
         <div>
+            <button onClick={() => router.push('/saved-rides')}>Back to Saved Rides</button>
             <h1>Update Ride</h1>
             <form onSubmit={handleSubmit} className="edit-ride-form">
 

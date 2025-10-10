@@ -114,6 +114,7 @@ export default function ScheduleNewRide() {
 
     return (
         <div>
+            <button onClick={() => router.push('/scheduled-rides')}>Back to Scheduled Rides</button>
             <h1>Schedule New Ride</h1>
             <form className="schedule-ride-form">
                 <label htmlFor="title">Title</label>

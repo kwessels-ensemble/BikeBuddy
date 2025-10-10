@@ -31,8 +31,10 @@ export async function GET(request) {
             query.type = type;
         }
 
+        // TODO - add pagination and limit for V1
         const savedRides = await SavedRide.find(query)
-                                            .sort({createdAt: -1});
+                                            .sort({createdAt: -1})
+                                            .limit(50); // limit for MVP
 
         return NextResponse.json({savedRides}, {status: 200});
 

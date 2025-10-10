@@ -50,10 +50,12 @@ export async function GET(request) {
             sortOption.eventTime = 1;
         }
 
+        // TODO - add pagination and limit for V1
         const publicRides = await ScheduledRide.find(query)
             .populate('organizer', 'username')
             .populate('participants', 'username')
-            .sort(sortOption);
+            .sort(sortOption)
+            .limit(50); // limit for MVP
 
         return NextResponse.json({publicRides}, {status: 200});
 

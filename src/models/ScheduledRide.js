@@ -18,10 +18,6 @@ const rideDetailsSchema = new Schema({
         type: String,
         required: true
         },
-    tags: {
-        type: [String],
-        default: []
-        },
     notes: {
         type: String
         },

@@ -54,7 +54,7 @@ export async function POST(request) {
         const reqBody = await request.json();
 
         // note - will need to add checks for the required fields here and/or within the ui form
-        // expecting: title, description, link, type, tags, notes, location
+        // expecting: title, description, link, type, notes, location
         // defaults/auto create: _id, createdAt, updatedAt, isDeleted, ...and userId added below
 
 
@@ -75,7 +75,6 @@ export async function POST(request) {
             description: reqBody.description,
             link: reqBody.link,
             type: reqBody.type,
-            tags: reqBody.tags,
             notes: reqBody.notes,
             location: reqBody.location
         })

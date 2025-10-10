@@ -106,7 +106,6 @@ export default function PublicRide() {
                     <li>Description: {publicRide.rideDetails.description}</li>
                     <li>Link: {publicRide.rideDetails.link}</li>
                     <li>Type: {publicRide.rideDetails.type}</li>
-                    <li>Tags: {publicRide.rideDetails.tags}</li>
                     <li>Notes: {publicRide.rideDetails.notes}</li>
                     <li>Location: {`${publicRide.rideDetails.location.city}, ${publicRide.rideDetails.location.state}`}</li>
                     <li>Organizer: {publicRide.organizer.username}</li>

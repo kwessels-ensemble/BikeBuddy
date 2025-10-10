@@ -91,7 +91,6 @@ export default function SavedRides() {
                     <li>Description: {ride.description}</li>
                     <li>Link: {ride.link}</li>
                     <li>Type: {ride.type}</li>
-                    <li>Tags: {ride.tags}</li>
                     <li>Notes: {ride.notes}</li>
                     <li>Location: {`${ride.location.city}, ${ride.location.state}`}</li>
 

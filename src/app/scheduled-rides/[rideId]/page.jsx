@@ -81,7 +81,6 @@ export default function ScheduledRide() {
                     <li>Description: {scheduledRide.rideDetails.description}</li>
                     <li>Link: {scheduledRide.rideDetails.link}</li>
                     <li>Type: {scheduledRide.rideDetails.type}</li>
-                    <li>Tags: {scheduledRide.rideDetails.tags}</li>
                     <li>Notes: {scheduledRide.rideDetails.notes}</li>
                     <li>Location: {`${scheduledRide.rideDetails.location.city}, ${scheduledRide.rideDetails.location.state}`}</li>
                     <li>Organizer: {scheduledRide.organizer.username}</li>

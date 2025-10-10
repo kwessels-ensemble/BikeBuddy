@@ -15,7 +15,6 @@ import axios from "axios";
 
 export default function SaveNewRide() {
 
-    // TODO - add tags functionality if desired for MVP
 
     const router = useRouter();
 
@@ -25,7 +24,6 @@ export default function SaveNewRide() {
         description: "",
         link: "",
         type: "",
-        tags: [],
         notes: "",
         location: {city: "", state: ""}
     };

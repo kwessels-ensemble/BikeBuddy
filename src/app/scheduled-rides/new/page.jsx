@@ -16,7 +16,6 @@ import { DateTime } from "luxon";
 
 export default function ScheduleNewRide() {
 
-    // TODO - add tags functionality if desired for MVP
 
     const searchParams = useSearchParams();
     const savedRideId = searchParams.get('savedRideId');
@@ -32,7 +31,6 @@ export default function ScheduleNewRide() {
             description: "",
             link: "",
             type: "",
-            tags: [],
             notes: "",
             location: {city: "", state: ""}
         }
@@ -70,7 +68,6 @@ export default function ScheduleNewRide() {
                             description: data.description ?? prev.rideDetails.description,
                             link: data.link ?? prev.rideDetails.link,
                             type: data.type ?? prev.rideDetails.type,
-                            tags: data.tags ?? prev.rideDetails.tags,
                             notes: data.notes ?? prev.rideDetails.notes,
                             location: {...prev.rideDetails.location, ...(data.location || {})}
                         }

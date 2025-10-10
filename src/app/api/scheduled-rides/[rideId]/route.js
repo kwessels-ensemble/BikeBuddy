@@ -139,7 +139,7 @@ export async function PATCH(request, { params }) {
 
         // update logic -
         const validFields = ['isPublic', 'eventTime', 'timeZone'];
-        const validRideDetailsFields = ['title', 'description', 'link', 'type', 'tags', 'notes', 'location'];
+        const validRideDetailsFields = ['title', 'description', 'link', 'type', 'notes', 'location'];
         // update top-level ride fields
         for (let key of Object.keys(rideUpdates)) {
             if (validFields.includes(key)) {

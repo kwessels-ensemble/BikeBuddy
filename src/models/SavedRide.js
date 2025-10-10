@@ -23,9 +23,6 @@ const savedRideSchema = new Schema({
         type: String,
         required: true
     },
-    tags: {
-        type: [String]
-    },
     notes: {
         type: String
     },

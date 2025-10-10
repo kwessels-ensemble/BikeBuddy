@@ -154,7 +154,6 @@ export default function rideFeed() {
                     <li>Description: {ride.rideDetails.description}</li>
                     <li>Link: {ride.rideDetails.link}</li>
                     <li>Type: {ride.rideDetails.type}</li>
-                    <li>Tags: {ride.rideDetails.tags}</li>
                     <li>Notes: {ride.rideDetails.notes}</li>
                     <li>Location: {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</li>
                     <li>Organizer: {ride.organizer.username}</li>

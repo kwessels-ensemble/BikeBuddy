@@ -128,7 +128,7 @@ export async function PATCH(request, { params }) {
         }
 
         // update logic -
-        const validFields = ['title', 'description', 'link', 'type', 'tags', 'notes', 'location'];
+        const validFields = ['title', 'description', 'link', 'type', 'notes', 'location'];
         for (let key of Object.keys(rideUpdates)) {
             if (validFields.includes(key)) {
                 ride[key] = rideUpdates[key];

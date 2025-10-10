@@ -115,6 +115,8 @@ export default function ScheduledRides() {
                         key={ride._id}
                         ride={ride}
                         handleCancel={handleCancel}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
                         >
                     </ScheduledRideCard>
                 )))

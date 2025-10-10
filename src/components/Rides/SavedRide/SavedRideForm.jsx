@@ -1,12 +1,11 @@
 "use client";
 
-// import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
-// import axios from "axios";
-
-
+import { useState } from "react";
+import styles from './SavedRideForm.module.css';
 
 export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonText }) {
+
+    const [errors, setErrors] = useState({});
 
     // const router = useRouter();
 
@@ -24,8 +23,39 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
     const typeOptions = ['mtb', 'gravel', 'road'];
 
 
+    const validate = () => {
+        const newErrors = {};
+
+        if (!ride.title.trim()) {
+            newErrors.title = 'Title is required.'
+        }
+
+        if (!ride.description.trim()) {
+            newErrors.description = 'Description is required.'
+        }
+
+        return newErrors;
+    }
+
+
+    const handleSubmit = (e) => {
+
+        e.preventDefault();
+
+        const validationErrors = validate();
+
+        if (Object.keys(validationErrors).length > 0 ) {
+            setErrors(validationErrors);
+        } else {
+            setErrors({});
+            onSubmit();
+        }
+
+    }
+
+
     return (
-        <form className="saved-ride-form">
+        <form className={styles.form}>
             <label htmlFor="title">Title</label>
             <input
                 id="title"
@@ -33,8 +63,11 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
                 placeholder="title"
                 value={ride.title}
                 onChange={(e) => setRide({...ride, title: e.target.value})}
+                className={errors.title ? styles.invalid: ''}
                 >
             </input>
+            {errors.title && <span className={styles.error}>{errors.title}</span>}
+
 
             <label htmlFor="description">Description</label>
             <textarea
@@ -43,14 +76,17 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
                 placeholder="description"
                 value={ride.description}
                 onChange={(e) => setRide({...ride, description: e.target.value})}
+                className={errors.description ? styles.invalid: ''}
                 >
             </textarea>
+            {errors.description && <span className={styles.error}>{errors.description}</span>}
 
             <label htmlFor="type">Type</label>
             <select
                 id="type"
                 value={ride.type}
                 onChange={(e) => setRide({...ride, type: e.target.value})}
+                className={errors.type ? styles.invalid: ''}
                 >
                     <option value="">Select ride type</option>
                     {typeOptions.map((type) => (
@@ -60,6 +96,7 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
                             </option>
                     ))}
             </select>
+            {errors.type && <span className={styles.error}>{errors.type}</span>}
 
             <label htmlFor="link">Link</label>
             <input
@@ -68,8 +105,10 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
                 placeholder="link"
                 value={ride.link}
                 onChange={(e) => setRide({...ride, link: e.target.value})}
+                className={errors.link ? styles.invalid: ''}
                 >
             </input>
+            {errors.link && <span className={styles.error}>{errors.link}</span>}
 
             <label htmlFor="notes">Notes</label>
             <textarea
@@ -78,8 +117,10 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
                 placeholder="notes"
                 value={ride.notes}
                 onChange={(e) => setRide({...ride, notes: e.target.value})}
+                className={errors.notes ? styles.invalid: ''}
                 >
             </textarea>
+            {errors.notes && <span className={styles.error}>{errors.notes}</span>}
 
             <label htmlFor="location">Location</label>
             <select
@@ -93,6 +134,7 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
                     const [city, state] = e.target.value.split(',').map((str) => str.trim());
                     setRide({...ride, location: {city, state}})
                 }}
+                className={errors.location ? styles.invalid: ''}
                 >
                     <option value="">Select a city</option>
                     {locationOptions.map((location) => (
@@ -102,8 +144,10 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
                             </option>
                     ))}
             </select>
+            {errors.location && <span className={styles.error}>{errors.location}</span>}
 
-            <button onClick={onSubmit}>{submitButtonText}</button>
+            {/* <button onClick={onSubmit}>{submitButtonText}</button> */}
+            <button onClick={handleSubmit}>{submitButtonText}</button>
             </form>
     )
 }

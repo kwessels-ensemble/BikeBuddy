@@ -22,7 +22,7 @@ export default function rideFeed() {
     // define state
     const [publicRides, setPublicRides] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [timeFilter, setTimeFilter] = useState('upcoming'); // 'upcoming' or 'past' or 'all
+    const [timeFilter, setTimeFilter] = useState('upcoming'); // 'upcoming' or 'past'
     const [typeFilter, setTypeFilter] = useState('all'); // 'mtb, 'gravel', 'road', 'all'
 
 
@@ -121,7 +121,7 @@ export default function rideFeed() {
 
 
             <div className={styles.timeFilters}>
-                {['upcoming', 'past', 'all'].map(time => (
+                {['upcoming', 'past'].map(time => (
                     <button
                         key={time}
                         onClick={() => setTimeFilter(time)}

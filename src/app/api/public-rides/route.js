@@ -45,6 +45,7 @@ export async function GET(request) {
         if (time === 'past') {
             sortOption.eventTime = -1;
         // TODO - add logic to handle separated past and upcoming on 'all' page
+        // for now, sort in chronological order for anything aside from 'past'
         } else {
             sortOption.eventTime = 1;
         }

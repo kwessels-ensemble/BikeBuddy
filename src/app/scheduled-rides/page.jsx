@@ -20,7 +20,7 @@ export default function ScheduledRides() {
     // define state
     const [scheduledRides, setScheduledRides] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [timeFilter, setTimeFilter] = useState('upcoming'); // 'upcoming', 'past', 'all'
+    const [timeFilter, setTimeFilter] = useState('upcoming'); // 'upcoming' or 'past'
     const [typeFilter, setTypeFilter] = useState('all'); // 'mtb, 'gravel', 'road', 'all'
 
     async function fetchScheduledRides () {
@@ -82,7 +82,7 @@ export default function ScheduledRides() {
             </Link>
 
             <div className={styles.timeFilters}>
-                {['upcoming', 'past', 'all'].map(time => (
+                {['upcoming', 'past'].map(time => (
                     <button
                         key={time}
                         onClick={() => setTimeFilter(time)}

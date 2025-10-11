@@ -28,12 +28,12 @@ export default function PublicRide() {
             console.log(response);
 
             const rideData = response.data;
-
-            setPublicRide({...rideData,
-                            eventTime: DateTime.fromISO(rideData.eventTime, {zone: 'utc'})
-                                            .setZone(rideData.timeZone)
-                                            .toFormat('ff')
-                            })
+            setPublicRide(rideData);
+            // setPublicRide({...rideData,
+            //                 eventTime: DateTime.fromISO(rideData.eventTime, {zone: 'utc'})
+            //                                 .setZone(rideData.timeZone)
+            //                                 .toFormat('ff')
+            //                 })
         } catch (err) {
             console.log('failed to fetch public ride:', err);
         } finally {
@@ -55,10 +55,12 @@ export default function PublicRide() {
             const updatedRide = response.data;
             // update data on page
             setPublicRide(prev => prev._id.toString() === rideId.toString()
-                            ? {...updatedRide,
-                                eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
-                                                    .setZone(updatedRide.timeZone)
-                                                    .toFormat('ff')}
+                            ?
+                            {...updatedRide}
+                            // {...updatedRide,
+                            //     eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
+                            //                         .setZone(updatedRide.timeZone)
+                            //                         .toFormat('ff')}
                             : prev)
 
         } catch (err) {
@@ -77,10 +79,12 @@ export default function PublicRide() {
             const updatedRide = response.data;
             // update data on page
             setPublicRide(prev => prev._id.toString() === rideId.toString()
-                            ? {...updatedRide,
-                                eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
-                                                    .setZone(updatedRide.timeZone)
-                                                    .toFormat('ff')}
+                            ?
+                            {...updatedRide}
+                            // {...updatedRide,
+                            //     eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
+                            //                         .setZone(updatedRide.timeZone)
+                            //                         .toFormat('ff')}
                             : prev)
 
         } catch (err) {
@@ -113,7 +117,10 @@ export default function PublicRide() {
                     <li>Participants: {publicRide.participants.length ?
                         publicRide.participants.map((user) => user.username).join(', ')
                         : 'No participants yet.'}</li>
-                    <li>Time: {publicRide.eventTime}</li>
+                    {/* <li>Time: {publicRide.eventTime}</li> */}
+                    <li>Time: {DateTime.fromISO(publicRide.eventTime, {zone: 'utc'})
+                                                .setZone(publicRide.timeZone)
+                                                .toFormat('ff')} </li>
 
                     <button onClick={() => handleJoinRide(publicRide._id)}>
                         Join Ride

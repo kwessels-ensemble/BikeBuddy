@@ -38,14 +38,14 @@ export default function rideFeed() {
                 console.log(response);
 
                 const rideData = response.data.publicRides;
-
-                setPublicRides(rideData.map((ride) => (
-                    {
-                    ...ride,
-                    eventTime: DateTime.fromISO(ride.eventTime, {zone: 'utc'})
-                                                .setZone(ride.timeZone)
-                                                .toFormat('ff')
-                })));
+                setPublicRides(rideData);
+                // setPublicRides(rideData.map((ride) => (
+                //     {
+                //     ...ride,
+                //     eventTime: DateTime.fromISO(ride.eventTime, {zone: 'utc'})
+                //                                 .setZone(ride.timeZone)
+                //                                 .toFormat('ff')
+                // })));
             } catch (err) {
                 console.log('failed to fetch public rides:', err);
             } finally {
@@ -68,11 +68,13 @@ export default function rideFeed() {
             // update data on page
             setPublicRides(prev =>
                 prev.map(ride => ride._id.toString() === rideId.toString()
-                ? {...updatedRide,
-                    eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
-                                                    .setZone(updatedRide.timeZone)
-                                                    .toFormat('ff')
-                }
+                ?
+                {...updatedRide}
+                // {...updatedRide,
+                //     eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
+                //                                     .setZone(updatedRide.timeZone)
+                //                                     .toFormat('ff')
+                // }
                 : ride)
             )
         } catch (err) {
@@ -92,11 +94,13 @@ export default function rideFeed() {
             // update data on page
             setPublicRides(prev =>
                 prev.map(ride => ride._id === rideId
-                ? {...updatedRide,
-                    eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
-                                                    .setZone(updatedRide.timeZone)
-                                                    .toFormat('ff')
-                }
+                ?
+                {...updatedRide}
+                // {...updatedRide,
+                //     eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
+                //                                     .setZone(updatedRide.timeZone)
+                //                                     .toFormat('ff')
+                // }
                 : ride)
             )
 
@@ -161,7 +165,10 @@ export default function rideFeed() {
                     <li>Participants: {ride.participants.length ?
                         ride.participants.map((user) => user.username).join(', ')
                         : 'No participants yet.'}</li>
-                    <li>Time: {ride.eventTime}</li>
+                    {/* <li>Time: {ride.eventTime}</li> */}
+                    <li>Time: {DateTime.fromISO(ride.eventTime, {zone: 'utc'})
+                                                .setZone(ride.timeZone)
+                                                .toFormat('ff')} </li>
 
                     <button onClick={() => handleJoinRide(ride._id)}>
                         Join Ride

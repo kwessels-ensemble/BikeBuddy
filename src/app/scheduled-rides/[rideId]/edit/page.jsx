@@ -20,7 +20,7 @@ export default function EditScheduledRide() {
     // default is null, then populate on first load
     const [ride, setRide] = useState(null);
 
-    const submitButtonText = 'Create';
+    const submitButtonText = 'Update';
 
 
     async function fetchScheduledRide () {

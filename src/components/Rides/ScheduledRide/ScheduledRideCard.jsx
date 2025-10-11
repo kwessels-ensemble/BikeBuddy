@@ -12,6 +12,11 @@ export default function ScheduledRideCard({ ride, handleCancel, isLoading, setIs
 
     const router = useRouter();
 
+    // check if event was in past for cancel/edit button disabling
+    const eventTimeUTC = DateTime.fromISO(ride.eventTime, {zone: 'utc'});
+    const currentTimeUTC = DateTime.utc();
+    const isPastRide = eventTimeUTC < currentTimeUTC;
+
     return (
         <div>
             <ul> {ride.rideDetails.title}
@@ -29,13 +34,19 @@ export default function ScheduledRideCard({ ride, handleCancel, isLoading, setIs
                 <li>Participants: {ride.participants.length ?
                     ride.participants.map((user) => user.username).join(', ')
                     : 'No participants yet.'}</li>
-                <li>Time: {ride.eventTime}</li>
+                <li>Time: {DateTime.fromISO(ride.eventTime, {zone: 'utc'})
+                                                .setZone(ride.timeZone)
+                                                .toFormat('ff')} </li>
 
 
-                <button onClick={() => router.push(`/scheduled-rides/${ride._id}/edit`)}>
+                <button
+                    disabled={isPastRide}
+                    onClick={() => router.push(`/scheduled-rides/${ride._id}/edit`)}>
                     Edit Ride
                 </button>
-                <button onClick={() => handleCancel(ride._id)}>
+                <button
+                    disabled={isPastRide}
+                    onClick={() => handleCancel(ride._id)}>
                     Cancel Ride
                 </button>
                 <button onClick={() => router.push(`/scheduled-rides/${ride._id}`)}>

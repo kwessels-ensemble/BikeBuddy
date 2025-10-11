@@ -30,11 +30,13 @@ export default function ScheduledRide() {
 
             const rideData = response.data;
 
-            setScheduledRide({...rideData,
-                            eventTime: DateTime.fromISO(rideData.eventTime, {zone: 'utc'})
-                                            .setZone(rideData.timeZone)
-                                            .toFormat('ff')
-                            })
+            // TODO - modify logic here to just keep ride data as is and reformat in child component display
+            // setScheduledRide({...rideData,
+            //                 eventTime: DateTime.fromISO(rideData.eventTime, {zone: 'utc'})
+            //                                 .setZone(rideData.timeZone)
+            //                                 .toFormat('ff')
+            //                 })
+            setScheduledRide(rideData);
         } catch (err) {
             console.log('failed to fetch scheduled ride:', err);
         } finally {

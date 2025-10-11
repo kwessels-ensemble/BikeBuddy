@@ -37,13 +37,15 @@ export default function ScheduledRides() {
 
                 const rideData = response.data.scheduledRides;
 
-                setScheduledRides(rideData.map((ride) => (
-                    {
-                    ...ride,
-                    eventTime: DateTime.fromISO(ride.eventTime, {zone: 'utc'})
-                                                .setZone(ride.timeZone)
-                                                .toFormat('ff')
-                })));
+                // TODO - modify logic here to just keep ride data as is and reformat in child component display
+                // setScheduledRides(rideData.map((ride) => (
+                //     {
+                //     ...ride,
+                //     eventTime: DateTime.fromISO(ride.eventTime, {zone: 'utc'})
+                //                                 .setZone(ride.timeZone)
+                //                                 .toFormat('ff')
+                // })));
+                setScheduledRides(rideData);
             } catch (err) {
                     console.error('failed to get scheduled rides:', err);
             } finally {

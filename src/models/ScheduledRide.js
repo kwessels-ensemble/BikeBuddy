@@ -47,10 +47,10 @@ const scheduledRideSchema = new Schema({
     eventTime: {
         type: Date,
         required: true,
-        validate: {
-            validator: (value) => value > new Date(),
-            message: "Event time must be in the future"
-        }
+        // validate: {
+        //     validator: (value) => value > new Date(),
+        //     message: "Event time must be in the future"
+        // }
     },
     timeZone: {
         type: String,

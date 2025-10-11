@@ -1,8 +1,10 @@
 import { connectToDb } from "@/lib/mongodb";
 import ScheduledRide from "@/models/ScheduledRide";
+import User from "@/models/User";
 import { NextResponse } from "next/server";
 import {verifyToken} from "@/lib/auth";
 import mongoose from "mongoose";
+import { DateTime } from "luxon";
 
 
 
@@ -81,6 +83,13 @@ export async function DELETE(request, { params}) {
             return NextResponse.json({error: "Forbidden"}, {status: 403});
         }
 
+        // TODO - add logic to check if eventTime in past (already happend) and prevent updates
+        // logic to check if eventTime in past (already happend) and prevent updates
+        const currentTimeUTC = DateTime.utc();
+        const eventTimeUTC = DateTime.fromJSDate(ride.eventTime).toUTC();
+        if (eventTimeUTC <= currentTimeUTC) {
+            return NextResponse.json({error: 'Cannot edit a ride that already happened'}, {status: 400});
+        }
 
         // unschedule/cancel ride by setting cancelled flags-
         ride.isCancelled = true;
@@ -135,6 +144,13 @@ export async function PATCH(request, { params }) {
         // check auth user is the ride organizer
         if (decoded.id?.toString() !== ride.organizer?.toString()) {
             return NextResponse.json({error: "Forbidden"}, {status: 403});
+        }
+
+        // logic to check if eventTime in past (already happend) and prevent updates
+        const currentTimeUTC = DateTime.utc();
+        const eventTimeUTC = DateTime.fromJSDate(ride.eventTime).toUTC();
+        if (eventTimeUTC <= currentTimeUTC) {
+            return NextResponse.json({error: 'Cannot edit a ride that already happened'}, {status: 400});
         }
 
         // update logic -

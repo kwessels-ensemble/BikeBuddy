@@ -63,6 +63,21 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
         if (ride.rideDetails.link && !validateLink(ride.rideDetails.link)) {
             newErrors.link = 'Link is invalid.';
         }
+        // handling datetime validation
+        // only run this logic if both eventTime and timeZone are populated
+        if (ride.eventTime && ride.timeZone) {
+            const selectedTimeUTC = DateTime.fromISO(ride.eventTime, {zone: 'utc'})
+            const currentTimeUTC = DateTime.utc();
+
+            if (!selectedTimeUTC.isValid) {
+                newErrors.eventTime = 'EventTime is not valid.';
+            }
+
+            if (selectedTimeUTC <= currentTimeUTC) {
+                newErrors.eventTime = 'Please select a future date and time.';
+            }
+        }
+
 
         return newErrors;
     }

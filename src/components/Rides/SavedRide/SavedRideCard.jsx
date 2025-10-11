@@ -12,7 +12,11 @@ export default function SavedRideCard({ ride, handleDelete }) {
     return (
         <ul> {ride.title}
             <li>Description: {ride.description}</li>
-            <li>Link: {ride.link}</li>
+            <li>Link: <Link
+                        href={ride.link} target="_blank" rel="noopener norefferrer">
+                        {ride.link}
+                        </Link>
+            </li>
             <li>Type: {ride.type}</li>
             <li>Notes: {ride.notes}</li>
             <li>Location: {`${ride.location.city}, ${ride.location.state}`}</li>

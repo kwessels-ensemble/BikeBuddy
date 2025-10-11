@@ -14,7 +14,13 @@ export default function SavedRideDetail( { savedRide, handleDelete }) {
     return (
         <ul key={savedRide._id}> {savedRide.title}
             <li>Description: {savedRide.description}</li>
-            <li>Link: {savedRide.link}</li>
+            {/* <li>Link: {savedRide.link}</li>
+             */}
+            <li>Link: <Link
+                        href={savedRide.link} target="_blank" rel="noopener norefferrer">
+                        {savedRide.link}
+                        </Link>
+            </li>
             <li>Type: {savedRide.type}</li>
             <li>Notes: {savedRide.notes}</li>
             <li>Location: {`${savedRide.location.city}, ${savedRide.location.state}`}</li>

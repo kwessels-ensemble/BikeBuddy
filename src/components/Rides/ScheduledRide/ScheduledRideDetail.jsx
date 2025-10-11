@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 // import axios from "axios";
+import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import { DateTime } from "luxon";
 
@@ -18,7 +19,11 @@ export default function ScheduledRideDetail( { scheduledRide, handleCancel }) {
     return (
         <ul> {scheduledRide.rideDetails.title}
             <li>Description: {scheduledRide.rideDetails.description}</li>
-            <li>Link: {scheduledRide.rideDetails.link}</li>
+            <li>Link: <Link
+                        href={scheduledRide.rideDetails.link} target="_blank" rel="noopener norefferrer">
+                        {scheduledRide.rideDetails.link}
+                        </Link>
+            </li>
             <li>Type: {scheduledRide.rideDetails.type}</li>
             <li>Notes: {scheduledRide.rideDetails.notes}</li>
             <li>Location: {`${scheduledRide.rideDetails.location.city}, ${scheduledRide.rideDetails.location.state}`}</li>

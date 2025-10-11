@@ -16,7 +16,11 @@ export default function ScheduledRideCard({ ride, handleCancel, isLoading, setIs
         <div>
             <ul> {ride.rideDetails.title}
                 <li>Description: {ride.rideDetails.description}</li>
-                <li>Link: {ride.rideDetails.link}</li>
+                <li>Link: <Link
+                        href={ride.rideDetails.link} target="_blank" rel="noopener norefferrer">
+                        {ride.rideDetails.link}
+                        </Link>
+                </li>
                 <li>Type: {ride.rideDetails.type}</li>
                 <li>Notes: {ride.rideDetails.notes}</li>
                 <li>Location: {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</li>

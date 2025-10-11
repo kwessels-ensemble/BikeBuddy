@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 // import styles from './page.module.css';
 
 
-export default function ScheduledRideCard({ ride, handleCancel, isLoading, setIsLoading }) {
+export default function ScheduledRideCard({ ride, handleCancel, handleEdit, handleRideDetails, isLoading, setIsLoading, handleJoin, handleLeave }) {
 
     const router = useRouter();
 
@@ -16,6 +16,7 @@ export default function ScheduledRideCard({ ride, handleCancel, isLoading, setIs
     const eventTimeUTC = DateTime.fromISO(ride.eventTime, {zone: 'utc'});
     const currentTimeUTC = DateTime.utc();
     const isPastRide = eventTimeUTC < currentTimeUTC;
+
 
     return (
         <div>
@@ -38,20 +39,45 @@ export default function ScheduledRideCard({ ride, handleCancel, isLoading, setIs
                                                 .setZone(ride.timeZone)
                                                 .toFormat('ff')} </li>
 
-
+                {/*
                 <button
                     disabled={isPastRide}
                     onClick={() => router.push(`/scheduled-rides/${ride._id}/edit`)}>
                     Edit Ride
-                </button>
-                <button
+                </button> */}
+
+                {handleEdit && <button
+                    disabled={isPastRide}
+                    onClick={() => handleEdit(ride._id)}>
+                    Edit Ride
+                </button>}
+
+                {handleCancel && <button
                     disabled={isPastRide}
                     onClick={() => handleCancel(ride._id)}>
                     Cancel Ride
-                </button>
-                <button onClick={() => router.push(`/scheduled-rides/${ride._id}`)}>
+                </button>}
+
+                {/* <button onClick={() => router.push(`/scheduled-rides/${ride._id}`)}>
                     View Ride Details
-                </button>
+                </button> */}
+
+
+                {handleJoin && <button onClick={() => handleJoin(ride._id)}>
+                    Join Ride
+                </button>}
+
+                {handleLeave && <button onClick={() => handleLeave(ride._id)}>
+                    Leave Ride
+                </button>}
+
+                {handleRideDetails && <button onClick={() => handleRideDetails(ride._id)}>
+                    View Ride Details
+                </button>}
+
+{/* //              <button onClick={() => router.push(`/ride-feed/${ride._id}`)}>
+//                  View Ride Details
+//              </button> */}
 
             </ul>
 

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
 import { DateTime } from "luxon";
+import ScheduledRideDetail from "@/components/Rides/ScheduledRide/ScheduledRideDetail";
 
 
 // export const metadata = {
@@ -46,7 +47,7 @@ export default function PublicRide() {
     }, []);
 
 
-    const handleJoinRide = async (rideId) => {
+    const handleJoin = async (rideId) => {
         try {
             setIsLoading(true);
             console.log('clicked join!');
@@ -70,7 +71,7 @@ export default function PublicRide() {
         }
     }
 
-    const handleLeaveRide = async (rideId) => {
+    const handleLeave = async (rideId) => {
         try {
             setIsLoading(true);
             console.log('clicked leave!');
@@ -106,30 +107,39 @@ export default function PublicRide() {
             ) : (!publicRide ? (
                 <p>No public ride found</p>
             ) :
-                <ul key={publicRide._id}> {publicRide.rideDetails.title}
-                    <li>Description: {publicRide.rideDetails.description}</li>
-                    <li>Link: {publicRide.rideDetails.link}</li>
-                    <li>Type: {publicRide.rideDetails.type}</li>
-                    <li>Notes: {publicRide.rideDetails.notes}</li>
-                    <li>Location: {`${publicRide.rideDetails.location.city}, ${publicRide.rideDetails.location.state}`}</li>
-                    <li>Organizer: {publicRide.organizer.username}</li>
-                    <li>Visibility: {publicRide.isPublic ? 'Public' : 'Private'}</li>
-                    <li>Participants: {publicRide.participants.length ?
-                        publicRide.participants.map((user) => user.username).join(', ')
-                        : 'No participants yet.'}</li>
-                    {/* <li>Time: {publicRide.eventTime}</li> */}
-                    <li>Time: {DateTime.fromISO(publicRide.eventTime, {zone: 'utc'})
-                                                .setZone(publicRide.timeZone)
-                                                .toFormat('ff')} </li>
+                (
+                <ScheduledRideDetail
+                    scheduledRide={publicRide}
+                    handleJoin={handleJoin}
+                    handleLeave={handleLeave}
+                    >
 
-                    <button onClick={() => handleJoinRide(publicRide._id)}>
-                        Join Ride
-                    </button>
-                    <button onClick={() => handleLeaveRide(publicRide._id)}>
-                        Leave Ride
-                    </button>
+                </ScheduledRideDetail>
+                )
+                // <ul key={publicRide._id}> {publicRide.rideDetails.title}
+                //     <li>Description: {publicRide.rideDetails.description}</li>
+                //     <li>Link: {publicRide.rideDetails.link}</li>
+                //     <li>Type: {publicRide.rideDetails.type}</li>
+                //     <li>Notes: {publicRide.rideDetails.notes}</li>
+                //     <li>Location: {`${publicRide.rideDetails.location.city}, ${publicRide.rideDetails.location.state}`}</li>
+                //     <li>Organizer: {publicRide.organizer.username}</li>
+                //     <li>Visibility: {publicRide.isPublic ? 'Public' : 'Private'}</li>
+                //     <li>Participants: {publicRide.participants.length ?
+                //         publicRide.participants.map((user) => user.username).join(', ')
+                //         : 'No participants yet.'}</li>
+                //     {/* <li>Time: {publicRide.eventTime}</li> */}
+                //     <li>Time: {DateTime.fromISO(publicRide.eventTime, {zone: 'utc'})
+                //                                 .setZone(publicRide.timeZone)
+                //                                 .toFormat('ff')} </li>
 
-                </ul>
+                //     <button onClick={() => handleJoinRide(publicRide._id)}>
+                //         Join Ride
+                //     </button>
+                //     <button onClick={() => handleLeaveRide(publicRide._id)}>
+                //         Leave Ride
+                //     </button>
+
+                // </ul>
             )}
 
         </div>

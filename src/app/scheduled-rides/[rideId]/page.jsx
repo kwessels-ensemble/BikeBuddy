@@ -68,6 +68,9 @@ export default function ScheduledRide() {
         }
     }
 
+    const handleEdit = (rideId) => {
+        router.push(`/scheduled-rides/${rideId}/edit`);
+    }
 
     return (
         <div>
@@ -82,6 +85,7 @@ export default function ScheduledRide() {
                 <ScheduledRideDetail
                     scheduledRide={scheduledRide}
                     handleCancel={handleCancel}
+                    handleEdit={handleEdit}
                     >
                 </ScheduledRideDetail>
             )

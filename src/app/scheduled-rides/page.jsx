@@ -74,6 +74,13 @@ export default function ScheduledRides() {
         }
     }
 
+    const handleRideDetails = (rideId) => {
+        router.push(`/scheduled-rides/${rideId}`);
+    }
+
+    const handleEdit = (rideId) => {
+        router.push(`/scheduled-rides/${rideId}/edit`);
+    }
 
     return (
         <div>
@@ -117,6 +124,8 @@ export default function ScheduledRides() {
                         key={ride._id}
                         ride={ride}
                         handleCancel={handleCancel}
+                        handleEdit={handleEdit}
+                        handleRideDetails={handleRideDetails}
                         isLoading={isLoading}
                         setIsLoading={setIsLoading}
                         >

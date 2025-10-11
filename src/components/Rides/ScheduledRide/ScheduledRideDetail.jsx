@@ -12,7 +12,7 @@ import { DateTime } from "luxon";
 //   description: "View a scheduled ride."
 // };
 
-export default function ScheduledRideDetail( { scheduledRide, handleCancel }) {
+export default function ScheduledRideDetail( { scheduledRide, handleCancel, handleEdit, handleJoin, handleLeave }) {
 
     const router = useRouter();
 
@@ -42,16 +42,31 @@ export default function ScheduledRideDetail( { scheduledRide, handleCancel }) {
                                                             .setZone(scheduledRide.timeZone)
                                                             .toFormat('ff')} </li>
 
-            <button
+            {/* <button
                 disabled={isPastRide}
                 onClick={() => router.push(`/scheduled-rides/${scheduledRide._id}/edit`)}>
                 Edit Ride
-            </button>
-            <button
+            </button> */}
+
+            {handleEdit && <button
+                disabled={isPastRide}
+                onClick={() => handleEdit(scheduledRide._id)}>
+                Edit Ride
+            </button>}
+
+            {handleCancel && <button
                 disabled={isPastRide}
                 onClick={() => handleCancel(scheduledRide._id)}>
                 Cancel Ride
-            </button>
+            </button>}
+
+            {handleJoin && <button onClick={() => handleJoin(scheduledRide._id)}>
+                Join Ride
+            </button>}
+
+            {handleLeave && <button onClick={() => handleLeave(scheduledRide._id)}>
+                Leave Ride
+            </button>}
 
         </ul>
     )

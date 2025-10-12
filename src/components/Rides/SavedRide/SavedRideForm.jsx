@@ -163,8 +163,8 @@ export default function SavedRideForm( { ride, setRide, onSubmit, submitButtonTe
             </select>
             {errors.location && <span className={styles.error}>{errors.location}</span>}
 
-            {/* <button onClick={onSubmit}>{submitButtonText}</button> */}
             <button onClick={handleSubmit}>{submitButtonText}</button>
+
             </form>
     )
 }

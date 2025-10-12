@@ -23,7 +23,7 @@ export async function POST(request) {
             return NextResponse.json({errors: 'all fields are required'}, {status: 400});
         }
 
-        // TODO - add logic to check for length of password, username, and valid email
+        // Validation checks for length of password, username, and valid email
         const errors = {};
         if (!username || username.length <= 3 || username.length >20) {
             errors.username = 'Username must be 4-20 characters.';

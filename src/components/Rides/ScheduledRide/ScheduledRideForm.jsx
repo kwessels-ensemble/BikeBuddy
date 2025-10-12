@@ -38,7 +38,7 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
     const validate = () => {
         const newErrors = {};
         // handle required fields -
-        const requiredTextFields = ['organizer', 'eventTime', 'timeZone', 'isPublic'];
+        const requiredTextFields = ['eventTime', 'timeZone', 'isPublic'];
         for (let field of requiredTextFields) {
             if (!ride[field]) {
                 // for now, handling of isPublic -
@@ -78,7 +78,6 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
             }
         }
 
-
         return newErrors;
     }
 
@@ -87,6 +86,7 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
         e.preventDefault();
 
         const validationErrors = validate();
+        // console.log(validationErrors);
 
         if (Object.keys(validationErrors).length > 0 ) {
             setErrors(validationErrors);
@@ -96,6 +96,7 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
         }
 
     }
+
 
     return (
         <form className={styles.form}>
@@ -256,6 +257,7 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
             {errors.timeZone && <span className={styles.error}>{errors.timeZone}</span>}
 
             <button onClick={handleSubmit}>{submitButtonText}</button>
+
         </form>
 
     )

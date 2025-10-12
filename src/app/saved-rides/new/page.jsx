@@ -36,8 +36,7 @@ export default function SaveNewRide() {
 
 
     const handleCreate = async () => {
-        // TODO - add loading logic, button disabling logic
-        // add handling to catch form submit without any required fields
+
         try {
             // e.preventDefault();
 
@@ -62,7 +61,9 @@ export default function SaveNewRide() {
     return (
         <div>
             <button onClick={() => router.push('/saved-rides')}>Back to Saved Rides</button>
+
             <h1>Create New Ride</h1>
+
             <SavedRideForm
                 ride={ride}
                 setRide={setRide}

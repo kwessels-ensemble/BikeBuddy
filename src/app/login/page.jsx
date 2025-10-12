@@ -69,6 +69,7 @@ export default function Login() {
             } else {
                 setErrors({general: 'Something went wrong. Please try again.'});
             }
+
             setUser((prev) => ({...prev, password: ""}));
         }
     }

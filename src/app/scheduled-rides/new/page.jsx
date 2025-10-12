@@ -71,8 +71,7 @@ export default function ScheduleNewRide() {
 
 
     const handleCreate = async () => {
-        // TODO - add loading logic, button disabling logic
-        // add handling to catch form submit without any required fields
+
         try {
             // e.preventDefault();
 
@@ -81,7 +80,6 @@ export default function ScheduleNewRide() {
             // timezone conversions
             const localDateTime = DateTime.fromISO(ride.eventTime, {zone: ride.timeZone});
             const eventTimeUtc = localDateTime.toUTC().toISO();
-
 
             const response = await axios.post('/api/scheduled-rides', {...ride, eventTime: eventTimeUtc});
             console.log(response);
@@ -102,6 +100,7 @@ export default function ScheduleNewRide() {
     return (
         <div>
             <button onClick={() => router.push('/scheduled-rides')}>Back to Scheduled Rides</button>
+
             <h1>Schedule New Ride</h1>
 
             <ScheduledRideForm

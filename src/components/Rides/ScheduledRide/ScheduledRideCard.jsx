@@ -22,7 +22,6 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
     const isOrganizer = authUser?._id === ride.organizer?._id;
     const isParticipant = ride.participants?.some((p) => p._id === authUser?._id);
 
-
     return (
         <div>
             <ul> {ride.rideDetails.title}

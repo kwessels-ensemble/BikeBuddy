@@ -127,6 +127,46 @@ export async function PATCH(request, { params }) {
             return NextResponse.json({error: "Forbidden"}, {status: 403});
         }
 
+        // data validation for required fields and formats
+        const locationOptions = [
+        {city: 'San Francisco', state: 'CA'},
+        {city: 'Santa Cruz', state: 'CA'},
+        {city: 'Pacifica', state: 'CA'},
+        {city: 'Berkeley', state: 'CA'},
+        {city: 'Oakland', state: 'CA'},
+        {city: 'Fairfax', state: 'CA'}
+        ]
+
+        const typeOptions = ['mtb', 'gravel', 'road'];
+
+        const validateLink = (link) => {
+            try {
+                new URL(link);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        // validation logic -
+        const errors = {};
+        if (rideUpdates.title && rideUpdates.title === "") {
+            errors.title = 'Title is required.'
+        }
+        if (rideUpdates.type && !typeOptions.includes(rideUpdates.type) ) {
+            errors.type = 'Type must be mtb, gravel, or road.'
+        }
+        if (rideUpdates.location && (!rideUpdates.location.city || !rideUpdates.location.state || !locationOptions.some(location => location.city === rideUpdates.location.city && location.state === rideUpdates.location.state ))) {
+            errors.location = 'Location (city, state) is required'
+        }
+        if (rideUpdates.link && !validateLink(rideUpdates.link)) {
+            errors.link = 'Link is invalid.';
+        }
+
+        if (Object.keys(errors).length > 0) {
+            return NextResponse.json({ errors}, {status: 400});
+            }
+
         // update logic -
         const validFields = ['title', 'description', 'link', 'type', 'notes', 'location'];
         for (let key of Object.keys(rideUpdates)) {

@@ -53,11 +53,6 @@ export async function POST(request) {
         // get details from request body
         const reqBody = await request.json();
 
-        // note - will need to add checks for the required fields here and/or within the ui form
-        // expecting: title, description, link, type, notes, location
-        // defaults/auto create: _id, createdAt, updatedAt, isDeleted, ...and userId added below
-
-
         console.log(reqBody);
 
         // get auth user
@@ -67,6 +62,46 @@ export async function POST(request) {
         if (!decoded) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
+
+        // data validation for required fields and formats
+        const locationOptions = [
+        {city: 'San Francisco', state: 'CA'},
+        {city: 'Santa Cruz', state: 'CA'},
+        {city: 'Pacifica', state: 'CA'},
+        {city: 'Berkeley', state: 'CA'},
+        {city: 'Oakland', state: 'CA'},
+        {city: 'Fairfax', state: 'CA'}
+        ]
+
+        const typeOptions = ['mtb', 'gravel', 'road'];
+
+        const validateLink = (link) => {
+            try {
+                new URL(link);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        // check for field errors
+        const errors = {};
+        if (!reqBody.title) {
+            errors.title = 'Title is required.'
+        }
+        if (!reqBody.type || !typeOptions.includes(reqBody.type) ) {
+            errors.type = 'Type (mtb, gravel, or road) is required.'
+        }
+        if (!reqBody.location || !reqBody.location.city || !reqBody.location.state || !locationOptions.some(location => location.city === reqBody.location.city && location.state === reqBody.location.state )) {
+            errors.location = 'Location (city, state) is required'
+        }
+        if (reqBody.link && !validateLink(reqBody.link)) {
+            errors.link = 'Link is invalid.';
+        }
+
+        if (Object.keys(errors).length > 0) {
+                    return NextResponse.json({ errors}, {status: 400});
+                }
 
         // create new saved ride
         const savedRide = new SavedRide({

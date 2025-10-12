@@ -53,6 +53,7 @@ export default function SaveNewRide() {
 
         } catch (err) {
             console.log('failed to save ride:', err);
+
         }
 
     }

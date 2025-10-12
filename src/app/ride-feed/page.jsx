@@ -85,7 +85,7 @@ export default function rideFeed() {
             const updatedRide = response.data;
             // update data on page
             setPublicRides(prev =>
-                prev.map(ride => ride._id === rideId
+                prev.map(ride => ride._id.toString() === rideId.toString()
                 ?
                 {...updatedRide}
                 : ride)

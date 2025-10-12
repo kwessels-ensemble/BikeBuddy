@@ -34,6 +34,11 @@ export async function POST(request, { params }) {
             return NextResponse.json({message: "Scheduled ride not found"}, {status: 404})
         }
 
+        // check if auth user is the organizer, if so then cannot join/leave (default is they are a participant)
+        if (decoded.id.toString() === ride.organizer._id.toString()) {
+            return NextResponse.json({error: "User is ride organizer so already joined ride"}, {status: 400});
+        }
+
         // check auth user is already participating, if so cannot join again
         if (ride.participants.map(id => id.toString()).includes(decoded.id.toString())) {
             return NextResponse.json({error: "User is already a participant in this ride"}, {status: 400});

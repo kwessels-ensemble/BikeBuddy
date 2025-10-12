@@ -23,14 +23,14 @@ export default function ScheduledRideDetail( { authUser, scheduledRide, handleCa
     const isPastRide = eventTimeUTC < currentTimeUTC;
 
     // check if auth user is organizer and /or participant
-    console.log('authUser', authUser);
-    console.log('organizer', scheduledRide.organizer);
+    // console.log('authUser', authUser);
+    // console.log('organizer', scheduledRide.organizer);
     const isOrganizer = authUser?._id === scheduledRide.organizer?._id;
     const isParticipant = scheduledRide.participants?.some((p) => p._id === authUser?._id);
 
-    console.log('isPastRide', isPastRide);
-    console.log('isOrganizer', isOrganizer);
-    console.log('isParticipant', isParticipant);
+    // console.log('isPastRide', isPastRide);
+    // console.log('isOrganizer', isOrganizer);
+    // console.log('isParticipant', isParticipant);
 
     return (
         <ul> {scheduledRide.rideDetails.title}

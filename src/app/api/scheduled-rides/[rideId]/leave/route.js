@@ -34,7 +34,12 @@ export async function DELETE(request, { params }) {
             return NextResponse.json({message: "Scheduled ride not found"}, {status: 404})
         }
 
-        // check auth user is already participating, if so cannot join again
+        // check if auth user is the organizer, if so then cannot join/leave ride (default is they are a participant)
+        if (decoded.id.toString() === ride.organizer._id.toString()) {
+            return NextResponse.json({error: "User is ride organizer and cannot leave ride"}, {status: 400});
+        }
+
+        // check auth user is not in participants.. if not in participants, can't 'leave'
         if (!ride.participants.map(id => id.toString()).includes(decoded.id.toString())) {
             return NextResponse.json({error: "User is not a participant in this ride"}, {status: 400});
         }

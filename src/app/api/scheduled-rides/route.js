@@ -110,6 +110,14 @@ export async function POST(request) {
         if (!reqBody.eventTime) {
             errors.eventTime = 'eventTime is required.'
         }
+        // check that eventTime is in future
+        if (reqBody.eventTime) {
+            const currentTimeUTC = DateTime.utc();
+            const eventTimeUTC = DateTime.fromJSDate(reqBody.eventTime).toUTC();
+            if (eventTimeUTC <= currentTimeUTC) {
+                errors.eventTime = 'eventTime must be a future date time.'
+            }
+        }
         if (!reqBody.timeZone) {
             errors.timeZone = 'timeZone is required.'
         }

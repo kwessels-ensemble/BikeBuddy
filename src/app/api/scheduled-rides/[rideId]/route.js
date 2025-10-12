@@ -178,6 +178,14 @@ export async function PATCH(request, { params }) {
         if (rideUpdates.eventTime && rideUpdates.eventTime.toString() === "") {
             errors.eventTime = 'eventTime is required.'
         }
+        // check that eventTime is in future
+        if (rideUpdates.eventTime && !rideUpdates.eventTime.toString() === "") {
+            const currentTimeUTC = DateTime.utc();
+            const eventTimeUTC = DateTime.fromJSDate(rideUpdates.eventTime).toUTC();
+            if (eventTimeUTC <= currentTimeUTC) {
+                errors.eventTime = 'eventTime must be a future date time.'
+            }
+        }
         if (rideUpdates.timeZone && rideUpdates.timeZone === "") {
             errors.timeZone = 'timeZone is required.'
         }

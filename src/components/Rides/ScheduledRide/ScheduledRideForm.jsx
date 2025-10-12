@@ -38,16 +38,25 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
     const validate = () => {
         const newErrors = {};
         // handle required fields -
-        const requiredTextFields = ['eventTime', 'timeZone', 'isPublic'];
-        for (let field of requiredTextFields) {
-            if (!ride[field]) {
-                // for now, handling of isPublic -
-                if (field === 'isPublic') {
-                    newErrors[field] = 'Visibility is required.'
-                } else {
-                    newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`
-                }
-            }
+        // const requiredTextFields = ['eventTime', 'timeZone', 'isPublic'];
+        // for (let field of requiredTextFields) {
+        //     if (!ride[field]) {
+        //         // for now, handling of isPublic -
+        //         if (field === 'isPublic') {
+        //             newErrors[field] = 'Visibility is required.'
+        //         } else {
+        //             newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`
+        //         }
+        //     }
+        if (!ride.eventTime) {
+            newErrors.eventTime = 'EventTime is required.'
+        }
+        if (!ride.timeZone) {
+            newErrors.timeZone = 'TimeZone is required.'
+        }
+        if (!(ride.isPublic === true || ride.isPublic === false || ride.isPublic === "true" || ride.isPublic === "false") ) {
+            newErrors.isPublic = 'Visiblity is required.'
+         }
         // handling required nested rideDetails fields
         const requiredNestedFields = ['title', 'type']
         for (let field of requiredNestedFields) {
@@ -56,8 +65,8 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
             }
         }
         // handling nested location logic
-        if (!ride.rideDetails.location || !(ride.rideDetails.location.city && ride.rideDetails.location.state))
-            newErrors.location = 'Location (city, state) is required.';
+        if (!ride.rideDetails.location || !(ride.rideDetails.location.city && ride.rideDetails.location.state)) {
+            newErrors.location = 'Location (city, state) is required.'
         }
         // handling link validation
         if (ride.rideDetails.link && !validateLink(ride.rideDetails.link)) {
@@ -112,7 +121,7 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
                 onChange={(e) => setRide({...ride,
                                         rideDetails: {
                                             ...ride.rideDetails,
-                                                title: e.target.value}})}
+                                            title: e.target.value}})}
                 className={errors.title ? styles.invalid: ''}
                 >
             </input>
@@ -219,8 +228,8 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
             <label htmlFor="isPublic">Visibility <span className={styles.required}>*</span></label>
             <select
                 id="isPublic"
-                value={ride.isPublic}
-                onChange={(e) => setRide({...ride, isPublic: e.target.value})}
+                value={ride.isPublic === true ? "true" : ride.isPublic === false ? "false" : ""}
+                onChange={(e) => setRide({...ride, isPublic: e.target.value === "true"})}
                 className={errors.isPublic ? styles.invalid: ''}
                 >
                 <option value="">Select visibility</option>

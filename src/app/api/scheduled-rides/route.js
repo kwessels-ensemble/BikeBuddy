@@ -73,10 +73,6 @@ export async function POST(request) {
         // get details from request body
         const reqBody = await request.json();
 
-        // note - will need to add checks for the required fields here and/or within the ui form
-        // expecting: title, description, link, type, notes, location
-        // defaults/auto create: _id, createdAt, updatedAt, isDeleted, ...and userId added below
-
 
         console.log(reqBody);
 
@@ -87,6 +83,55 @@ export async function POST(request) {
         if (!decoded) {
             return NextResponse.json({error: "unauthorized"}, {status: 401});
         }
+
+        // validation -
+        const locationOptions = [
+        {city: 'San Francisco', state: 'CA'},
+        {city: 'Santa Cruz', state: 'CA'},
+        {city: 'Pacifica', state: 'CA'},
+        {city: 'Berkeley', state: 'CA'},
+        {city: 'Oakland', state: 'CA'},
+        {city: 'Fairfax', state: 'CA'}
+        ]
+
+        const typeOptions = ['mtb', 'gravel', 'road'];
+
+        const validateLink = (link) => {
+            try {
+                new URL(link);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        // validate fields
+        const errors = {};
+        if (!reqBody.eventTime) {
+            errors.eventTime = 'eventTime is required.'
+        }
+        if (!reqBody.timeZone) {
+            errors.timeZone = 'timeZone is required.'
+        }
+        if (!reqBody.isPublic) {
+            errors.isPublic = 'isPublic is required.'
+        }
+        if (!reqBody.rideDetails.title) {
+            errors.rideDetails.title = 'rideDetails.title is required.'
+        }
+        if (!reqBody.rideDetails.type || !typeOptions.includes(reqBody.rideDetails.type)) {
+            errors.rideDetails.type = 'rideDetails.type (mtb, gravel, road) is required.'
+        }
+        if (!reqBody.rideDetails.location || !reqBody.rideDetails.location.city || !reqBody.rideDetails.location.state || !locationOptions.some(location => location.city === reqBody.rideDetails.location.city && location.state === reqBody.rideDetails.location.state )) {
+            errors.location = 'rideDetails.location (city, state) is required'
+        }
+        if (reqBody.rideDetails.link && !validateLink(reqBody.rideDetails.link)) {
+            errors.link = 'link is invalid.';
+        }
+
+        if (Object.keys(errors).length > 0) {
+            return NextResponse.json({ errors}, {status: 400});
+            }
 
         // create new scheduled ride
         const scheduledRide = new ScheduledRide({

@@ -152,6 +152,57 @@ export async function PATCH(request, { params }) {
             return NextResponse.json({error: 'Cannot edit a ride that already happened'}, {status: 400});
         }
 
+        // validation-
+        const locationOptions = [
+        {city: 'San Francisco', state: 'CA'},
+        {city: 'Santa Cruz', state: 'CA'},
+        {city: 'Pacifica', state: 'CA'},
+        {city: 'Berkeley', state: 'CA'},
+        {city: 'Oakland', state: 'CA'},
+        {city: 'Fairfax', state: 'CA'}
+        ]
+
+        const typeOptions = ['mtb', 'gravel', 'road'];
+
+        const validateLink = (link) => {
+            try {
+                new URL(link);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        // validate fields
+        const errors = {};
+        if (rideUpdates.eventTime && rideUpdates.eventTime.toString() === "") {
+            errors.eventTime = 'eventTime is required.'
+        }
+        if (rideUpdates.timeZone && rideUpdates.timeZone === "") {
+            errors.timeZone = 'timeZone is required.'
+        }
+        if (rideUpdates.isPublic && rideUpdates.isPublic === "") {
+            errors.isPublic = 'isPublic is required.'
+        }
+        if (rideUpdates.rideDetails.title && rideUpdates.rideDetails.title === "") {
+            errors.rideDetails.title = 'rideDetails.title is required.'
+        }
+        if (rideUpdates.rideDetails.type && !typeOptions.includes(rideUpdates.rideDetails.type)) {
+            errors.rideDetails.type = 'rideDetails.type (mtb, gravel, road) is required.'
+        }
+        if (rideUpdates.rideDetails.location && (!rideUpdates.rideDetails.location.city || !rideUpdates.rideDetails.location.state || !locationOptions.some(location => location.city === rideUpdates.rideDetails.location.city && location.state === rideUpdates.rideDetails.location.state ))) {
+            errors.location = 'rideDetails.location (city, state) is required'
+        }
+        if (rideUpdates.rideDetails.link && !validateLink(rideUpdates.rideDetails.link)) {
+            errors.link = 'link is invalid.';
+        }
+
+        if (Object.keys(errors).length > 0) {
+            return NextResponse.json({ errors}, {status: 400});
+            }
+
+
+
         // update logic -
         const validFields = ['isPublic', 'eventTime', 'timeZone'];
         const validRideDetailsFields = ['title', 'description', 'link', 'type', 'notes', 'location'];

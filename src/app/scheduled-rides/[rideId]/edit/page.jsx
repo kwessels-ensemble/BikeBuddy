@@ -18,6 +18,22 @@ export default function EditScheduledRide() {
     const { rideId } = useParams();
     const router = useRouter();
     // default is null, then populate on first load
+    // store ride in state
+    // const defaultRide = {
+    //     isPublic: "",
+    //     eventTime: "",
+    //     timeZone: "",
+    //     rideDetails: {
+    //         title: "",
+    //         description: "",
+    //         link: "",
+    //         type: "",
+    //         notes: "",
+    //         location: {city: "", state: ""}
+    //     }
+
+    // };
+    // const [ride, setRide ] = useState(defaultRide);
     const [ride, setRide] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,6 +46,8 @@ export default function EditScheduledRide() {
             const response = await axios.get(`/api/scheduled-rides/${rideId}`);
             console.log(response);
             setRide({...response.data,
+                // added -
+                    isPublic: Boolean(response.data.isPublic),
                     eventTime: DateTime.fromISO(response.data.eventTime, {zone: 'utc'})
                                                             .setZone(response.data.timeZone)
                                                             .toFormat("yyyy-MM-dd'T'HH:mm")

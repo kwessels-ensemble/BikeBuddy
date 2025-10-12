@@ -2,8 +2,9 @@
 
 // import Link from "next/link";
 import { useState } from "react";
-// import {useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 import axios from "axios";
+import styles from './page.module.css';
 
 // export const metadata = {
 //   title: "Sign Up",
@@ -13,6 +14,8 @@ import axios from "axios";
 // TODO - add this logic back again after adding client logic to a child component
 export default function SignUp() {
 
+    const router = useRouter();
+
     // store user in state
     const defaultUser = {
         email: "",
@@ -21,34 +24,73 @@ export default function SignUp() {
     };
 
     const [user, setUser] = useState(defaultUser);
+    const [errors, setErrors] = useState({});
 
-    const onSignUp = async (e) => {
-        // TODO - add sign up db logic here
-        // also add try, catch, finally logic
-        // + loading logic, button disabling logic
-        // + any redirect logic after successful sign up
+    const validate = (user) => {
+
+        const {email, username, password} = user;
+
+        const newErrors = {};
+
+        //username
+        if (!username || username.length <=3  || username.length > 20) {
+            newErrors.username = 'Username must be 4-20 characters';
+        }
+        //email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            newErrors.email = 'Please enter a valid email.'
+        }
+        // password
+        if (!password || password.length < 8) {
+            newErrors.password = 'Password must be at least 8 characters';
+        }
+
+        return newErrors;
+    }
+
+
+    const handleSignUp = async () => {
         try {
-            e.preventDefault();
-
-            console.log(user);
-
             const response = await axios.post('/api/auth/signup', user);
             console.log(response);
 
-            // reset user
-            setUser(defaultUser);
+            // redirect to login on successful signup
+            router.push('/login');
 
         } catch (err) {
-            console.log('sign up failed:', err);
+            // console.log('sign up failed:', err);
+            // note this will catch more specific backend errors
+            if (err.response && err.response.data && err.response.data.errors) {
+                setErrors(err.response.data.errors);
+            } else {
+                setErrors({general: 'Something went wrong. Please try again.'});
+            }
         }
+    }
 
+    const onSubmit = (e) => {
+
+        e.preventDefault();
+
+        // check for validation errors
+        const validationErrors = validate(user);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+        } else {
+            setErrors({});
+            handleSignUp();
+        }
     }
 
     return (
         <div>
             <h1>Sign Up</h1>
-            <form className="signup-form">
-                <label htmlFor="email">Email</label>
+            <form className={styles.form}>
+
+                <p className={styles.note}>* Required fields</p>
+
+                <label htmlFor="email">Email <span className={styles.required}>*</span> </label>
                 <input
                     id="email"
                     type="text"
@@ -57,8 +99,9 @@ export default function SignUp() {
                     onChange={(e) => setUser({...user, email: e.target.value})}
                     >
                 </input>
+                {errors.email && <span className={styles.error}>{errors.email}</span>}
 
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">Username <span className={styles.required}>*</span></label>
                 <input
                     id="username"
                     type="text"
@@ -67,8 +110,9 @@ export default function SignUp() {
                     onChange={(e) => setUser({...user, username: e.target.value})}
                     >
                 </input>
+                {errors.username && <span className={styles.error}>{errors.username}</span>}
 
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password <span className={styles.required}>*</span></label>
                 <input
                     id="password"
                     type="password"
@@ -77,7 +121,11 @@ export default function SignUp() {
                     onChange={(e) => setUser({...user, password: e.target.value})}
                     >
                 </input>
-                <button onClick={onSignUp}>Sign Up</button>
+                {errors.password && <span className={styles.error}>{errors.password}</span>}
+
+                <button onClick={onSubmit}>Sign Up</button>
+
+                {errors.general && <span className={styles.error}>{errors.general}</span>}
             </form>
         </div>
     )

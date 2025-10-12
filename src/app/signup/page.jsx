@@ -61,11 +61,13 @@ export default function SignUp() {
         } catch (err) {
             // console.log('sign up failed:', err);
             // note this will catch more specific backend errors
-            if (err.response && err.response.data && err.response.data.errors) {
+            if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);
             } else {
                 setErrors({general: 'Something went wrong. Please try again.'});
             }
+
+            setUser((prev) => ({...prev, password: ""}));
         }
     }
 
@@ -126,6 +128,7 @@ export default function SignUp() {
                 <button onClick={onSubmit}>Sign Up</button>
 
                 {errors.general && <span className={styles.error}>{errors.general}</span>}
+
             </form>
         </div>
     )

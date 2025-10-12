@@ -5,7 +5,7 @@
 import { useState } from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
-
+import styles from './page.module.css';
 
 // TODO - add this logic back again after adding client logic to a child component
 // export const metadata = {
@@ -24,38 +24,78 @@ export default function Login() {
     };
 
     const [user, setUser] = useState(defaultUser);
+    const [errors, setErrors] = useState({});
 
+    const validate = (user) => {
 
+        const {email, password} = user;
 
-    const onLogin = async (e) => {
-        // TODO - add login db logic here
-        // also add try, catch, finally logic
-        // + loading logic, button disabling logic
-        // + any redirect logic after successful login
+        const newErrors = {};
 
+        //email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            newErrors.email = 'Please enter a valid email.'
+        }
+        // password
+        if (!password || password.length < 8) {
+            newErrors.password = 'Password must be at least 8 characters';
+        }
+
+        return newErrors;
+
+    }
+
+    const handleLogin = async () => {
         try {
-            e.preventDefault();
+            // e.preventDefault();
 
-            console.log(user);
+            // console.log(user);
 
             // reset user to defaults
-            setUser(defaultUser);
+            // setUser(defaultUser);
 
             const response = await axios.post('/api/auth/login', user);
-            console.log(response);
+            // console.log(response);
+
             // redirect to saved rides
             router.push('/saved-rides');
 
         } catch (err) {
             console.log('login failed:', err);
+
+            if (err.response?.data?.errors) {
+                setErrors(err.response.data.errors);
+            } else {
+                setErrors({general: 'Something went wrong. Please try again.'});
+            }
+            setUser((prev) => ({...prev, password: ""}));
+        }
+    }
+
+    const onSubmit = (e) => {
+
+        e.preventDefault();
+
+        // check for validation errors
+        const validationErrors = validate(user);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+        } else {
+            setErrors({});
+            handleLogin();
         }
     }
 
     return (
         <div>
             <h1>Login</h1>
-            <form className="login-form">
-                <label htmlFor="email">Email</label>
+
+            <form className={styles.form}>
+
+                <p className={styles.note}>* Required fields</p>
+
+                <label htmlFor="email">Email<span className={styles.required}>*</span></label>
                 <input
                     id="email"
                     type="text"
@@ -64,7 +104,9 @@ export default function Login() {
                     onChange={(e) => setUser({...user, email: e.target.value})}
                     >
                 </input>
-                <label htmlFor="password">Password</label>
+                {errors.email && <span className={styles.error}>{errors.email}</span>}
+
+                <label htmlFor="password">Password<span className={styles.required}>*</span></label>
                 <input
                     id="password"
                     type="password"
@@ -73,7 +115,12 @@ export default function Login() {
                     onChange={(e) => setUser({...user, password: e.target.value})}
                     >
                 </input>
-                <button onClick={onLogin}>Log In</button>
+                {errors.password && <span className={styles.error}>{errors.password}</span>}
+
+                <button onClick={onSubmit}>Log In</button>
+
+                {errors.general && <span className={styles.error}>{errors.general}</span>}
+
             </form>
         </div>
     )

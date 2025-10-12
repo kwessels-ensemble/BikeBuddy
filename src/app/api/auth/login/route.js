@@ -21,13 +21,27 @@ export async function POST(request) {
         // return error if any fields are missing
         if (!email || !password) {
             console.log('Error: all fields are required')
-            return NextResponse.json({error: 'all fields are required'}, {status: 400});
+            return NextResponse.json({errors: 'all fields are required'}, {status: 400});
+        }
+
+        // Validation checks for length of password and valid email
+        const errors = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            errors.email = 'Invalid email';
+        }
+        if (!password || password.length < 8) {
+            errors.password = 'Password must be at least 8 characters.'
+        }
+
+        if (Object.keys(errors).length > 0) {
+            return NextResponse.json({errors}, {status: 400});
         }
 
         const user = await User.findOne({email});
 
         if (!user) {
-            return NextResponse.json({error: 'no account with this email'}, {status: 401});
+            return NextResponse.json({errors: {email: 'No account with this email'}}, {status: 401});
         }
 
         console.log(user);
@@ -40,7 +54,7 @@ export async function POST(request) {
             const token = createToken(user._id);
 
             const response =  NextResponse.json({
-                    message: 'user logged in successfully',
+                    message: 'User logged in successfully',
                     email: user.email,
                     userId: user._id},
                     {status: 200})
@@ -54,11 +68,11 @@ export async function POST(request) {
             return response;
         }
 
-        return NextResponse.json({error: 'incorrect password'}, {status: 401});
+        return NextResponse.json({errors: {password: 'Incorrect password'}}, {status: 401});
 
 
     } catch (error) {
         console.error('login error:', error);
-        return NextResponse.json({error: 'server error'}, {status: 500});
+        return NextResponse.json({errors: 'server error'}, {status: 500});
     }
 }

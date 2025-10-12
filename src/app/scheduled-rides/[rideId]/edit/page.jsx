@@ -19,12 +19,14 @@ export default function EditScheduledRide() {
     const router = useRouter();
     // default is null, then populate on first load
     const [ride, setRide] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const submitButtonText = 'Update';
 
 
     async function fetchScheduledRide () {
         try {
+            setIsLoading(true);
             const response = await axios.get(`/api/scheduled-rides/${rideId}`);
             console.log(response);
             setRide({...response.data,
@@ -35,6 +37,8 @@ export default function EditScheduledRide() {
 
         } catch (err) {
             console.log('failed to get ride:', err);
+        } finally {
+            setIsLoading(false);
         }
         }
 
@@ -77,16 +81,21 @@ export default function EditScheduledRide() {
     return (
         <div>
             <button onClick={() => router.push('/scheduled-rides')}>Back to Scheduled Rides</button>
+
             <h1>Update Scheduled Ride</h1>
 
-            <ScheduledRideForm
+            {isLoading === true ? (
+                <p>Loading...</p>
+            ) : (
+                <ScheduledRideForm
                 ride={ride}
                 setRide={setRide}
                 onSubmit={handleUpdate}
                 submitButtonText={submitButtonText}
                 >
-            </ScheduledRideForm>
-
+                </ScheduledRideForm>
+            )
+        }
 
         </div>
     )

@@ -19,20 +19,24 @@ export default function EditRide() {
 
     // default is null, then populate on first load
     const [ride, setRide] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const submitButtonText='Save Changes';
 
 
     async function fetchRide () {
         try {
+            setIsLoading(true);
             const response = await axios.get(`/api/saved-rides/${rideId}`);
             console.log(response);
             setRide(response.data);
 
         } catch (err) {
             console.log('failed to get ride:', err);
+        } finally {
+            setIsLoading(false);
         }
-        }
+    }
 
 
     useEffect( () => {
@@ -42,8 +46,6 @@ export default function EditRide() {
 
 
     const handleUpdate = async () => {
-        // TODO - add loading logic, button disabling logic
-        // add handling to catch form submit without any required fields
         try {
             // e.preventDefault();
 
@@ -73,15 +75,21 @@ export default function EditRide() {
     return (
         <div>
             <button onClick={() => router.push('/saved-rides')}>Back to Saved Rides</button>
+
             <h1>Update Ride</h1>
 
-            <SavedRideForm
+            {isLoading === true ? (
+                <p>Loading...</p>
+            ) : (
+                <SavedRideForm
                 ride={ride}
                 setRide={setRide}
                 onSubmit={handleUpdate}
                 submitButtonText={submitButtonText}
                 >
-            </SavedRideForm>
+                </SavedRideForm>
+            )
+        }
 
         </div>
     )

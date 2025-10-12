@@ -37,6 +37,7 @@ export default function ScheduleNewRide() {
     };
 
     const [ride, setRide] = useState(defaultRide);
+    const [isLoading, setIsLoading] = useState(false);
 
     const submitButtonText = 'Create';
 
@@ -45,6 +46,7 @@ export default function ScheduleNewRide() {
         if (savedRideId) {
             const fetchRide = async () => {
                 try {
+                    setIsLoading(true);
                     const response = await axios.get(`/api/saved-rides/${savedRideId}`);
                     console.log(response);
                     const data = response.data;
@@ -62,6 +64,8 @@ export default function ScheduleNewRide() {
                     }));
                 } catch (err) {
                     console.error('error fetching ride:', err);
+                } finally {
+                    setIsLoading(false);
                 }
 
             };
@@ -103,14 +107,18 @@ export default function ScheduleNewRide() {
 
             <h1>Schedule New Ride</h1>
 
-            <ScheduledRideForm
+            {isLoading === true ? (
+                <p>Loading...</p>
+            ) :  (
+                <ScheduledRideForm
                 ride={ride}
                 setRide={setRide}
                 onSubmit={handleCreate}
                 submitButtonText={submitButtonText}
                 >
-            </ScheduledRideForm>
-
+                </ScheduledRideForm>
+            )
+            }
         </div>
     )
 }

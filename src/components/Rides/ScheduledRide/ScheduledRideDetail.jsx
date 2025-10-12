@@ -12,15 +12,25 @@ import { DateTime } from "luxon";
 //   description: "View a scheduled ride."
 // };
 
-export default function ScheduledRideDetail( { scheduledRide, handleCancel, handleEdit, handleJoin, handleLeave }) {
+export default function ScheduledRideDetail( { authUser, scheduledRide, handleCancel, handleEdit, handleJoin, handleLeave }) {
 
     const router = useRouter();
 
-    // check if event was in past for cancel/edit button disabling
+    // check if event was in past for cancel/edit/join/leave button disabling
     const eventTimeUTC = DateTime.fromISO(scheduledRide.eventTime, {zone: 'utc'});
     const currentTimeUTC = DateTime.utc();
+
     const isPastRide = eventTimeUTC < currentTimeUTC;
 
+    // check if auth user is organizer and /or participant
+    console.log('authUser', authUser);
+    console.log('organizer', scheduledRide.organizer);
+    const isOrganizer = authUser?._id === scheduledRide.organizer?._id;
+    const isParticipant = scheduledRide.participants?.some((p) => p._id === authUser?._id);
+
+    console.log('isPastRide', isPastRide);
+    console.log('isOrganizer', isOrganizer);
+    console.log('isParticipant', isParticipant);
 
     return (
         <ul> {scheduledRide.rideDetails.title}
@@ -42,12 +52,6 @@ export default function ScheduledRideDetail( { scheduledRide, handleCancel, hand
                                                             .setZone(scheduledRide.timeZone)
                                                             .toFormat('ff')} </li>
 
-            {/* <button
-                disabled={isPastRide}
-                onClick={() => router.push(`/scheduled-rides/${scheduledRide._id}/edit`)}>
-                Edit Ride
-            </button> */}
-
             {handleEdit && <button
                 disabled={isPastRide}
                 onClick={() => handleEdit(scheduledRide._id)}>
@@ -60,11 +64,15 @@ export default function ScheduledRideDetail( { scheduledRide, handleCancel, hand
                 Cancel Ride
             </button>}
 
-            {handleJoin && <button onClick={() => handleJoin(scheduledRide._id)}>
+            {handleJoin && <button
+                disabled={isPastRide || isParticipant || isOrganizer}
+                onClick={() => handleJoin(scheduledRide._id)}>
                 Join Ride
             </button>}
 
-            {handleLeave && <button onClick={() => handleLeave(scheduledRide._id)}>
+            {handleLeave && <button
+                disabled={isPastRide || !isParticipant || isOrganizer}
+                onClick={() => handleLeave(scheduledRide._id)}>
                 Leave Ride
             </button>}
 

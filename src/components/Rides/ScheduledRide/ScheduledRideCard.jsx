@@ -8,14 +8,19 @@ import { DateTime } from "luxon";
 // import styles from './page.module.css';
 
 
-export default function ScheduledRideCard({ ride, handleCancel, handleEdit, handleRideDetails, isLoading, setIsLoading, handleJoin, handleLeave }) {
+export default function ScheduledRideCard({ authUser, ride, handleCancel, handleEdit, handleRideDetails, isLoading, setIsLoading, handleJoin, handleLeave }) {
 
     const router = useRouter();
 
     // check if event was in past for cancel/edit button disabling
     const eventTimeUTC = DateTime.fromISO(ride.eventTime, {zone: 'utc'});
     const currentTimeUTC = DateTime.utc();
+
     const isPastRide = eventTimeUTC < currentTimeUTC;
+
+    // check if auth user is organizer and /or participant
+    const isOrganizer = authUser?._id === ride.organizer?._id;
+    const isParticipant = ride.participants?.some((p) => p._id === authUser?._id);
 
 
     return (
@@ -39,13 +44,6 @@ export default function ScheduledRideCard({ ride, handleCancel, handleEdit, hand
                                                 .setZone(ride.timeZone)
                                                 .toFormat('ff')} </li>
 
-                {/*
-                <button
-                    disabled={isPastRide}
-                    onClick={() => router.push(`/scheduled-rides/${ride._id}/edit`)}>
-                    Edit Ride
-                </button> */}
-
                 {handleEdit && <button
                     disabled={isPastRide}
                     onClick={() => handleEdit(ride._id)}>
@@ -58,26 +56,24 @@ export default function ScheduledRideCard({ ride, handleCancel, handleEdit, hand
                     Cancel Ride
                 </button>}
 
-                {/* <button onClick={() => router.push(`/scheduled-rides/${ride._id}`)}>
-                    View Ride Details
-                </button> */}
 
-
-                {handleJoin && <button onClick={() => handleJoin(ride._id)}>
+                {handleJoin && <button
+                    disabled={isPastRide || isParticipant || isOrganizer}
+                    onClick={() => handleJoin(ride._id)}>
                     Join Ride
                 </button>}
 
-                {handleLeave && <button onClick={() => handleLeave(ride._id)}>
+                {handleLeave && <button
+                    disabled={isPastRide || !isParticipant || isOrganizer}
+                    onClick={() => handleLeave(ride._id)}>
                     Leave Ride
                 </button>}
 
-                {handleRideDetails && <button onClick={() => handleRideDetails(ride._id)}>
+                {handleRideDetails && <button
+                    onClick={() => handleRideDetails(ride._id)}>
                     View Ride Details
                 </button>}
 
-{/* //              <button onClick={() => router.push(`/ride-feed/${ride._id}`)}>
-//                  View Ride Details
-//              </button> */}
 
             </ul>
 

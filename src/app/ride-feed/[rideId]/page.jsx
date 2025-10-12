@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
 import { DateTime } from "luxon";
 import ScheduledRideDetail from "@/components/Rides/ScheduledRide/ScheduledRideDetail";
-
+import { useAuth } from "@/app/context/AuthContext";
 
 // export const metadata = {
 //   title: "Public Ride Details",
@@ -18,23 +18,19 @@ export default function PublicRide() {
     const router = useRouter();
     const { rideId } = useParams();
 
+    // get auth user
+    const { authUser, authLoading } = useAuth();
     // define state
     const [publicRide, setPublicRide] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     async function fetchPublicRide () {
-
         try {
             const response = await axios.get(`/api/public-rides/${rideId}`);
             console.log(response);
 
             const rideData = response.data;
             setPublicRide(rideData);
-            // setPublicRide({...rideData,
-            //                 eventTime: DateTime.fromISO(rideData.eventTime, {zone: 'utc'})
-            //                                 .setZone(rideData.timeZone)
-            //                                 .toFormat('ff')
-            //                 })
         } catch (err) {
             console.log('failed to fetch public ride:', err);
         } finally {
@@ -58,10 +54,6 @@ export default function PublicRide() {
             setPublicRide(prev => prev._id.toString() === rideId.toString()
                             ?
                             {...updatedRide}
-                            // {...updatedRide,
-                            //     eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
-                            //                         .setZone(updatedRide.timeZone)
-                            //                         .toFormat('ff')}
                             : prev)
 
         } catch (err) {
@@ -82,10 +74,6 @@ export default function PublicRide() {
             setPublicRide(prev => prev._id.toString() === rideId.toString()
                             ?
                             {...updatedRide}
-                            // {...updatedRide,
-                            //     eventTime: DateTime.fromISO(updatedRide.eventTime, {zone: 'utc'})
-                            //                         .setZone(updatedRide.timeZone)
-                            //                         .toFormat('ff')}
                             : prev)
 
         } catch (err) {
@@ -95,8 +83,11 @@ export default function PublicRide() {
         }
     }
 
-    // TODO - move ride display logic into a child component
-    // choose which details to display for each ride
+    // confirm we have authUser prior to running other logic
+    if (authLoading) {
+        return (<p>Loading user... </p>);
+    }
+
     return (
         <div>
             <button onClick={() => router.push('/ride-feed')}>Back to Ride Feed</button>
@@ -107,39 +98,14 @@ export default function PublicRide() {
             ) : (!publicRide ? (
                 <p>No public ride found</p>
             ) :
-                (
-                <ScheduledRideDetail
+                (<ScheduledRideDetail
+                    authUser={authUser}
                     scheduledRide={publicRide}
                     handleJoin={handleJoin}
                     handleLeave={handleLeave}
                     >
-
                 </ScheduledRideDetail>
                 )
-                // <ul key={publicRide._id}> {publicRide.rideDetails.title}
-                //     <li>Description: {publicRide.rideDetails.description}</li>
-                //     <li>Link: {publicRide.rideDetails.link}</li>
-                //     <li>Type: {publicRide.rideDetails.type}</li>
-                //     <li>Notes: {publicRide.rideDetails.notes}</li>
-                //     <li>Location: {`${publicRide.rideDetails.location.city}, ${publicRide.rideDetails.location.state}`}</li>
-                //     <li>Organizer: {publicRide.organizer.username}</li>
-                //     <li>Visibility: {publicRide.isPublic ? 'Public' : 'Private'}</li>
-                //     <li>Participants: {publicRide.participants.length ?
-                //         publicRide.participants.map((user) => user.username).join(', ')
-                //         : 'No participants yet.'}</li>
-                //     {/* <li>Time: {publicRide.eventTime}</li> */}
-                //     <li>Time: {DateTime.fromISO(publicRide.eventTime, {zone: 'utc'})
-                //                                 .setZone(publicRide.timeZone)
-                //                                 .toFormat('ff')} </li>
-
-                //     <button onClick={() => handleJoinRide(publicRide._id)}>
-                //         Join Ride
-                //     </button>
-                //     <button onClick={() => handleLeaveRide(publicRide._id)}>
-                //         Leave Ride
-                //     </button>
-
-                // </ul>
             )}
 
         </div>

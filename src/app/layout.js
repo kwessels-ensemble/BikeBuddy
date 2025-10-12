@@ -1,6 +1,6 @@
 import NavBar from "@/components/Nav/NavBar"
 import './global.css'
-
+import { AuthProvider } from "@/app/context/AuthContext";
 
 // note can later add functionality to show a specific ride name in title etc.
 export const metadata = {
@@ -12,15 +12,19 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+
   return (
     <html lang="en">
       <body>
-        <header>
-          <NavBar></NavBar>
-        </header>
-        <main>
-          {children}
-        </main>
+        <AuthProvider>
+          <header>
+            <NavBar></NavBar>
+          </header>
+          <main>
+            {children}
+          </main>
+        </AuthProvider>
       </body>
     </html>
   );

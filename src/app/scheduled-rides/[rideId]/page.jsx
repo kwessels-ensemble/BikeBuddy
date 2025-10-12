@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
 import { DateTime } from "luxon";
 import ScheduledRideDetail from "@/components/Rides/ScheduledRide/ScheduledRideDetail";
-
+import { useAuth } from "@/app/context/AuthContext";
 
 // export const metadata = {
 //   title: "Scheduled Ride Details",
@@ -18,6 +18,8 @@ export default function ScheduledRide() {
     const router = useRouter();
     const { rideId } = useParams();
 
+    // get auth user
+    const { authUser, authLoading } = useAuth();
     // define state
     const [scheduledRide, setScheduledRide] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -30,13 +32,8 @@ export default function ScheduledRide() {
 
             const rideData = response.data;
 
-            // TODO - modify logic here to just keep ride data as is and reformat in child component display
-            // setScheduledRide({...rideData,
-            //                 eventTime: DateTime.fromISO(rideData.eventTime, {zone: 'utc'})
-            //                                 .setZone(rideData.timeZone)
-            //                                 .toFormat('ff')
-            //                 })
             setScheduledRide(rideData);
+
         } catch (err) {
             console.log('failed to fetch scheduled ride:', err);
         } finally {
@@ -72,6 +69,10 @@ export default function ScheduledRide() {
         router.push(`/scheduled-rides/${rideId}/edit`);
     }
 
+    if (authLoading) {
+        return (<p>Loading user... </p>);
+    }
+
     return (
         <div>
             <button onClick={() => router.push('/scheduled-rides')}>Back to Scheduled Rides</button>
@@ -83,6 +84,7 @@ export default function ScheduledRide() {
                 <p>No scheduled ride found</p>
             ) : (
                 <ScheduledRideDetail
+                    authUser={authUser}
                     scheduledRide={scheduledRide}
                     handleCancel={handleCancel}
                     handleEdit={handleEdit}

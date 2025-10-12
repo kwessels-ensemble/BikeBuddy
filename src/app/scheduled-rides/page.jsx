@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { DateTime } from "luxon";
 import styles from './page.module.css';
 import ScheduledRideCard from "@/components/Rides/ScheduledRide/ScheduledRideCard";
+import { useAuth } from "@/app/context/AuthContext";
+
 
 // export const metadata = {
 //   title: "Scheduled Rides",
@@ -18,6 +20,8 @@ export default function ScheduledRides() {
 
     const router = useRouter();
 
+    // get auth user
+    const { authUser, authLoading } = useAuth();
     // define state
     const [scheduledRides, setScheduledRides] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -37,15 +41,8 @@ export default function ScheduledRides() {
 
                 const rideData = response.data.scheduledRides;
 
-                // TODO - modify logic here to just keep ride data as is and reformat in child component display
-                // setScheduledRides(rideData.map((ride) => (
-                //     {
-                //     ...ride,
-                //     eventTime: DateTime.fromISO(ride.eventTime, {zone: 'utc'})
-                //                                 .setZone(ride.timeZone)
-                //                                 .toFormat('ff')
-                // })));
                 setScheduledRides(rideData);
+
             } catch (err) {
                     console.error('failed to get scheduled rides:', err);
             } finally {
@@ -80,6 +77,10 @@ export default function ScheduledRides() {
 
     const handleEdit = (rideId) => {
         router.push(`/scheduled-rides/${rideId}/edit`);
+    }
+
+    if (authLoading) {
+        return (<p>Loading user... </p>);
     }
 
     return (
@@ -122,6 +123,7 @@ export default function ScheduledRides() {
                 (scheduledRides.map(ride => (
                     <ScheduledRideCard
                         key={ride._id}
+                        authUser={authUser}
                         ride={ride}
                         handleCancel={handleCancel}
                         handleEdit={handleEdit}

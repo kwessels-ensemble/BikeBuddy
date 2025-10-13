@@ -1,10 +1,11 @@
 "use client";
 
 // import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
 import styles from './page.module.css';
+import { useAuth } from "@/app/context/AuthContext";
 
 // export const metadata = {
 //   title: "Sign Up",
@@ -23,8 +24,30 @@ export default function SignUp() {
         password: ""
     };
 
+    const { authUser, authLoading } = useAuth();
+
+
     const [user, setUser] = useState(defaultUser);
     const [errors, setErrors] = useState({});
+
+
+
+    // if user already authenticated, redirect to ride feed
+    useEffect(() => {
+        if (!authLoading && authUser) {
+            router.push('/ride-feed');
+        }
+    }, [authUser, authLoading, router]);
+
+    // return loading before redirect as needed
+    if (authLoading) {
+        return (
+            <p>Loading...</p>
+        )
+    }
+    if (authUser) {
+        return null;
+    }
 
     const validate = (user) => {
 

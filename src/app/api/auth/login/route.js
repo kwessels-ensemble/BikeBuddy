@@ -53,11 +53,25 @@ export async function POST(request) {
             // login user by creating jwt token
             const token = createToken(user._id);
 
+            // const response =  NextResponse.json({
+            //         message: 'User logged in successfully',
+            //         email: user.email,
+            //         userId: user._id},
+            //         {status: 200})
+
             const response =  NextResponse.json({
                     message: 'User logged in successfully',
-                    email: user.email,
-                    userId: user._id},
+                    user: {
+                        _id: user.id,
+                        username: user.username,
+                        email: user.email,
+                        createdAt: user.createdAt,
+                        updatedAt: user.updatedAt,
+                        __v: user.__v
+                    }
+                    },
                     {status: 200})
+
             // set jwt token
             response.cookies.set('token', token, {
                 httpOnly: true,

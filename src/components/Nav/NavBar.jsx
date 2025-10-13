@@ -81,7 +81,7 @@ export default function NavBar() {
                         Ride Feed
                     </Link>
 
-                    <button onClick={onLogout}>Logout</button>
+                    <button className='btn-secondary-destructive' onClick={onLogout}>Logout</button>
                 </>
                 ) :
                 (

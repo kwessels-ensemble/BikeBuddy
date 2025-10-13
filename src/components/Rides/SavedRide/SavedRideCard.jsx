@@ -2,39 +2,71 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { DateTime } from "luxon";
 
 
 export default function SavedRideCard({ ride, handleDelete }) {
 
     const router = useRouter();
 
+    // MVP - local time pacific
+    // V1- will add this to user table in db
+    const localTime = 'America/Los_Angeles';
+
+
     return (
-        <ul> {ride.title}
-            <li>Description: {ride.description}</li>
-            <li>Link: <Link
+        <div className='card'>
+            <div className='card-header'>
+                <h3 className='rideTitle'>
+                    <Link href={`/saved-rides/${ride._id}`} className='rideTitleLink'>
+                        {ride.title}
+                    </Link>
+                </h3>
+            </div>
+            <div className='card-body'>
+                {/* <p>Description: {ride.description}</p> */}
+
+                <div className='ride-tag'>
+                    {ride.type === 'road' && '🚴 Road'}
+                    {ride.type === 'gravel' && '🚴 🚵 Gravel'}
+                    {ride.type === 'mtb' && '🚵 Mountain'}
+                </div>
+
+                {/* {ride.notes && <p> 🗒️ {ride.notes}</p>} */}
+
+                <p>📍 {`${ride.location.city}, ${ride.location.state}`}</p>
+
+                                { ride.link  &&
+                <p> 🔗 <Link
                         href={ride.link} target="_blank" rel="noopener norefferrer">
                         {ride.link}
                         </Link>
-            </li>
-            <li>Type: {ride.type}</li>
-            <li>Notes: {ride.notes}</li>
-            <li>Location: {`${ride.location.city}, ${ride.location.state}`}</li>
+                </p>
+                }
+            </div>
+            <div className='card-footer'>
+                <div className='card-createdAt'>
+                    Created: {DateTime.fromISO(ride.createdAt, {zone: 'utc'})
+                                                .setZone(localTime)
+                                                .toFormat('ff')}
+                </div>
+                <div className='card-actions'>
+                    <button className='btn-secondary' onClick={() => router.push(`/saved-rides/${ride._id}/edit`)}>
+                        ✏️ Edit
+                    </button>
+                    <button className='btn-secondary' onClick={() => handleDelete(ride._id)}>
+                        🗑️ Delete
+                    </button>
+                    <button className='btn-primary' onClick={() => router.push(`/scheduled-rides/new?savedRideId=${ride._id}`)}>
+                        📅 Schedule
+                    </button>
 
-            <button onClick={() => router.push(`/saved-rides/${ride._id}/edit`)}>
-                Edit
-            </button>
-            <button onClick={() => handleDelete(ride._id)}>
-                Delete
-            </button>
-            <button onClick={() => router.push(`/scheduled-rides/new?savedRideId=${ride._id}`)}>
-                Schedule this Ride
-            </button>
-            <button onClick={() => router.push(`/saved-rides/${ride._id}`)}>
-                View Ride Details
-            </button>
+                </div>
+            </div>
 
-        </ul>
+
+        </div>
+
     )
 
 

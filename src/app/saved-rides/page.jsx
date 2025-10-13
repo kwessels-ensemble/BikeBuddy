@@ -66,17 +66,24 @@ export default function SavedRides() {
         <div>
             <h1>Saved Rides</h1>
             <Link href="/saved-rides/new">
-                <button>Create New Ride!</button>
+                <button className='btn-primary'> + Create New Ride! </button>
             </Link>
 
-            <div className={styles.typeFilters}>
+            {/* <div className={styles.typeFilters}> */}
+
+            <div>
                 {['mtb', 'gravel', 'road', 'all'].map(type => (
                     <button
                         key={type}
                         onClick={() => setTypeFilter(type)}
-                        className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
+                        // className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
+                        className={`btn-filter ${typeFilter === type ? 'active' : ''}`}
                     >
-                        {type}
+                        {/* {type} */}
+                        {type === 'road' && '🚴 Road'}
+                        {type === 'gravel' && '🚴 🚵 Gravel'}
+                        {type === 'mtb' && '🚵 Mountain'}
+                        {type === 'all' && '🚲 All'}
                     </button>
                 ))}
             </div>

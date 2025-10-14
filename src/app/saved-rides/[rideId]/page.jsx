@@ -58,7 +58,7 @@ export default function SavedRide() {
 
 
     return (
-        <div>
+        <div className='container'>
             <button className='btn-secondary' onClick={() => router.push('/saved-rides')}>Back to Saved Rides</button>
             <h1>Saved Ride</h1>
 

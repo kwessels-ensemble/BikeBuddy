@@ -109,7 +109,7 @@ export default function SignUp() {
     }
 
     return (
-        <div>
+        <div className='container'>
             <h1>Sign Up</h1>
             <form className={styles.form}>
 

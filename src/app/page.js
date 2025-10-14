@@ -7,7 +7,7 @@ export default function HomePage() {
   const { authUser, setAuthUser, authLoading } = useAuth();
 
   return (
-    <div >
+    <div className='container'>
       <h1>BikeBuddy</h1>
       <p>
         An app for riders (MTB, Gravel, Road) to plan and join rides in their area.

@@ -41,71 +41,89 @@ export default function NavBar() {
 
     return (
             <nav className={styles.nav}>
+                <div className={styles.container}>
+                    <div className='leftItems'>
+                        <Link
+                            href="/"
+                            className={
+                                pathname === "/"
+                                ? `${styles.navLink} ${styles.navLinkActive}`
+                                : styles.navLink
+                            }>
+                            Home
+                        </Link>
 
-                <Link
-                    href="/"
-                    className={
-                        pathname === "/"
-                        ? `${styles.navLink} ${styles.navLinkActive}`
-                        : styles.navLink
-                    }>
-                    Home
-                </Link>
+                        {authUser ? (
+                        <>
+                            <Link href="/saved-rides"
+                                className={
+                                    pathname === "/rides"
+                                    ? `${styles.navLink} ${styles.navLinkActive}`
+                                    : styles.navLink
+                                }>
+                                Saved Rides
+                            </Link>
 
-                {authUser ? (
-                <>
-                    <Link href="/saved-rides"
-                        className={
-                            pathname === "/rides"
-                            ? `${styles.navLink} ${styles.navLinkActive}`
-                            : styles.navLink
-                        }>
-                        Saved Rides
-                    </Link>
+                            <Link href="/scheduled-rides"
+                                className={
+                                    pathname === "/scheduled-rides"
+                                    ? `${styles.navLink} ${styles.navLinkActive}`
+                                    : styles.navLink
+                                }>
+                                Scheduled Rides
+                            </Link>
 
-                    <Link href="/scheduled-rides"
-                        className={
-                            pathname === "/scheduled-rides"
-                            ? `${styles.navLink} ${styles.navLinkActive}`
-                            : styles.navLink
-                        }>
-                        Scheduled Rides
-                    </Link>
+                            <Link href="/ride-feed"
+                                className={
+                                    pathname === "/ride-feed"
+                                    ? `${styles.navLink} ${styles.navLinkActive}`
+                                    : styles.navLink
+                                }>
+                                Ride Feed
+                            </Link>
 
-                    <Link href="/ride-feed"
-                        className={
-                            pathname === "/ride-feed"
-                            ? `${styles.navLink} ${styles.navLinkActive}`
-                            : styles.navLink
-                        }>
-                        Ride Feed
-                    </Link>
+                            {/* <button className='btn-secondary-destructive' onClick={onLogout}>Logout</button> */}
+                        </>
+                        ) :
+                        (
+                        <>
+                        </>
+                        )}
+                    </div>
 
-                    <button className='btn-secondary-destructive' onClick={onLogout}>Logout</button>
-                </>
-                ) :
-                (
-                <>
-                    <Link href="/login"
-                        className={
-                            pathname === "/login"
-                            ? `${styles.navLink} ${styles.navLinkActive}`
-                            : styles.navLink
-                        }>
-                        Login
-                    </Link>
+                    <div className='rightItems'>
+                        {authUser ?
+                            (
+                            <>
+                                <button className='btn-secondary-destructive' onClick={onLogout}>Logout</button>
+                            </>
+                            )
+                        : (
+                            <>
+                                <Link href="/login"
+                                    className={
+                                        pathname === "/login"
+                                        ? `${styles.navLink} ${styles.navLinkActive}`
+                                        : styles.navLink
+                                    }>
+                                    Login
+                                </Link>
 
-                    <Link href="/signup"
-                        className={
-                            pathname === "/signup"
-                            ? `${styles.navLink} ${styles.navLinkActive}`
-                            : styles.navLink
-                        }>
-                        Sign Up
-                    </Link>
-                </>
-                )}
+                                <Link href="/signup"
+                                    className={
+                                        pathname === "/signup"
+                                        ? `${styles.navLink} ${styles.navLinkActive}`
+                                        : styles.navLink
+                                    }>
+                                    Sign Up
+                                </Link>
+                            </>
+                        )
+                        }
 
+                    </div>
+
+                </div>
             </nav>
     )
 }

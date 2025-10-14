@@ -73,7 +73,7 @@ export default function EditRide() {
 
 
     return (
-        <div>
+        <div className='container'>
             <button className='btn-secondary' onClick={() => router.push('/saved-rides')}>Back to Saved Rides</button>
 
             <h1>Update Ride</h1>

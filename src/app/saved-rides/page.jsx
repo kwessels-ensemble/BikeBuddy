@@ -63,7 +63,7 @@ export default function SavedRides() {
 
 
     return (
-        <div>
+        <div className='container'>
             <Link href="/saved-rides/new">
                 <button className='btn-primary'> + Create New Ride! </button>
             </Link>

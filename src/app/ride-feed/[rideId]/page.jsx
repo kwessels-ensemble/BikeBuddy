@@ -89,7 +89,7 @@ export default function PublicRide() {
     }
 
     return (
-        <div>
+        <div className='container'>
             <button className='btn-secondary' onClick={() => router.push('/ride-feed')}>Back to Ride Feed</button>
 
             <h1>Ride Details</h1>

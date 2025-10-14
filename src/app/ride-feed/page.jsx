@@ -110,7 +110,7 @@ export default function rideFeed() {
     }
 
     return (
-        <div>
+        <div className='container'>
             <Link href="/scheduled-rides/new">
                 <button className='btn-primary'> + Schedule New Ride!</button>
             </Link>

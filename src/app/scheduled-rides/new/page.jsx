@@ -102,7 +102,7 @@ export default function ScheduleNewRide() {
 
 
     return (
-        <div>
+        <div className='container'>
             <button className='btn-secondary' onClick={() => router.push('/scheduled-rides')}>Back to Scheduled Rides</button>
 
             <h1>Schedule New Ride</h1>

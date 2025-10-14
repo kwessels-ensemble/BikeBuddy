@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 // import styles from './page.module.css';
 
 
-export default function ScheduledRideCard({ authUser, ride, handleCancel, handleEdit, handleRideDetails, isLoading, setIsLoading, handleJoin, handleLeave }) {
+export default function ScheduledRideCard({ authUser, ride, handleCancel, handleEdit, rideDetailPath, isLoading, setIsLoading, handleJoin, handleLeave }) {
 
     const router = useRouter();
 
@@ -26,51 +26,52 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
         <div className='card'>
             <div className='card-header'>
                 <h3 className='rideTitle'>
-                    <Link href={`/scheduled-rides/${ride._id}`} className='rideTitleLink'>
+                    <Link href={`${rideDetailPath}/${ride._id}`} className='rideTitleLink'>
                         {ride.rideDetails.title}
                     </Link>
                 </h3>
+                <p className={`visibility-tag ${ride.isPublic ? 'public' : 'private'}`}>{ride.isPublic ? '🌎 Public' : '🔒 Private'}</p>
             </div>
 
             <div className='card-body'>
-                {/* <li>Type: {ride.rideDetails.type}</li> */}
+                <div className='ride-info'>
+                    <div>
+                        <p>{ride.rideDetails.type === 'road' && '🚴 Road'}</p>
+                        <p>{ride.rideDetails.type === 'gravel' && '🚴 🚵 Gravel'}</p>
+                        <p>{ride.rideDetails.type === 'mtb' && '🚵 Mountain'}</p>
+                    </div>
+                    <p> • </p>
+                    <p>📍 {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</p>
 
-                 <div className='ride-tag'>
-                    {ride.rideDetails.type === 'road' && '🚴 Road'}
-                    {ride.rideDetails.type === 'gravel' && '🚴 🚵 Gravel'}
-                    {ride.rideDetails.type === 'mtb' && '🚵 Mountain'}
+                    { ride.rideDetails.link  &&
+                    <>
+                        <p> • </p>
+                        <p> 🔗 <Link
+                                href={ride.rideDetails.link} target="_blank" rel="noopener norefferrer">
+                                {ride.rideDetails.link}
+                                </Link>
+                        </p>
+                    </>
+                    }
                 </div>
-
-                {/* <p>Location: {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</p> */}
-                <p>📍 {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</p>
-
-                { ride.rideDetails.link  &&
-                <p> 🔗 <Link
-                        href={ride.rideDetails.link} target="_blank" rel="noopener norefferrer">
-                        {ride.rideDetails.link}
-                        </Link>
-                </p>
-                }
 
                 {/* {ride.rideDetails.description && <p>Description: {ride.rideDetails.description}</p>}
 
                 {ride.rideDetails.notes && <p>🗒️  {ride.rideDetails.notes}</p>} */}
 
-                <p>Organizer: {ride.organizer.username}</p>
-                <p>Visibility: {ride.isPublic ? 'Public' : 'Private'}</p>
-                <p>Participants: {ride.participants.length ?
-                    ride.participants.map((user) => user.username).join(', ')
-                    : 'No participants yet.'}</p>
-                <p>Time: {DateTime.fromISO(ride.eventTime, {zone: 'utc'})
-                                                .setZone(ride.timeZone)
-                                                .toFormat('ff')} </p>
-
             </div>
             <div className='card-footer'>
                 <div className='card-createdAt'>
-                    Created: {DateTime.fromISO(ride.createdAt, {zone: 'utc'})
+                    <div className="ride-info">
+                        <p>🧍{ride.organizer.username}</p>
+                        <p> • </p>
+                        <p> 🕓 {DateTime.fromISO(ride.eventTime, {zone: 'utc'})
                                                 .setZone(ride.timeZone)
-                                                .toFormat('ff')}
+                                                .toFormat('ff')} </p>
+                    </div>
+                    <p>Participants: {ride.participants.length ?
+                    ride.participants.map((user) => user.username).join(', ')
+                    : 'No participants yet.'}</p>
                 </div>
                 <div className='card-actions'>
                     {handleEdit && <button className='btn-secondary'

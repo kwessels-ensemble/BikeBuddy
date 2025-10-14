@@ -23,26 +23,32 @@ export default function SavedRideCard({ ride, handleDelete }) {
                     </Link>
                 </h3>
             </div>
+
             <div className='card-body'>
                 {/* <p>Description: {ride.description}</p> */}
+                <div className='ride-info'>
+                    <div>
+                        {ride.type === 'road' && '🚴 Road'}
+                        {ride.type === 'gravel' && '🚴 🚵 Gravel'}
+                        {ride.type === 'mtb' && '🚵 Mountain'}
+                    </div>
 
-                <div className='ride-tag'>
-                    {ride.type === 'road' && '🚴 Road'}
-                    {ride.type === 'gravel' && '🚴 🚵 Gravel'}
-                    {ride.type === 'mtb' && '🚵 Mountain'}
+                    {/* {ride.notes && <p> 🗒️ {ride.notes}</p>} */}
+                    <p> • </p>
+                    <p>📍 {`${ride.location.city}, ${ride.location.state}`}</p>
+
+                    { ride.link  &&
+                    <>
+                        <p> • </p>
+                        <p> 🔗 <Link
+                                href={ride.link} target="_blank" rel="noopener norefferrer">
+                                {ride.link}
+                                </Link>
+                        </p>
+                    </>
+                    }
                 </div>
 
-                {/* {ride.notes && <p> 🗒️ {ride.notes}</p>} */}
-
-                <p>📍 {`${ride.location.city}, ${ride.location.state}`}</p>
-
-                                { ride.link  &&
-                <p> 🔗 <Link
-                        href={ride.link} target="_blank" rel="noopener norefferrer">
-                        {ride.link}
-                        </Link>
-                </p>
-                }
             </div>
             <div className='card-footer'>
                 <div className='card-createdAt'>

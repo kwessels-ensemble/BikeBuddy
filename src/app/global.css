@@ -150,6 +150,9 @@ form {
 .card-header {
     font-family: var(--font-heading);
     margin-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .card-body {
@@ -204,3 +207,30 @@ form {
     text-decoration: underline;
 }
 
+.ride-info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    color: var(--color-text);
+    font-size: 16px;
+    /* margin-top: 10px; */
+}
+
+
+.visibility-tag {
+  font-size: 0.9rem;
+  padding: 2px 8px;
+  border-radius: var(--radius);
+  /* font-weight: 500; */
+}
+
+
+.public {
+  background-color: #e0f3e0;
+  /* color: #1e7a1e; */
+}
+
+.private {
+  background-color: #f5e0e0;
+  /* color: #b21e1e; */
+}

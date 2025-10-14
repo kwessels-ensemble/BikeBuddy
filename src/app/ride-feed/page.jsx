@@ -30,6 +30,8 @@ export default function rideFeed() {
     const [typeFilter, setTypeFilter] = useState('all'); // 'mtb, 'gravel', 'road', 'all'
 
 
+    const rideDetailPath = '/ride-feed';
+
     async function fetchPublicRides () {
             try {
                 const response = await axios.get('/api/public-rides', {
@@ -98,9 +100,9 @@ export default function rideFeed() {
         }
     }
 
-    const handleRideDetails = (rideId) => {
-        router.push(`/ride-feed/${rideId}`)
-    }
+    // const handleRideDetails = (rideId) => {
+    //     router.push(`/ride-feed/${rideId}`)
+    // }
 
 
     if (authLoading) {
@@ -109,38 +111,39 @@ export default function rideFeed() {
 
     return (
         <div>
+            <Link href="/scheduled-rides/new">
+                <button className='btn-primary'> + Schedule New Ride!</button>
+            </Link>
+
             <h1>Ride Feed</h1>
 
-            {/* TODO - decide if we want to link here the option to schedule a (public) ride */}
-            {/* <Link href="/scheduled-rides/new">
-                <button>Schedule New Ride!</button>
-            </Link> */}
 
-            <div className={styles.typeFilters}>
+            <div>
                 {['mtb', 'gravel', 'road', 'all'].map(type => (
                     <button
                         key={type}
                         onClick={() => setTypeFilter(type)}
-                        className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
+                        className={`btn-filter ${typeFilter === type ? 'active' : ''}`}
                     >
-                        {type}
+                        {type === 'road' && '🚴 Road'}
+                        {type === 'gravel' && '🚴 🚵 Gravel'}
+                        {type === 'mtb' && '🚵 Mountain'}
+                        {type === 'all' && '🚲 All'}
                     </button>
                 ))}
             </div>
 
-            <div className={styles.timeFilters}>
+            <div>
                 {['upcoming', 'past'].map(time => (
                     <button
                         key={time}
                         onClick={() => setTimeFilter(time)}
-                        className={`${styles.filterButton} ${timeFilter === time ? styles.active : ''}`}
+                        className={`btn-filter ${timeFilter === time ? 'active' : ''}`}
                     >
                         {time}
                     </button>
                 ))}
             </div>
-
-
 
             {isLoading === true ? (
                 <p>Loading...</p>
@@ -152,7 +155,7 @@ export default function rideFeed() {
                     key={ride._id}
                     authUser={authUser}
                     ride={ride}
-                    handleRideDetails={handleRideDetails}
+                    rideDetailPath={rideDetailPath}
                     isLoading={isLoading}
                     setIsLoading={setIsLoading}
                     handleJoin={handleJoin}

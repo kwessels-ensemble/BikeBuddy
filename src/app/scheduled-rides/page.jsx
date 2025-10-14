@@ -28,6 +28,8 @@ export default function ScheduledRides() {
     const [timeFilter, setTimeFilter] = useState('upcoming'); // 'upcoming' or 'past'
     const [typeFilter, setTypeFilter] = useState('all'); // 'mtb, 'gravel', 'road', 'all'
 
+    const rideDetailPath = '/scheduled-rides';
+
     async function fetchScheduledRides () {
             try {
                 const response = await axios.get('/api/scheduled-rides', {
@@ -71,9 +73,9 @@ export default function ScheduledRides() {
         }
     }
 
-    const handleRideDetails = (rideId) => {
-        router.push(`/scheduled-rides/${rideId}`);
-    }
+    // const handleRideDetails = (rideId) => {
+    //     router.push(`/scheduled-rides/${rideId}`);
+    // }
 
     const handleEdit = (rideId) => {
         router.push(`/scheduled-rides/${rideId}/edit`);
@@ -107,18 +109,6 @@ export default function ScheduledRides() {
                 ))}
             </div>
 
-            {/* <div className={styles.typeFilters}>
-                {['mtb', 'gravel', 'road', 'all'].map(type => (
-                    <button
-                        key={type}
-                        onClick={() => setTypeFilter(type)}
-                        className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
-                    >
-                        {type}
-                    </button>
-                ))}
-            </div> */}
-
             <div>
                 {['upcoming', 'past'].map(time => (
                     <button
@@ -143,7 +133,7 @@ export default function ScheduledRides() {
                         ride={ride}
                         handleCancel={handleCancel}
                         handleEdit={handleEdit}
-                        handleRideDetails={handleRideDetails}
+                        rideDetailPath={rideDetailPath}
                         isLoading={isLoading}
                         setIsLoading={setIsLoading}
                         >

@@ -18,13 +18,13 @@ export default function HomePage() {
           <p>
             Join BikeBuddy today.
             <Link href="/signup">
-              <button>Sign Up</button>
+              <button className='btn-primary'>Sign Up</button>
             </Link>
           </p>
             <p>
               Already have an account?
               <Link href="/login">
-                <button>Log In</button>
+                <button className='btn-primary'>Log In</button>
               </Link>
 
           </p>

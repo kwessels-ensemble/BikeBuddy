@@ -33,7 +33,7 @@ export default function SavedRideCard({ ride, handleDelete }) {
                         {ride.type === 'mtb' && '🚵 Mountain'}
                     </div>
 
-                    {/* {ride.notes && <p> 🗒️ {ride.notes}</p>} */}
+
                     <p> • </p>
                     <p>📍 {`${ride.location.city}, ${ride.location.state}`}</p>
 

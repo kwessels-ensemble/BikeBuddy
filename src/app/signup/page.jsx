@@ -148,7 +148,7 @@ export default function SignUp() {
                 </input>
                 {errors.password && <span className={styles.error}>{errors.password}</span>}
 
-                <button onClick={onSubmit}>Sign Up</button>
+                <button className='btn-primary' onClick={onSubmit}>Sign Up</button>
 
                 {errors.general && <span className={styles.error}>{errors.general}</span>}
 

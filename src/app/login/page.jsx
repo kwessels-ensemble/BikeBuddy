@@ -148,7 +148,7 @@ export default function Login() {
                 </input>
                 {errors.password && <span className={styles.error}>{errors.password}</span>}
 
-                <button onClick={onSubmit}>Log In</button>
+                <button className='btn-primary' onClick={onSubmit}>Log In</button>
 
                 {errors.general && <span className={styles.error}>{errors.general}</span>}
 

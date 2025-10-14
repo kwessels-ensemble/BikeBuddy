@@ -7,6 +7,7 @@ import { useRouter, useParams } from "next/navigation";
 import { DateTime } from "luxon";
 import ScheduledRideDetail from "@/components/Rides/ScheduledRide/ScheduledRideDetail";
 import { useAuth } from "@/app/context/AuthContext";
+import Spinner from "@/components/Spinner/Spinner";
 
 // export const metadata = {
 //   title: "Public Ride Details",
@@ -85,7 +86,12 @@ export default function PublicRide() {
 
     // confirm we have authUser prior to running other logic
     if (authLoading) {
-        return (<p>Loading user... </p>);
+        // return (<p>Loading user... </p>);
+        return (
+            <div className='loading-container'>
+                <Spinner></Spinner>
+            </div>
+        )
     }
 
     return (
@@ -95,7 +101,8 @@ export default function PublicRide() {
             <h1>Ride Details</h1>
 
             {isLoading === true ? (
-                <p>Loading...</p>
+                // <p>Loading...</p>
+                <Spinner></Spinner>
             ) : (!publicRide ? (
                 <p>No public ride found</p>
             ) :

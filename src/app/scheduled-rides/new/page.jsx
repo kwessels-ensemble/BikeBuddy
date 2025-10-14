@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { DateTime } from "luxon";
 import ScheduledRideForm from "@/components/Rides/ScheduledRide/ScheduledRideForm";
+import Spinner from "@/components/Spinner/Spinner";
+
 
 // export const metadata = {
 //   title: "Schedule New Ride",
@@ -108,7 +110,8 @@ export default function ScheduleNewRide() {
             <h1>Schedule New Ride</h1>
 
             {isLoading === true ? (
-                <p>Loading...</p>
+                // <p>Loading...</p>
+                <Spinner></Spinner>
             ) :  (
                 <ScheduledRideForm
                 ride={ride}

@@ -7,6 +7,8 @@ import {useRouter} from "next/navigation";
 import axios from "axios";
 import styles from './page.module.css';
 import { useAuth } from "@/app/context/AuthContext";
+import Spinner from "@/components/Spinner/Spinner";
+
 
 // TODO - add this logic back again after adding client logic to a child component
 // export const metadata = {
@@ -40,7 +42,10 @@ export default function Login() {
     // return loading before redirect as needed
     if (authLoading) {
         return (
-            <p>Loading...</p>
+            // <p>Loading...</p>
+            <div className='loading-container'>
+                <Spinner></Spinner>
+            </div>
         )
     }
     if (authUser) {

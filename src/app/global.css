@@ -44,7 +44,7 @@ button {
     cursor: pointer;
     transition: background 0.2s ease, transform 0.1s ease;
     margin-bottom: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
     margin-right: 1px;
     margin-left: 1px;
 }
@@ -233,4 +233,13 @@ form {
 .private {
   background-color: #f5e0e0;
   /* color: #b21e1e; */
+}
+
+/* to wrap around loading spinner when we want it centered on page */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 200px;
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
 import SavedRideForm from "@/components/Rides/SavedRide/SavedRideForm";
+import Spinner from "@/components/Spinner/Spinner";
 
 // export const metadata = {
 //   title: "Update ride Ride",
@@ -68,7 +69,12 @@ export default function EditRide() {
     }
 
     if (!ride) {
-        return (<p>Loading...</p>);
+        // return (<p>Loading...</p>);
+        return (
+                <div className='loading-container'>
+                    <Spinner></Spinner>
+                </div>
+        )
     }
 
 
@@ -79,7 +85,8 @@ export default function EditRide() {
             <h1>Update Ride</h1>
 
             {isLoading === true ? (
-                <p>Loading...</p>
+                // <p>Loading...</p>
+                <Spinner></Spinner>
             ) : (
                 <SavedRideForm
                 ride={ride}

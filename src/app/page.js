@@ -8,8 +8,10 @@ export default function HomePage() {
 
   return (
     <div className='container'>
+
       <h1>BikeBuddy</h1>
-      <p>
+      <div className='card'>
+              <p>
         An app for riders (MTB, Gravel, Road) to plan and join rides in their area.
       </p>
 
@@ -30,6 +32,8 @@ export default function HomePage() {
           </p>
         </>
       }
+      </div>
+
 
     </div>
   );

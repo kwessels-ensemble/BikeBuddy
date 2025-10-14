@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
 import SavedRideDetail from "@/components/Rides/SavedRide/SavedRideDetail";
-
+import Spinner from "@/components/Spinner/Spinner";
 
 // export const metadata = {
 //   title: "Saved Ride",
@@ -63,7 +63,8 @@ export default function SavedRide() {
             <h1>Saved Ride</h1>
 
             {isLoading === true ? (
-                <p>Loading...</p>
+                // <p>Loading...</p>
+                <Spinner></Spinner>
             ) : (!savedRide ? (
                 <p>No saved ride found</p>
             ) : (

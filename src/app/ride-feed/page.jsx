@@ -9,7 +9,7 @@ import { DateTime } from "luxon";
 import styles from './page.module.css';
 import ScheduledRideCard from "@/components/Rides/ScheduledRide/ScheduledRideCard";
 import { useAuth } from "@/app/context/AuthContext";
-
+import Spinner from "@/components/Spinner/Spinner";
 
 // export const metadata = {
 //   title: "Ride Feed",
@@ -106,7 +106,12 @@ export default function rideFeed() {
 
 
     if (authLoading) {
-        return (<p>Loading user... </p>);
+        // return (<p>Loading user... </p>);
+        return (
+            <div className='loading-container'>
+                <Spinner></Spinner>
+            </div>
+        )
     }
 
     return (
@@ -146,7 +151,8 @@ export default function rideFeed() {
             </div>
 
             {isLoading === true ? (
-                <p>Loading...</p>
+                // <p>Loading...</p>
+                <Spinner></Spinner>
             ) : (publicRides.length === 0 ? (
                 <p>No public rides found</p>
             ) :
@@ -156,8 +162,8 @@ export default function rideFeed() {
                     authUser={authUser}
                     ride={ride}
                     rideDetailPath={rideDetailPath}
-                    isLoading={isLoading}
-                    setIsLoading={setIsLoading}
+                    // isLoading={isLoading}
+                    // setIsLoading={setIsLoading}
                     handleJoin={handleJoin}
                     handleLeave={handleLeave}
                     >

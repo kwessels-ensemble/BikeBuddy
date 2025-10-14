@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import styles from './page.module.css';
 import SavedRideCard from "@/components/Rides/SavedRide/SavedRideCard";
+import Spinner from "@/components/Spinner/Spinner";
 
 // export const metadata = {
 //   title: "Saved Rides",
@@ -91,7 +92,8 @@ export default function SavedRides() {
             </div>
 
             {isLoading === true ? (
-                <p>Loading...</p>
+                // <p>Loading...</p>
+                <Spinner></Spinner>
             ) : (savedRides.length === 0 ? (
                 <p>No saved rides found</p>
             ) :

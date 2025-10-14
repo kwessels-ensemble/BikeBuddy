@@ -9,6 +9,7 @@ import { DateTime } from "luxon";
 import styles from './page.module.css';
 import ScheduledRideCard from "@/components/Rides/ScheduledRide/ScheduledRideCard";
 import { useAuth } from "@/app/context/AuthContext";
+import Spinner from "@/components/Spinner/Spinner";
 
 
 // export const metadata = {
@@ -82,7 +83,12 @@ export default function ScheduledRides() {
     }
 
     if (authLoading) {
-        return (<p>Loading user... </p>);
+        return (
+        // <p>Loading user... </p>
+        <div className='loading-container'>
+            <Spinner></Spinner>
+        </div>
+    );
     }
 
     return (
@@ -122,7 +128,8 @@ export default function ScheduledRides() {
             </div>
 
             {isLoading === true ? (
-                <p>Loading...</p>
+                // <p>Loading...</p>
+                <Spinner></Spinner>
             ) : (scheduledRides.length === 0 ? (
                 <p>No scheduled rides found</p>
             ) :
@@ -134,8 +141,8 @@ export default function ScheduledRides() {
                         handleCancel={handleCancel}
                         handleEdit={handleEdit}
                         rideDetailPath={rideDetailPath}
-                        isLoading={isLoading}
-                        setIsLoading={setIsLoading}
+                        // isLoading={isLoading}
+                        // setIsLoading={setIsLoading}
                         >
                     </ScheduledRideCard>
                 )))

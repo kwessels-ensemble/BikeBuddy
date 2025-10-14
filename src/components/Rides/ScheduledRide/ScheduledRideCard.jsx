@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 // import styles from './page.module.css';
 
 
-export default function ScheduledRideCard({ authUser, ride, handleCancel, handleEdit, rideDetailPath, isLoading, setIsLoading, handleJoin, handleLeave }) {
+export default function ScheduledRideCard({ authUser, ride, handleCancel, handleEdit, rideDetailPath, handleJoin, handleLeave }) {
 
     const router = useRouter();
 

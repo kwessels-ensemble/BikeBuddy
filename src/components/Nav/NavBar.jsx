@@ -41,7 +41,7 @@ export default function NavBar() {
 
     return (
             <nav className={styles.nav}>
-                <div className={styles.container}>
+                <div className={`container ${styles.inner}`}>
                     <div className='leftItems'>
                         <Link
                             href="/"

@@ -23,61 +23,87 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
     const isParticipant = ride.participants?.some((p) => p._id === authUser?._id);
 
     return (
-        <div>
-            <ul> {ride.rideDetails.title}
-                <li>Description: {ride.rideDetails.description}</li>
-                <li>Link: <Link
+        <div className='card'>
+            <div className='card-header'>
+                <h3 className='rideTitle'>
+                    <Link href={`/scheduled-rides/${ride._id}`} className='rideTitleLink'>
+                        {ride.rideDetails.title}
+                    </Link>
+                </h3>
+            </div>
+
+            <div className='card-body'>
+                {/* <li>Type: {ride.rideDetails.type}</li> */}
+
+                 <div className='ride-tag'>
+                    {ride.rideDetails.type === 'road' && '🚴 Road'}
+                    {ride.rideDetails.type === 'gravel' && '🚴 🚵 Gravel'}
+                    {ride.rideDetails.type === 'mtb' && '🚵 Mountain'}
+                </div>
+
+                {/* <p>Location: {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</p> */}
+                <p>📍 {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</p>
+
+                { ride.rideDetails.link  &&
+                <p> 🔗 <Link
                         href={ride.rideDetails.link} target="_blank" rel="noopener norefferrer">
                         {ride.rideDetails.link}
                         </Link>
-                </li>
-                <li>Type: {ride.rideDetails.type}</li>
-                <li>Notes: {ride.rideDetails.notes}</li>
-                <li>Location: {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</li>
-                <li>Organizer: {ride.organizer.username}</li>
-                <li>Visibility: {ride.isPublic ? 'Public' : 'Private'}</li>
-                <li>Participants: {ride.participants.length ?
+                </p>
+                }
+
+                {/* {ride.rideDetails.description && <p>Description: {ride.rideDetails.description}</p>}
+
+                {ride.rideDetails.notes && <p>🗒️  {ride.rideDetails.notes}</p>} */}
+
+                <p>Organizer: {ride.organizer.username}</p>
+                <p>Visibility: {ride.isPublic ? 'Public' : 'Private'}</p>
+                <p>Participants: {ride.participants.length ?
                     ride.participants.map((user) => user.username).join(', ')
-                    : 'No participants yet.'}</li>
-                <li>Time: {DateTime.fromISO(ride.eventTime, {zone: 'utc'})
+                    : 'No participants yet.'}</p>
+                <p>Time: {DateTime.fromISO(ride.eventTime, {zone: 'utc'})
                                                 .setZone(ride.timeZone)
-                                                .toFormat('ff')} </li>
+                                                .toFormat('ff')} </p>
 
-                {handleEdit && <button
-                    disabled={isPastRide}
-                    onClick={() => handleEdit(ride._id)}>
-                    Edit Ride
-                </button>}
+            </div>
+            <div className='card-footer'>
+                <div className='card-createdAt'>
+                    Created: {DateTime.fromISO(ride.createdAt, {zone: 'utc'})
+                                                .setZone(ride.timeZone)
+                                                .toFormat('ff')}
+                </div>
+                <div className='card-actions'>
+                    {handleEdit && <button className='btn-secondary'
+                        disabled={isPastRide}
+                        onClick={() => handleEdit(ride._id)}>
+                        Edit Ride
+                    </button>}
 
-                {handleCancel && <button
-                    disabled={isPastRide}
-                    onClick={() => handleCancel(ride._id)}>
-                    Cancel Ride
-                </button>}
+                    {handleCancel && <button className='btn-secondary'
+                        disabled={isPastRide}
+                        onClick={() => handleCancel(ride._id)}>
+                        Cancel Ride
+                    </button>}
 
+                    {handleJoin && <button className='btn-secondary'
+                        disabled={isPastRide || isParticipant || isOrganizer}
+                        onClick={() => handleJoin(ride._id)}>
+                        Join Ride
+                    </button>}
 
-                {handleJoin && <button
-                    disabled={isPastRide || isParticipant || isOrganizer}
-                    onClick={() => handleJoin(ride._id)}>
-                    Join Ride
-                </button>}
+                    {handleLeave && <button className='btn-secondary'
+                        disabled={isPastRide || !isParticipant || isOrganizer}
+                        onClick={() => handleLeave(ride._id)}>
+                        Leave Ride
+                    </button>}
 
-                {handleLeave && <button
-                    disabled={isPastRide || !isParticipant || isOrganizer}
-                    onClick={() => handleLeave(ride._id)}>
-                    Leave Ride
-                </button>}
+                    {/* {handleRideDetails && <button
+                        onClick={() => handleRideDetails(ride._id)}>
+                        View Ride Details
+                    </button>} */}
 
-                {handleRideDetails && <button
-                    onClick={() => handleRideDetails(ride._id)}>
-                    View Ride Details
-                </button>}
-
-
-            </ul>
-
+                </div>
+            </div>
         </div>
-
-
     )
 }

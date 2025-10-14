@@ -85,25 +85,29 @@ export default function ScheduledRides() {
 
     return (
         <div>
-            <h1>Scheduled Rides</h1>
 
             <Link href="/scheduled-rides/new">
-                <button>Schedule New Ride!</button>
+                <button className='btn-primary'> + Schedule New Ride!</button>
             </Link>
 
-            <div className={styles.timeFilters}>
-                {['upcoming', 'past'].map(time => (
+            <h1>Scheduled Rides</h1>
+
+            <div>
+                {['mtb', 'gravel', 'road', 'all'].map(type => (
                     <button
-                        key={time}
-                        onClick={() => setTimeFilter(time)}
-                        className={`${styles.filterButton} ${timeFilter === time ? styles.active : ''}`}
-                    >
-                        {time}
+                        key={type}
+                        onClick={() => setTypeFilter(type)}
+                        className={`btn-filter ${typeFilter === type ? 'active' : ''}`}
+                        >
+                        {type === 'road' && '🚴 Road'}
+                        {type === 'gravel' && '🚴 🚵 Gravel'}
+                        {type === 'mtb' && '🚵 Mountain'}
+                        {type === 'all' && '🚲 All'}
                     </button>
                 ))}
             </div>
 
-            <div className={styles.typeFilters}>
+            {/* <div className={styles.typeFilters}>
                 {['mtb', 'gravel', 'road', 'all'].map(type => (
                     <button
                         key={type}
@@ -111,6 +115,18 @@ export default function ScheduledRides() {
                         className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
                     >
                         {type}
+                    </button>
+                ))}
+            </div> */}
+
+            <div>
+                {['upcoming', 'past'].map(time => (
+                    <button
+                        key={time}
+                        onClick={() => setTimeFilter(time)}
+                        className={`btn-filter ${timeFilter === time ? 'active' : ''}`}
+                    >
+                        {time}
                     </button>
                 ))}
             </div>

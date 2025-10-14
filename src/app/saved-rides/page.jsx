@@ -64,10 +64,12 @@ export default function SavedRides() {
 
     return (
         <div>
-            <h1>Saved Rides</h1>
             <Link href="/saved-rides/new">
                 <button className='btn-primary'> + Create New Ride! </button>
             </Link>
+
+            <h1>Saved Rides</h1>
+
 
             {/* <div className={styles.typeFilters}> */}
 

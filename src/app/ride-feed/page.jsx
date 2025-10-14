@@ -116,6 +116,17 @@ export default function rideFeed() {
                 <button>Schedule New Ride!</button>
             </Link> */}
 
+            <div className={styles.typeFilters}>
+                {['mtb', 'gravel', 'road', 'all'].map(type => (
+                    <button
+                        key={type}
+                        onClick={() => setTypeFilter(type)}
+                        className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
+                    >
+                        {type}
+                    </button>
+                ))}
+            </div>
 
             <div className={styles.timeFilters}>
                 {['upcoming', 'past'].map(time => (
@@ -129,17 +140,7 @@ export default function rideFeed() {
                 ))}
             </div>
 
-            <div className={styles.typeFilters}>
-                {['mtb', 'gravel', 'road', 'all'].map(type => (
-                    <button
-                        key={type}
-                        onClick={() => setTypeFilter(type)}
-                        className={`${styles.filterButton} ${typeFilter === type ? styles.active : ''}`}
-                    >
-                        {type}
-                    </button>
-                ))}
-            </div>
+
 
             {isLoading === true ? (
                 <p>Loading...</p>

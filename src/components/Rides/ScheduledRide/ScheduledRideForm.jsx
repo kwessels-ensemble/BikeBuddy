@@ -265,7 +265,7 @@ export default function ScheduledRideForm( { ride, setRide, onSubmit, submitButt
             </select>
             {errors.timeZone && <span className={styles.error}>{errors.timeZone}</span>}
 
-            <button onClick={handleSubmit}>{submitButtonText}</button>
+            <button className='btn-primary' onClick={handleSubmit}>{submitButtonText}</button>
 
         </form>
 

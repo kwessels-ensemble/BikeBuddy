@@ -22,6 +22,24 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
     const isOrganizer = authUser?._id === ride.organizer?._id;
     const isParticipant = ride.participants?.some((p) => p._id === authUser?._id);
 
+
+    function formatParticipants(participants) {
+        // handle edge case, though we always expect at least 1 participant
+        if (!participants.length) {
+            return 'No participants yet.';
+        }
+
+        const totalParticipants = participants.length + 1 ;
+        // grab (up to) the first 3 to display
+        const firstThree = participants.slice(0, 3);
+        let outputText = firstThree.map((user) => user.username).join(', ');
+        if (totalParticipants <= 3) {
+            return outputText;
+        }
+        const extraParticipants = totalParticipants - 3;
+        return (outputText + ` + ${extraParticipants} more.`)
+    }
+
     return (
         <div className='card'>
             <div className='card-header'>
@@ -69,9 +87,13 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
                                                 .setZone(ride.timeZone)
                                                 .toFormat('ff')} </p>
                     </div>
-                    <p>Participants: {ride.participants.length ?
+
+                    {/* <p>Participants: {ride.participants.length ?
                     ride.participants.map((user) => user.username).join(', ')
-                    : 'No participants yet.'}</p>
+                    : 'No participants yet.'}</p> */}
+
+                    <p>Participants: {formatParticipants(ride.participants)}</p>
+
                 </div>
                 <div className='card-actions'>
                     {handleEdit && <button className='btn-secondary'

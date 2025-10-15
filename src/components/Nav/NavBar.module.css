@@ -36,6 +36,17 @@
     text-decoration: none;
 }
 
+.appName {
+    /* color: var(--color-primary); */
+    font-size: 20px;
+    font-weight: 600px;
+
+}
+
+/* .appName .navLinkActive {
+    color: var(--color-primary-dark);
+} */
+
 .navLink:hover {
     /* color: rgb(157, 3, 157); */
     color: var(--color-secondary);

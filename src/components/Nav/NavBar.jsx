@@ -42,7 +42,7 @@ export default function NavBar() {
         // }
     }
 
-    // if (isLoading) {
+    // if (authLoading) {
     //     return (
     //         <div className='loading-container'>
     //             <Spinner></Spinner>
@@ -58,10 +58,10 @@ export default function NavBar() {
                             href="/"
                             className={
                                 pathname === "/"
-                                ? `${styles.navLink} ${styles.navLinkActive}`
-                                : styles.navLink
+                                ? `${styles.navLink} ${styles.appName} ${styles.navLinkActive}`
+                                : `${styles.navLink} ${styles.appName}`
                             }>
-                            Home
+                            🚲 BikeBuddy
                         </Link>
 
                         {authUser ? (

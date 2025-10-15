@@ -2,14 +2,23 @@
 
 import Link from "next/link";
 import { useAuth } from "@/app/context/AuthContext";
+import Spinner from "@/components/Spinner/Spinner";
 
 export default function HomePage() {
   const { authUser, setAuthUser, authLoading } = useAuth();
 
+  if (authLoading) {
+    return (
+        <div className='loading-container'>
+            <Spinner></Spinner>
+        </div>
+    )
+  }
+
   return (
     <div className='container'>
 
-      <h1>BikeBuddy</h1>
+      <h1>🚲 BikeBuddy</h1>
       <div className='card'>
         <p className='home-description'>
         An app for riders (MTB, Gravel, Road) to plan and join rides in their area.

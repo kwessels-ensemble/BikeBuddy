@@ -100,13 +100,11 @@ export default function rideFeed() {
         }
     }
 
-    // const handleRideDetails = (rideId) => {
-    //     router.push(`/ride-feed/${rideId}`)
-    // }
+
 
 
     if (authLoading) {
-        // return (<p>Loading user... </p>);
+        // return null;
         return (
             <div className='loading-container'>
                 <Spinner></Spinner>
@@ -151,7 +149,6 @@ export default function rideFeed() {
             </div>
 
             {isLoading === true ? (
-                // <p>Loading...</p>
                 <Spinner></Spinner>
             ) : (publicRides.length === 0 ? (
                 <p>No public rides found</p>
@@ -162,12 +159,9 @@ export default function rideFeed() {
                     authUser={authUser}
                     ride={ride}
                     rideDetailPath={rideDetailPath}
-                    // isLoading={isLoading}
-                    // setIsLoading={setIsLoading}
                     handleJoin={handleJoin}
                     handleLeave={handleLeave}
                     >
-
                 </ScheduledRideCard>
             )))
             )}

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import { useState } from "react";
 import Spinner from "../Spinner/Spinner";
-
+import LogoutButton from "./LogoutButton";
 
 export default function NavBar() {
     // get current route for styling logic
@@ -16,31 +16,8 @@ export default function NavBar() {
     // router for redirect
     const router = useRouter();
 
-    // const [isLoading, setIsLoading] = useState(false);
-
     const { authUser, setAuthUser, authLoading } = useAuth();
 
-    const onLogout = async (e) => {
-        try {
-            e.preventDefault();
-            // setIsLoading(true);
-            // console.log('clicked log out!');
-            const response = await axios.post('/api/auth/logout', {}, {withCredentials: true});
-            console.log(response);
-            setAuthUser(null);
-            //redirect to home page
-            router.push('/');
-
-
-
-        } catch (err) {
-            console.error('logout error:', err)
-
-        }
-        // finally {
-        //     setIsLoading(false);
-        // }
-    }
 
     if (authLoading) {
         return null;
@@ -89,7 +66,6 @@ export default function NavBar() {
                                 Ride Feed
                             </Link>
 
-                            {/* <button className='btn-secondary-destructive' onClick={onLogout}>Logout</button> */}
                         </>
                         ) :
                         (
@@ -102,7 +78,7 @@ export default function NavBar() {
                         {authUser ?
                             (
                             <>
-                                <button className='btn-secondary-destructive' onClick={onLogout}>Logout</button>
+                                <LogoutButton></LogoutButton>
                             </>
                             )
                         : (

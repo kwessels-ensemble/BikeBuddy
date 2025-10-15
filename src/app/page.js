@@ -18,12 +18,11 @@ export default function HomePage() {
   return (
     <div className='container'>
 
-      <h1>🚲 BikeBuddy</h1>
-      <div className='card'>
-        <p className='home-description'>
+      {/* <h1>🚲 BikeBuddy</h1> */}
+      <h4 className='home-description'>
         An app for riders (MTB, Gravel, Road) to plan and join rides in their area.
-        </p>
-
+      </h4>
+      <div>
         {!authUser &&
           <div className='home-actions'>
             <div className='home-action-card'>

@@ -27,10 +27,10 @@ export default function NavBar() {
             // console.log('clicked log out!');
             const response = await axios.post('/api/auth/logout', {}, {withCredentials: true});
             console.log(response);
-
+            setAuthUser(null);
             //redirect
             router.push('/login');
-            setAuthUser(null);
+
 
 
         } catch (err) {
@@ -42,13 +42,13 @@ export default function NavBar() {
         // }
     }
 
-    if (authLoading) {
-        return (
-            <div className='loading-container'>
-                <Spinner></Spinner>
-            </div>
-        )
-    }
+    // if (authLoading) {
+    //     return (
+    //         <div className='loading-container'>
+    //             <Spinner></Spinner>
+    //         </div>
+    //     )
+    // }
 
     return (
             <nav className={styles.nav}>

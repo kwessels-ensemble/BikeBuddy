@@ -1,11 +1,11 @@
 :root {
     /* colors */
-    --color-primary: #1347b8;
-    --color-primary-dark: #0c378c;
-    --color-secondary:#f67f0f;
-    --color-secondary-dark: #c1670d;
-    --color-secondary-destructive: rgb(237, 150, 79);
-    --color-secondary-destructive-dark: #f67f0f;
+    --color-primary: #026ee2;
+    --color-primary-dark: #0355b3;
+    --color-secondary:#FF7A00;
+    --color-secondary-dark: #d56801;
+    --color-secondary-destructive: #fc9535;
+    --color-secondary-destructive-dark: #db6b01;
 
 
     --color-neutral: #f8fafc;

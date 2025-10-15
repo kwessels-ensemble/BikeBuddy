@@ -6,6 +6,15 @@
     --color-secondary-dark: #be1e6a;
     --color-secondary-destructive: #ee89bb;
     --color-secondary-destructive-dark: #ec4899;
+
+    /* --color-primary: #3568cd;
+    --color-primary-dark: #254b95;
+    --color-secondary:#be5325;
+    --color-secondary-dark: #723419;
+    --color-secondary-destructive: #dd6d3c;
+    --color-secondary-destructive-dark: #b06c4f; */
+
+
     --color-neutral: #f8fafc;
     --color-background: #ffffff;
     --color-card-background: #f9fafb;
@@ -36,6 +45,21 @@ html, body {
 
 h1, h2, h3, .btn, .filter-btn {
     font-family: var(--font-heading);
+}
+
+.rideTitleLink {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+
+}
+
+.rideTitleLink:hover{
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
 }
 
 button {

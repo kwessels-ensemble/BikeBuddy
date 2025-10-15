@@ -98,7 +98,7 @@ export default function ScheduledRides() {
                 <button className='btn-primary'> + Schedule New Ride!</button>
             </Link>
 
-            <h1>Scheduled Rides</h1>
+            <h1>My Scheduled Rides</h1>
 
             <div>
                 {['mtb', 'gravel', 'road', 'all'].map(type => (

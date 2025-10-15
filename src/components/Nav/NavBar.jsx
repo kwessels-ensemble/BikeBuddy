@@ -68,7 +68,7 @@ export default function NavBar() {
                         <>
                             <Link href="/saved-rides"
                                 className={
-                                    pathname === "/rides"
+                                    pathname === "/saved-rides"
                                     ? `${styles.navLink} ${styles.navLinkActive}`
                                     : styles.navLink
                                 }>

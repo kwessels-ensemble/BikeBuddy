@@ -120,7 +120,7 @@ export default function rideFeed() {
                 <button className='btn-primary'> + Schedule New Ride!</button>
             </Link>
 
-            <h1>Ride Feed</h1>
+            <h1>Public Ride Feed</h1>
 
 
             <div>

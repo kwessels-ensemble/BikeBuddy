@@ -69,7 +69,7 @@ export default function SavedRides() {
                 <button className='btn-primary'> + Create New Ride! </button>
             </Link>
 
-            <h1>Saved Rides</h1>
+            <h1>My Saved Rides</h1>
 
 
             {/* <div className={styles.typeFilters}> */}

@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import { useState } from "react";
+import Spinner from "../Spinner/Spinner";
 
 
 export default function NavBar() {
@@ -15,14 +16,14 @@ export default function NavBar() {
     // router for redirect
     const router = useRouter();
 
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
 
     const { authUser, setAuthUser, authLoading } = useAuth();
 
     const onLogout = async (e) => {
         try {
             e.preventDefault();
-            setIsLoading(true);
+            // setIsLoading(true);
             // console.log('clicked log out!');
             const response = await axios.post('/api/auth/logout', {}, {withCredentials: true});
             console.log(response);
@@ -30,14 +31,24 @@ export default function NavBar() {
             //redirect
             router.push('/login');
 
+
         } catch (err) {
             console.error('logout error:', err)
 
-        } finally {
-
-            setIsLoading(false);
         }
+        // finally {
+
+        //     setIsLoading(false);
+        // }
     }
+
+    // if (isLoading) {
+    //     return (
+    //         <div className='loading-container'>
+    //             <Spinner></Spinner>
+    //         </div>
+    //     )
+    // }
 
     return (
             <nav className={styles.nav}>

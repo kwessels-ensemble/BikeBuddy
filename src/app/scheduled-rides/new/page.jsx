@@ -54,6 +54,8 @@ export default function ScheduleNewRide() {
                     const data = response.data;
                     setRide((prev) => ({
                         ...prev,
+                        // need to set visibility default to private?
+                        // isPublic: "false",
                         rideDetails: {
                             ...prev.rideDetails,
                             title: data.title ?? prev.rideDetails.title,

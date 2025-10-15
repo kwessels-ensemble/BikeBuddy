@@ -2,7 +2,7 @@ import { connectToDb } from "@/lib/mongodb";
 import ScheduledRide from "@/models/ScheduledRide";
 import { NextResponse } from "next/server";
 import {verifyToken} from "@/lib/auth";
-
+import { DateTime } from "luxon";
 
 export async function GET(request) {
 
@@ -121,7 +121,7 @@ export async function POST(request) {
         if (!reqBody.timeZone) {
             errors.timeZone = 'timeZone is required.'
         }
-        if (!reqBody.isPublic) {
+        if (!reqBody.isPublic === undefined) {
             errors.isPublic = 'isPublic is required.'
         }
         if (!reqBody.rideDetails.title) {

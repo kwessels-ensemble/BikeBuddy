@@ -34,14 +34,17 @@ export default function SavedRideDetail( { savedRide, handleDelete }) {
                     <p>📍 {`${savedRide.location.city}, ${savedRide.location.state}`}</p>
 
                     { savedRide.link  &&
-                        <>
-                            <p> • </p>
-                            <p> 🔗 <Link
-                                    href={savedRide.link} target="_blank" rel="noopener norefferrer">
-                                    {savedRide.link}
-                                    </Link>
-                            </p>
-                        </>
+                        <p className='link-container'>
+                            <span> • </span>
+                            <Link
+                                href={savedRide.link}
+                                target="_blank"
+                                rel="noopener norefferrer"
+                                className='link'
+                                >
+                                🔗 {savedRide.link}
+                                </Link>
+                        </p>
                     }
                 </div>
 

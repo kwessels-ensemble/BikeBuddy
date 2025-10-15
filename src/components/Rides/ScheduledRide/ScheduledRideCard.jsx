@@ -75,14 +75,6 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
 
                         </Link>
                     </p>
-                    // <>
-                    //     <p> • </p>
-                    //     <p> 🔗 <Link
-                    //             href={ride.rideDetails.link} target="_blank" rel="noopener norefferrer">
-                    //             Link
-                    //             </Link>
-                    //     </p>
-                    // </>
                     }
                 </div>
 

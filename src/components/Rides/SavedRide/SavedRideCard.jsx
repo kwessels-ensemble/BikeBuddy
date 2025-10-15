@@ -38,14 +38,19 @@ export default function SavedRideCard({ ride, handleDelete }) {
                     <p>📍 {`${ride.location.city}, ${ride.location.state}`}</p>
 
                     { ride.link  &&
-                    <>
-                        <p> • </p>
-                        <p> 🔗 <Link
-                                href={ride.link} target="_blank" rel="noopener norefferrer">
-                                {ride.link}
-                                </Link>
-                        </p>
-                    </>
+                    <p className='link-container'>
+                        <span> • </span>
+                        <Link
+                            href={ride.link}
+                            target="_blank"
+                            rel="noopener norefferrer"
+                            title={ride.link} //for tooltip showing
+                            className='link'
+                            >
+                            🔗 View Link
+                        </Link>
+
+                    </p>
                     }
                 </div>
 

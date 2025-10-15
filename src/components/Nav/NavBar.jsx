@@ -28,8 +28,8 @@ export default function NavBar() {
             const response = await axios.post('/api/auth/logout', {}, {withCredentials: true});
             console.log(response);
             setAuthUser(null);
-            //redirect
-            router.push('/login');
+            //redirect to home page
+            router.push('/');
 
 
 

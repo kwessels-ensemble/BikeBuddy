@@ -67,7 +67,10 @@ export default function ScheduledRideDetail( { authUser, scheduledRide, handleCa
                         <p> • </p>
                         <p> 🕓 {DateTime.fromISO(scheduledRide.eventTime, {zone: 'utc'})
                                                 .setZone(scheduledRide.timeZone)
-                                            .toFormat('ff')} </p>
+                                            // .toFormat('ff')
+                                            .toFormat('ccc, LLL d • h:mm a')
+                                            }
+                                            </p>
                     </div>
                     <p>Participants: {scheduledRide.participants.length ?
                     scheduledRide.participants.map((user) => user.username).join(', ')

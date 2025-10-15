@@ -85,7 +85,9 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
                         <p> • </p>
                         <p> 🕓 {DateTime.fromISO(ride.eventTime, {zone: 'utc'})
                                                 .setZone(ride.timeZone)
-                                                .toFormat('ff')} </p>
+                                                // .toFormat('ff')
+                                                .toFormat('ccc, LLL d • h:mm a')
+                                                } </p>
                     </div>
 
                     {/* <p>Participants: {ride.participants.length ?

@@ -27,9 +27,10 @@ export default function NavBar() {
             // console.log('clicked log out!');
             const response = await axios.post('/api/auth/logout', {}, {withCredentials: true});
             console.log(response);
-            setAuthUser(null);
+
             //redirect
             router.push('/login');
+            setAuthUser(null);
 
 
         } catch (err) {

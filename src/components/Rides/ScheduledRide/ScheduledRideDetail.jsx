@@ -44,14 +44,18 @@ export default function ScheduledRideDetail( { authUser, scheduledRide, handleCa
                     <p>📍 {`${scheduledRide.rideDetails.location.city}, ${scheduledRide.rideDetails.location.state}`}</p>
 
                     {scheduledRide.rideDetails.link  &&
-                    <>
-                        <p> • </p>
-                        <p> 🔗 <Link
-                                href={scheduledRide.rideDetails.link} target="_blank" rel="noopener norefferrer">
-                                {scheduledRide.rideDetails.link}
-                                </Link>
-                        </p>
-                    </>
+                    <p className='link-container'>
+                        <span> • </span>
+                        <Link
+                            href={scheduledRide.rideDetails.link}
+                            target="_blank"
+                            rel="noopener norefferrer"
+                            className='link'
+                            >
+                            🔗 {scheduledRide.rideDetails.link}
+                        </Link>
+
+                    </p>
                     }
                 </div>
 

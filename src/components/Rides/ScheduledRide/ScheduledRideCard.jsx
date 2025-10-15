@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-// import axios from "axios";
 import { useRouter } from "next/navigation";
 import { DateTime } from "luxon";
 // import styles from './page.module.css';
@@ -40,6 +39,7 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
         return (outputText + ` + ${extraParticipants} more.`)
     }
 
+
     return (
         <div className='card'>
             <div className='card-header'>
@@ -62,20 +62,29 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
                     <p>📍 {`${ride.rideDetails.location.city}, ${ride.rideDetails.location.state}`}</p>
 
                     { ride.rideDetails.link  &&
-                    <>
-                        <p> • </p>
-                        <p> 🔗 <Link
-                                href={ride.rideDetails.link} target="_blank" rel="noopener norefferrer">
-                                {ride.rideDetails.link}
-                                </Link>
-                        </p>
-                    </>
+                    <p className='link-container'>
+                        <span> • </span>
+                        <Link
+                            href={ride.rideDetails.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={ride.rideDetails.link} //tooltip shows full url
+                            className='link'
+                            >
+                            🔗 View Link
+
+                        </Link>
+                    </p>
+                    // <>
+                    //     <p> • </p>
+                    //     <p> 🔗 <Link
+                    //             href={ride.rideDetails.link} target="_blank" rel="noopener norefferrer">
+                    //             Link
+                    //             </Link>
+                    //     </p>
+                    // </>
                     }
                 </div>
-
-                {/* {ride.rideDetails.description && <p>Description: {ride.rideDetails.description}</p>}
-
-                {ride.rideDetails.notes && <p>🗒️  {ride.rideDetails.notes}</p>} */}
 
             </div>
             <div className='card-footer'>
@@ -89,10 +98,6 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
                                                 .toFormat('ccc, LLL d • h:mm a')
                                                 } </p>
                     </div>
-
-                    {/* <p>Participants: {ride.participants.length ?
-                    ride.participants.map((user) => user.username).join(', ')
-                    : 'No participants yet.'}</p> */}
 
                     <p>Participants: {formatParticipants(ride.participants)}</p>
 
@@ -121,11 +126,6 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
                         onClick={() => handleLeave(ride._id)}>
                         Leave Ride
                     </button>}
-
-                    {/* {handleRideDetails && <button
-                        onClick={() => handleRideDetails(ride._id)}>
-                        View Ride Details
-                    </button>} */}
 
                 </div>
             </div>

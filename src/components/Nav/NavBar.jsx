@@ -36,19 +36,18 @@ export default function NavBar() {
             console.error('logout error:', err)
 
         }
-        // finally {
-
-        //     setIsLoading(false);
-        // }
+        finally {
+            setIsLoading(false);
+        }
     }
 
-    // if (authLoading) {
-    //     return (
-    //         <div className='loading-container'>
-    //             <Spinner></Spinner>
-    //         </div>
-    //     )
-    // }
+    if (authLoading) {
+        return (
+            <div className='loading-container'>
+                <Spinner></Spinner>
+            </div>
+        )
+    }
 
     return (
             <nav className={styles.nav}>

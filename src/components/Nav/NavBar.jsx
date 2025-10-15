@@ -42,13 +42,9 @@ export default function NavBar() {
         // }
     }
 
-    // if (authLoading) {
-    //     return (
-    //         <div className='loading-container'>
-    //             <Spinner></Spinner>
-    //         </div>
-    //     )
-    // }
+    if (authLoading) {
+        return null;
+    }
 
     return (
             <nav className={styles.nav}>

@@ -32,10 +32,10 @@ export default function Login() {
     const [errors, setErrors] = useState({});
 
 
-    // if user already authenticated, redirect to ride feed
+    // if user already authenticated, redirect to home page
     useEffect(() => {
         if (!authLoading && authUser) {
-            router.push('/ride-feed');
+            router.push('/');
         }
     }, [authUser, authLoading, router]);
 
@@ -88,8 +88,8 @@ export default function Login() {
             // update authUser context
             setAuthUser(response.data.user);
 
-            // redirect to ride feed
-            router.push('/ride-feed');
+            // redirect to home page
+            router.push('/');
 
 
 

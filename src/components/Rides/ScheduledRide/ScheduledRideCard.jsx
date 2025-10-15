@@ -29,7 +29,7 @@ export default function ScheduledRideCard({ authUser, ride, handleCancel, handle
             return 'No participants yet.';
         }
 
-        const totalParticipants = participants.length + 1 ;
+        const totalParticipants = participants.length;
         // grab (up to) the first 3 to display
         const firstThree = participants.slice(0, 3);
         let outputText = firstThree.map((user) => user.username).join(', ');

@@ -36,9 +36,9 @@ export default function NavBar() {
             console.error('logout error:', err)
 
         }
-        finally {
-            setIsLoading(false);
-        }
+        // finally {
+        //     setIsLoading(false);
+        // }
     }
 
     if (authLoading) {

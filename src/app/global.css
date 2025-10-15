@@ -1,23 +1,24 @@
 :root {
     /* colors */
-    --color-primary: #4f46e5;
+    /* --color-primary: #4f46e5;
     --color-primary-dark: #372dc0;
     --color-secondary:#ec4899;
     --color-secondary-dark: #be1e6a;
     --color-secondary-destructive: #ee89bb;
-    --color-secondary-destructive-dark: #ec4899;
+    --color-secondary-destructive-dark: #ec4899; */
 
-    /* --color-primary: #3568cd;
-    --color-primary-dark: #254b95;
-    --color-secondary:#be5325;
-    --color-secondary-dark: #723419;
-    --color-secondary-destructive: #dd6d3c;
-    --color-secondary-destructive-dark: #b06c4f; */
+    --color-primary: #1347b8;
+    --color-primary-dark: #0c378c;
+    --color-secondary:#f67f0f;
+    --color-secondary-dark: #c1670d;
+    --color-secondary-destructive: rgb(237, 150, 79);
+    --color-secondary-destructive-dark: #f67f0f;
 
 
     --color-neutral: #f8fafc;
     --color-background: #ffffff;
-    --color-card-background: #f9fafb;
+    /* --color-card-background: #f9fafb; */
+     --color-card-background: #faf7f3;
     --color-text: #111827;
 
     /* border radius */

@@ -1,6 +1,6 @@
 import {describe, it, expect, vi} from 'vitest';
 import { Request } from 'undici';
-
+import User from '@/models/User';
 
 // mock db connection-
 vi.mock('@/lib/mongodb', () => ({
@@ -10,12 +10,14 @@ vi.mock('@/lib/mongodb', () => ({
 // mock users model
 vi.mock('@/models/User', () => ({
   default: {
-    findOne: vi.fn().mockResolvedValue({
+    findOne: vi.fn().mockResolvedValue(null),
+    create: vi.fn().mockResolvedValue({
       _id: '123',
-      password: '$2b$10$hashedpassword', // fake bcrypt hash
+      email: 'testuser123456@gmail.com',
+      username: 'testuser123456',
     }),
   },
-}))
+}));
 
 // mock bcrypt
 vi.mock('bcrypt', () => ({
@@ -32,14 +34,15 @@ vi.mock('jsonwebtoken', () => ({
 }))
 
 
-import { POST } from '@/app/api/auth/login/route';
+import { POST } from '@/app/api/auth/signup/route';
 
-describe('POST /api/auth/login', () => {
-    it('it returns a status 200 if login successful', async () => {
+describe('POST /api/auth/signup', () => {
+    it('it returns a status 201 if signup successful', async () => {
         const req = new Request('http://localhost', {
             method: 'POST',
             body: JSON.stringify({
-                email: 'katewessels@gmail.com',
+                email: 'testuser123@gmail.com',
+                username: 'testuser123',
                 password: 'password'
             }),
             headers: { 'Content-Type': 'application/json' },
@@ -48,16 +51,20 @@ describe('POST /api/auth/login', () => {
 
         const res = await POST(req);
         const data = await res.json();
-        expect(res.status).toBe(200);
+        console.log(data);
+        expect(res.status).toBe(201);
 
     })
 
     it('it returns a status 400 if input validation errors', async () => {
+        User.findOne.mockResolvedValueOnce({ _id: '123', email: 'testuser123@example.com' });
+
         const req = new Request('http://localhost', {
             method: 'POST',
             body: JSON.stringify({
-                email: 'katewessels',
-                password: 'pass'
+                email: 'testuser123@gmail.com',
+                username: 'testuser123',
+                password: 'password'
             }),
             headers: { 'Content-Type': 'application/json' },
 

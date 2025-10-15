@@ -4,12 +4,11 @@ import bcrypt from "bcrypt"
 import { NextRequest, NextResponse } from "next/server";
 import {maxAge, createToken} from "@/lib/auth";
 
-// connectToDb();
+
 
 export async function POST(request) {
 
     try {
-        // need to explicitly connect to db within function?
         await connectToDb();
 
         const reqBody = await request.json();
@@ -52,12 +51,6 @@ export async function POST(request) {
         if (auth) {
             // login user by creating jwt token
             const token = createToken(user._id);
-
-            // const response =  NextResponse.json({
-            //         message: 'User logged in successfully',
-            //         email: user.email,
-            //         userId: user._id},
-            //         {status: 200})
 
             const response =  NextResponse.json({
                     message: 'User logged in successfully',

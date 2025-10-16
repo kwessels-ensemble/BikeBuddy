@@ -1,5 +1,6 @@
 
 import { vi } from "vitest";
+import '@testing-library/jest-dom';
 import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
 

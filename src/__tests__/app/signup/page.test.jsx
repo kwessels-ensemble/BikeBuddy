@@ -36,8 +36,7 @@ describe('Sign Up Page Test', () => {
         expect(screen.getByRole('button', {name: /Sign Up/i })).toBeInTheDocument();
     })
 
-    it('submits the form and mock axios.post', () => {
-
+    it('submits the form and axios.post with inputs', () => {
         axios.post.mockResolvedValue({
             data: {token: 'fake-token'}
         })

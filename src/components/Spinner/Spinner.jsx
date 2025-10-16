@@ -1,3 +1,5 @@
+"use client";
+
 import styles from './Spinner.module.css';
 
 export default function Spinner() {

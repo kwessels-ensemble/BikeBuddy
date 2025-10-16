@@ -8,7 +8,6 @@ import { DateTime } from "luxon";
 import ScheduledRideForm from "@/components/Rides/ScheduledRide/ScheduledRideForm";
 import Spinner from "@/components/Spinner/Spinner";
 
-
 // export const metadata = {
 //   title: "Schedule New Ride",
 //   description: "Schedule a ride and make public for others to join."

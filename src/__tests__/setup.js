@@ -1,5 +1,7 @@
 
 import { vi } from "vitest";
+import mongoose from 'mongoose';
+const { ObjectId } = mongoose.Types;
 
 // mocks to be used in api endpoint testing
 // and a helper function to add cookies, json, and headers to the mock requests
@@ -16,6 +18,44 @@ vi.mock('@/models/User', () => ({
         create: vi.fn()
     },
 }));
+
+// vi.mock('@/models/SavedRide', () => ({
+//     default: {
+//         findOne: vi.fn(),
+//         findById: vi.fn(),
+//         create: vi.fn()
+//     },
+// }));
+
+vi.mock('@/models/SavedRide', () => {
+  // Mock class to simulate Mongoose model
+    class SavedRideMock {
+        constructor(data) {
+        // assign the passed data to this instance
+        Object.assign(this, data);
+        this._id = new ObjectId(); // give it a fake ObjectId
+        }
+
+        // simulate .save() instance method
+        save() {
+        return Promise.resolve(this);
+        }
+
+        // optional: you can add more instance methods if needed
+    }
+
+    // static methods like .create()
+    SavedRideMock.create = vi.fn().mockImplementation((data) => {
+        return Promise.resolve(new SavedRideMock(data));
+    });
+
+    SavedRideMock.findById = vi.fn();
+    SavedRideMock.findOne = vi.fn();
+
+    return { default: SavedRideMock };
+});
+
+
 
 // mock bcrypt
 vi.mock('bcrypt', () => ({

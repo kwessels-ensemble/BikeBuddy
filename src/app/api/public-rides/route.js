@@ -2,7 +2,7 @@ import { connectToDb } from "@/lib/mongodb";
 import ScheduledRide from "@/models/ScheduledRide";
 import { NextResponse } from "next/server";
 import {verifyToken} from "@/lib/auth";
-import { truncates } from "bcryptjs";
+// import { truncates } from "bcryptjs";
 
 
 export async function GET(request) {

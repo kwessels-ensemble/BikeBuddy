@@ -39,7 +39,7 @@ export async function DELETE(request, { params }) {
             return NextResponse.json({error: "User is ride organizer and cannot leave ride"}, {status: 400});
         }
 
-        // check auth user is not in participants.. if not in participants, can't 'leave'
+        // check auth user is in participants.. if not in participants, can't 'leave'
         if (!ride.participants.map(id => id.toString()).includes(decoded.id.toString())) {
             return NextResponse.json({error: "User is not a participant in this ride"}, {status: 400});
         }

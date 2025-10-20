@@ -51,20 +51,20 @@ You can now modify files and the local dev server will reflect any changes.
 
 ## Project Structure/Code Organization
 
-The project follows Next.js app/ directory structure.
+The project follows Next.js `app/` directory structure.
 
 - Configuration files (and .env file) live in the root directory.
-- All other files live in /src.
-- Auth and db connection files live in /src/lib.
-- Model files live in /src/models.
-- Middleware is in /src.
-- Reusable UI components are stored in /src/components.
-- All other app code lives in /src/app.
-- The layout file lives in /src/app/layout.js, and the homepage lives in /src/app/page.js.
-- A global css file lives in /src/app/global.css. All other css files are scoped to a specific page or component and live with the corresponding page or component location and naming convention `<filename>.module.css`, where `<filename>` matches the page or component name.
-- All api routes live in /src/app/api, and code is in 'route.js' files, which are within the folders with folder path matching the api route.
-- Shared state lives in /src/app/context.
-- UI pages, like 'ride-feed' for example, live in their own folder within /src/app (example- src/app/ride-feed), and UI code is in files named 'page.jsx' within folders with folder path matching the page's url.
+- All other files live in `/src`.
+- Auth and db connection files live in `/src/lib`.
+- Model files live in `/src/models`.
+- Middleware is in `/src`.
+- Reusable UI components are stored in `/src/components`.
+- All other app code lives in `/src/app`.
+- The layout file lives in `/src/app/layout.js`, and the homepage lives in `/src/app/page.js`.
+- A global css file lives in `/src/app/global.css`. All other css files are scoped to a specific page or component and live with the corresponding page or component location and naming convention `<filename>.module.css`, where `<filename>` matches the page or component name.
+- All api routes live in `/src/app/api`, and code is in `route.js` files, which are within the folders with folder path matching the api route.
+- Shared state lives in `/src/app/context`.
+- UI pages, like 'ride-feed' for example, live in their own folder within `/src/app` (example- `src/app/ride-feed`), and UI code is in files named 'page.jsx' within folders with folder path matching the page's url.
 
 Here is a snapshot of the general directory structure -
 

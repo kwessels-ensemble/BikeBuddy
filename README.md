@@ -51,7 +51,7 @@ You can now modify files and the local dev server will reflect any changes.
 
 ### Testing
 
-Testing is implemented with vitest. Test files live in /src/__tests__ Note that backend tests are in /src/__tests__/api, and front end tests are in /src/__tests__/app and /src/__tests__/components. Note the file setup.js that includes a number of mocks that are used to assist with mocking db operations, api calls, and related authentication and encryption functions for testing.
+Testing is implemented with vitest. Test files live in `/src/__tests__` Note that backend tests are in `/src/__tests__/api`, and front end tests are in `/src/__tests__/app` and `/src/__tests__/components`. Note the file setup.js that includes a number of mocks that are used to assist with mocking db operations, api calls, and related authentication and encryption functions for testing.
 
 Tests can be run with the following -
 
@@ -78,7 +78,10 @@ The app is currently deployed on vercel (https://bikebuddy-dev.vercel.app/).
 
 ## V1 and Next Steps
 
-Small improvements are planned for the current version of the app, including filters for the ride feed and easy navigation and tracking of rides you're "attending" or that you're the organizer of.
+Small improvements are planned for the current version of the app, including -
+- Improved styling, including compatibility and improvements for experience viewing app on a phone.
+- Filters for the ride feed and easy navigation and tracking of rides you're "attending" or that you're the organizer of.
+
 
 Other planned improvements include -
 - Adding ride meeting location field with an option for a link to ride meet up location pin.
@@ -89,5 +92,6 @@ Other planned improvements include -
 - Add a calendar/scheduling tool to make it easier for users to view their ride "calendar", including all rides they've scheduled or are attending.
 - Add gpx upload option for rides and map preview.
 - Allow participants to add comments to a scheduled ride.
+- Additional user auth functions, like verifying user via email and forgot user/password support.
 
 

@@ -1,6 +1,6 @@
 # BikeBuddy
 
-An app for bikers (MTB, Gravel, Road) to plan and join rides in their area.
+An app for riders (MTB, Gravel, Road) to plan and join rides in their area.
 
 ## Requirements
 
@@ -48,6 +48,60 @@ Create a .env file within the root project dir with the following required envir
 This will run Next.js in dev mode (at http://localhost:3000).
 
 You can now modify files and the local dev server will reflect any changes.
+
+## Project Structure/Code Organization
+
+The project follows Next.js app/ directory structure.
+
+- Configuration files (and .env file) live in the root directory.
+- All other files live in /src.
+- Auth and db connection files live in /src/lib.
+- Model files live in /src/models.
+- Middleware is in /src.
+- Reusable UI components are stored in /src/components.
+- All other app code lives in /src/app.
+- The layout file lives in /src/app/layout.js, and the homepage lives in /src/app/page.js.
+- A global css file lives in /src/app/global.css. All other css files are scoped to a specific page or component and live with the corresponding page or component location and naming convention `<filename>.module.css`, where `<filename>` matches the page or component name.
+- All api routes live in /src/app/api, and code is in 'route.js' files, which are within the folders with folder path matching the api route.
+- Shared state lives in /src/app/context.
+- UI pages, like 'ride-feed' for example, live in their own folder within /src/app (example- src/app/ride-feed), and UI code is in files named 'page.jsx' within folders with folder path matching the page's url.
+
+Here is a snapshot of the general directory structure -
+
+
+    ├── src
+    │   ├── app #next.js app dir (routes, layouts, styles)
+    │   │   ├── api/ #all api routes
+    │   │   ├── login/ #login page
+    │   │   ├── ride-feed/ #public ride feed pages
+    │   │   ├── saved-rides/ #saved ride pages
+    │   │   ├── scheduled-rides/ #scheduled ride pages
+    │   │   └── signup/ #signup page
+    │   │   ├── page.js #home page
+
+    │   │   ├── context/ #global context (authcontext)
+    │   │   ├── global.css #global css
+    │   │   ├── layout.js #root layout shared across pages
+
+    │   ├── components
+    │   │   ├── Nav/ #nav bar and logout button
+    │   │   ├── Rides/ #ride-related forms, cards, details
+    │   │   └── Spinner/ #loading spinner
+
+    │   ├── helpers/ #helper functions
+    │   ├── lib/ #utility functions and db connection
+    │   ├── models/ #mongoose db models
+    │   └── schemas/ #mongoose db schemas
+    │   ├── __tests__/ #unit and integration tests (vitest)
+    │   ├── middleware.js #next.js middleware for auth/routing
+
+    ├── public/ #static assets
+    ├── .env #env variables
+    ├── vitest.config.js #vitest configuration
+    ├── eslint.config.mjs #eslint rules
+    ├── next.config.mjs #next.js config
+    ├── package.json #dependencies
+
 
 ### Testing
 

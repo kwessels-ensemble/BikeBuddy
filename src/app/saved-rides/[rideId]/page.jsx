@@ -24,7 +24,7 @@ export default function SavedRide() {
     async function fetchSavedRide () {
             try {
                 const response = await axios.get(`/api/saved-rides/${rideId}`);
-                console.log(response);
+                // console.log(response);
                 setSavedRide(response.data);
 
             } catch (err) {
@@ -39,14 +39,14 @@ export default function SavedRide() {
     }, []);
 
     async function handleDelete(rideId) {
-        console.log('inside delete')
+        // console.log('inside delete')
         try {
             const confirmed = window.confirm('Are you sure you want to delete this ride?');
             if (!confirmed) {
                 return;
             }
             const response = await axios.delete(`/api/saved-rides/${rideId}`);
-            console.log(response);
+            // console.log(response);
             // redirect back to saved rides
             router.push('/saved-rides');
             // TODO - decide if we want to add a message to confirm to user delete was successful

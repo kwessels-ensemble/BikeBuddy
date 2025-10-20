@@ -46,7 +46,7 @@ export default function EditScheduledRide() {
         try {
             setIsLoading(true);
             const response = await axios.get(`/api/scheduled-rides/${rideId}`);
-            console.log(response);
+            // console.log(response);
             setRide({...response.data,
                 // added -
                     isPublic: Boolean(response.data.isPublic),
@@ -75,10 +75,10 @@ export default function EditScheduledRide() {
         try {
             // e.preventDefault();
 
-            console.log(ride);
+            // console.log(ride);
 
             const response = await axios.patch(`/api/scheduled-rides/${rideId}`, ride);
-            console.log(response);
+            // console.log(response);
 
             // reset ride
             // setRide(defaultRide);

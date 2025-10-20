@@ -3,23 +3,22 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs"
 import { NextRequest, NextResponse } from "next/server";
 
-// connectToDb();
 
 export async function POST(request) {
 
     try {
-        // need to explicitly connect to db within function?
+
         await connectToDb();
 
         const reqBody = await request.json();
 
         const {email, username, password} = reqBody;
 
-        console.log(reqBody);
+        // console.log(reqBody);
 
         // return error if any fields are missing
         if (!username || !email || !password) {
-            console.log('Error: all fields are required')
+            // console.log('Error: all fields are required')
             return NextResponse.json({errors: 'all fields are required'}, {status: 400});
         }
 

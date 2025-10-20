@@ -95,7 +95,7 @@ export default function Login() {
 
 
         } catch (err) {
-            console.log('login failed:', err);
+            // console.log('login failed:', err);
 
             if (err.response?.data?.errors) {
                 setErrors(err.response.data.errors);

@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
 
 // mocks to be used in api endpoint testing
-// and a helper function to add cookies, json, and headers to the mock requests
+// + helper function to add cookies, json, and headers to the mock requests
 
 // mock db connection-
 vi.mock('@/lib/mongodb', () => ({
@@ -20,29 +20,18 @@ vi.mock('@/models/User', () => ({
     },
 }));
 
-// vi.mock('@/models/SavedRide', () => ({
-//     default: {
-//         findOne: vi.fn(),
-//         findById: vi.fn(),
-//         create: vi.fn()
-//     },
-// }));
-
 vi.mock('@/models/SavedRide', () => {
-  // Mock class to simulate Mongoose model
     class SavedRideMock {
         constructor(data) {
-        // assign the passed data to this instance
+
         Object.assign(this, data);
-        this._id = new ObjectId(); // give it a fake ObjectId
+        this._id = new ObjectId();
         }
 
-        // simulate .save() instance method
         save() {
         return Promise.resolve(this);
         }
 
-        // optional: you can add more instance methods if needed
     }
 
     // static methods like .create()
@@ -93,4 +82,4 @@ export function createMockRequest({body, method = 'GET', token}) {
     return req;
 }
 
-console.log('setup.js is loaded.')
+// console.log('setup.js is loaded.')

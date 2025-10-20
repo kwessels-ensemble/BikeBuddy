@@ -28,7 +28,7 @@ export default function PublicRide() {
     async function fetchPublicRide () {
         try {
             const response = await axios.get(`/api/public-rides/${rideId}`);
-            console.log(response);
+            // console.log(response);
 
             const rideData = response.data;
             setPublicRide(rideData);
@@ -47,9 +47,9 @@ export default function PublicRide() {
     const handleJoin = async (rideId) => {
         try {
             setIsLoading(true);
-            console.log('clicked join!');
+            // console.log('clicked join!');
             const response = await axios.post(`/api/scheduled-rides/${rideId}/join`);
-            console.log(response);
+            // console.log(response);
             const updatedRide = response.data;
             // update data on page
             setPublicRide(prev => prev._id.toString() === rideId.toString()
@@ -67,9 +67,9 @@ export default function PublicRide() {
     const handleLeave = async (rideId) => {
         try {
             setIsLoading(true);
-            console.log('clicked leave!');
+            // console.log('clicked leave!');
             const response = await axios.delete(`/api/scheduled-rides/${rideId}/leave`);
-            console.log(response);
+            // console.log(response);
             const updatedRide = response.data;
             // update data on page
             setPublicRide(prev => prev._id.toString() === rideId.toString()

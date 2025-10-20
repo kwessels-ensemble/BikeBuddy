@@ -4,7 +4,7 @@ import User from "@/models/User";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
-    // need to explicitly connect to db within function?
+
     await connectToDb();
 
     const token = req.cookies.get('token')?.value;

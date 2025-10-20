@@ -35,7 +35,7 @@ describe('SavedRides API', () => {
 
 
             const fakeUserId = new ObjectId();
-            console.log(fakeUserId);
+            // console.log(fakeUserId);
             verifyToken.mockReturnValue({ id: fakeUserId });
 
             SavedRide.create.mockResolvedValue({
@@ -75,10 +75,10 @@ describe('SavedRides API', () => {
 
 
             const fakeUserId = new ObjectId();
-            console.log(fakeUserId);
+            // console.log(fakeUserId);
             verifyToken.mockReturnValue({ id: fakeUserId });
 
-            // this doesn't matter because reoute code shouldn't get here even, should fail due to input validators
+            // note-route code shouldn't need this, should fail due to input validators
             SavedRide.create.mockResolvedValue({
                 _id: new ObjectId(),
                 userId: fakeUserId,

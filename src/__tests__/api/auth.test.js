@@ -29,7 +29,7 @@ describe('Auth API', () => {
             });
 
             const res = await signupRoute(req);
-            console.log(res);
+            // console.log(res);
             const data = await res.json();
 
             expect(res.status).toBe(201);
@@ -81,7 +81,7 @@ describe('Auth API', () => {
 
 
             const res = await loginRoute(req);
-            console.log(res);
+            // console.log(res);
             const data = await res.json();
 
             expect(res.status).toBe(200);
@@ -98,11 +98,6 @@ describe('Auth API', () => {
 
             });
 
-             // mock the cookies
-            // req.cookies = {
-            //     get: vi.fn(() => ({value: fakeToken}))
-            // };
-
             const res = await loginRoute(req);
             const data = await res.json();
 
@@ -114,7 +109,6 @@ describe('Auth API', () => {
 
     describe('GET /api/auth/me', () => {
         it('it returns a status 200 if request successful', async () => {
-            // const fakeToken = 'fake-token';
 
             User.findById.mockReturnValue({
                 select: vi.fn().mockResolvedValue({
@@ -145,7 +139,6 @@ describe('Auth API', () => {
         })
 
         it('it returns a status 401 if not valid token', async () => {
-            // const fakeToken = 'fake-token';
 
             verifyToken.mockReturnValue(null);
 

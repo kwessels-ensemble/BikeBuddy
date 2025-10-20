@@ -30,7 +30,7 @@ export default function SavedRides() {
                     }
                 });
 
-                console.log(response);
+                // console.log(response);
                 setSavedRides(response.data.savedRides);
 
             } catch (err) {
@@ -45,14 +45,14 @@ export default function SavedRides() {
     }, [typeFilter]);
 
     async function handleDelete(rideId) {
-        console.log('inside delete')
+        // console.log('inside delete')
         try {
             const confirmed = window.confirm('Are you sure you want to delete this ride?');
             if (!confirmed) {
                 return;
             }
             const response = await axios.delete(`/api/saved-rides/${rideId}`);
-            console.log(response);
+            // console.log(response);
             // reload
             setSavedRides((prev) =>
                 prev.filter((ride) =>ride._id !== rideId));

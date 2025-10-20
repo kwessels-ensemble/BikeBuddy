@@ -40,7 +40,7 @@ export default function ScheduledRides() {
                     }
                 });
 
-                console.log(response);
+                // console.log(response);
 
                 const rideData = response.data.scheduledRides;
 
@@ -64,7 +64,7 @@ export default function ScheduledRides() {
                 return;
             }
             const response = await axios.delete(`/api/scheduled-rides/${scheduledRideId}`);
-            console.log(response);
+            // console.log(response);
             // reload
             setScheduledRides((prev) =>
                 prev.filter((ride) =>ride._id !== scheduledRideId));

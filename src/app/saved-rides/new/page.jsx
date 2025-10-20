@@ -40,10 +40,10 @@ export default function SaveNewRide() {
         try {
             // e.preventDefault();
 
-            console.log(ride);
+            // console.log(ride);
 
             const response = await axios.post('/api/saved-rides', ride);
-            console.log(response);
+            // console.log(response);
 
             // reset ride
             setRide(defaultRide);

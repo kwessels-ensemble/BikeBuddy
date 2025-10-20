@@ -81,7 +81,7 @@ export default function SignUp() {
     const handleSignUp = async () => {
         try {
             const response = await axios.post('/api/auth/signup', user);
-            console.log(response);
+            // console.log(response);
 
             // redirect to login on successful signup
             router.push('/login');

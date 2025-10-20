@@ -53,7 +53,7 @@ export async function POST(request) {
         // get details from request body
         const reqBody = await request.json();
 
-        console.log(reqBody);
+        // console.log(reqBody);
 
         // get auth user
         const token = request.cookies.get('token')?.value;

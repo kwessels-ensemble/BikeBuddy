@@ -25,7 +25,7 @@ export default function LogoutButton() {
             setAuthUser(null);
             // console.log('clicked log out!');
             const response = await axios.post('/api/auth/logout', {}, {withCredentials: true});
-            console.log(response);
+            // console.log(response);
             //redirect to home page
             router.push('/');
         } catch (err) {

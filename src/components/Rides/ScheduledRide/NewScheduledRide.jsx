@@ -50,7 +50,7 @@ export default function ScheduleNewRide() {
                 try {
                     setIsLoading(true);
                     const response = await axios.get(`/api/saved-rides/${savedRideId}`);
-                    console.log(response);
+                    // console.log(response);
                     const data = response.data;
                     setRide((prev) => ({
                         ...prev,
@@ -83,14 +83,14 @@ export default function ScheduleNewRide() {
         try {
             // e.preventDefault();
 
-            console.log(ride);
+            // console.log(ride);
 
             // timezone conversions
             const localDateTime = DateTime.fromISO(ride.eventTime, {zone: ride.timeZone});
             const eventTimeUtc = localDateTime.toUTC().toISO();
 
             const response = await axios.post('/api/scheduled-rides', {...ride, eventTime: eventTimeUtc});
-            console.log(response);
+            // console.log(response);
 
             // reset ride
             setRide(defaultRide);

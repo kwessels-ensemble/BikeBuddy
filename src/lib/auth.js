@@ -13,7 +13,7 @@ export function verifyToken(token) {
     try {
         return jwt.verify(token, jwtSecret);
     } catch (err) {
-        console.log(err);
+        console.log('token error:', err);
         return null;
     }
 }

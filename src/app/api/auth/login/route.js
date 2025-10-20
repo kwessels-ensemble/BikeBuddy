@@ -15,11 +15,11 @@ export async function POST(request) {
 
         const {email, password} = reqBody;
 
-        console.log(reqBody);
+        // console.log(reqBody);
 
         // return error if any fields are missing
         if (!email || !password) {
-            console.log('Error: all fields are required')
+            // console.log('Error: all fields are required')
             return NextResponse.json({errors: 'all fields are required'}, {status: 400});
         }
 
@@ -43,7 +43,7 @@ export async function POST(request) {
             return NextResponse.json({errors: {email: 'No account with this email'}}, {status: 401});
         }
 
-        console.log(user);
+        // console.log(user);
 
         // check password
         const auth = await bcrypt.compare(password, user.password);

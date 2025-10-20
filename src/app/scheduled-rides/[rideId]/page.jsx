@@ -29,7 +29,7 @@ export default function ScheduledRide() {
 
         try {
             const response = await axios.get(`/api/scheduled-rides/${rideId}`);
-            console.log(response);
+            // console.log(response);
 
             const rideData = response.data;
 
@@ -53,11 +53,8 @@ export default function ScheduledRide() {
                 return;
             }
             const response = await axios.delete(`/api/scheduled-rides/${rideId}`);
-            console.log(response);
-            // reload
-            // setScheduledRide((prev) =>
-            //     prev.filter((ride) =>ride._id !== rideId));
-            // redirect back to scheduled rides
+            // console.log(response);
+
             router.push('/scheduled-rides');
             // TODO - consider adding a message to inform user deletion was successfuly
 

@@ -29,7 +29,7 @@ export default function EditRide() {
         try {
             setIsLoading(true);
             const response = await axios.get(`/api/saved-rides/${rideId}`);
-            console.log(response);
+            // console.log(response);
             setRide(response.data);
 
         } catch (err) {
@@ -50,10 +50,10 @@ export default function EditRide() {
         try {
             // e.preventDefault();
 
-            console.log(ride);
+            // console.log(ride);
 
             const response = await axios.patch(`/api/saved-rides/${rideId}`, ride);
-            console.log(response);
+            // console.log(response);
 
             // reset ride
             // setRide(defaultRide);

@@ -67,16 +67,27 @@ The next stage of development will include expanding unit and integration test c
 
 ## Deployment
 
+The app is currently deployed on vercel (https://bikebuddy-dev.vercel.app/).
 
-
-## MVP Goals
+## MVP Summary
 - Riders can create an account and securely access the BikeBuddy app.
 - Riders can add, edit, delete rides into their personal "Saved Rides" collection for planning.
 - Riders can schedule rides, either with details from an existing "Saved Ride" or by entering details on the fly. Riders can add, edit, and cancel their "Scheduled Rides".
 - Scheduled rides can be made public or private. If public, they will appear on the "Ride Feed" for other riders.
 - Riders can scroll through the "Ride Feed" to view upcoming public rides. They can "Join" or "Leave" public rides.
 
-## Note on v1 and next steps
+## V1 and Next Steps
 
+Small improvements are planned for the current version of the app, including filters for the ride feed and easy navigation and tracking of rides you're "attending" or that you're the organizer of.
+
+Other planned improvements include -
+- Adding ride meeting location field with an option for a link to ride meet up location pin.
+- Allowing photo upload for a ride.
+- Further building out the existing ride "location" functionality to allow for more location selections and filtering by location or distance (likely integrating an external api).
+- Adding notifications for rides a user is "attending" (like reminders or any cancellations or changes to ride details).
+- Building out a basic profile page with user summary and photo (with small photo/avatar to be used in ride feed).
+- Add a calendar/scheduling tool to make it easier for users to view their ride "calendar", including all rides they've scheduled or are attending.
+- Add gpx upload option for rides and map preview.
+- Allow participants to add comments to a scheduled ride.
 
 

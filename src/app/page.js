@@ -1,95 +1,75 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+import Link from "next/link";
+import { useAuth } from "@/app/context/AuthContext";
+import Spinner from "@/components/Spinner/Spinner";
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+export default function HomePage() {
+  const { authUser, setAuthUser, authLoading } = useAuth();
+
+  if (authLoading) {
+    return (
+        <div className='loading-container'>
+            <Spinner></Spinner>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    )
+  }
+
+  return (
+    <div className='container'>
+
+      {/* <h1>🚲 BikeBuddy</h1> */}
+      <h4 className='home-description'>
+        An app for riders (MTB, Gravel, Road) to plan and join rides in their area.
+      </h4>
+      <div>
+        {!authUser &&
+          <div className='home-actions'>
+            <div className='home-action-card'>
+              <span>Join BikeBuddy today</span>
+              <Link href="/signup">
+                  <button className='btn-primary'>Sign Up</button>
+              </Link>
+            </div>
+
+            <div className='home-action-card'>
+              <span> Already have an account? </span>
+              <Link href="/login">
+                <button className='btn-primary'>Log In</button>
+              </Link>
+            </div>
+          </div>
+        }
+
+
+        {authUser &&
+          <div className='home-actions'>
+
+            <div className='home-action-card'>
+              <span> Browse and add to your personal saved rides </span>
+              <Link href="/saved-rides">
+                <button className='btn-primary'>Saved Rides</button>
+              </Link>
+            </div>
+
+            <div className='home-action-card'>
+              <span> Schedule public or private rides </span>
+              <Link href="/scheduled-rides">
+                    <button className='btn-primary'>Scheduled Rides</button>
+              </Link>
+            </div>
+
+            <div className='home-action-card'>
+              <span> Check out the public ride feed and join rides in your area </span>
+              <Link href="/ride-feed">
+                  <button className='btn-primary'>Ride Feed</button>
+              </Link>
+            </div>
+          </div>
+        }
+      </div>
+
+
     </div>
   );
 }

@@ -1,0 +1,318 @@
+:root {
+    /* colors */
+    --color-primary: #026ee2;
+    --color-primary-dark: #0355b3;
+    --color-secondary:#FF7A00;
+    --color-secondary-dark: #d56801;
+    --color-secondary-destructive: #fc9535;
+    --color-secondary-destructive-dark: #db6b01;
+
+
+    --color-neutral: #f8fafc;
+    --color-background: #ffffff;
+    /* --color-card-background: #f9fafb; */
+     --color-card-background: #faf7f3;
+    --color-text: #111827;
+
+    /* border radius */
+    --radius: 12px;
+
+    /* fonts */
+    --font-body: 'Poppins', sans-serif;
+    --font-heading: 'Fredoka One', sans-serif;
+}
+
+/* class to wrap pages in */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.container h1 {
+    margin-left: 0.5rem;
+}
+
+html, body {
+  margin: 1rem;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+h1, h2, h3, .btn, .filter-btn {
+    font-family: var(--font-heading);
+}
+
+.rideTitleLink {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+
+}
+
+.rideTitleLink:hover{
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+button {
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 1px;
+    margin-left: 1px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: none;
+}
+
+/* primary: create/schedule buttons */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.75rem 1rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.btn-primary.active {
+    background-color: var(--color-primary-dark);
+    transform: scale(0.98);
+}
+
+/* secondary: edit/delete type buttons */
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+.btn-secondary.active {
+    background-color: var(--color-secondary-dark);
+    transform: scale(0.98);
+}
+
+/* destructive buttons like logout button */
+.btn-secondary-destructive {
+    background-color: var(--color-secondary-destructive);
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+.btn-secondary-destructive:hover {
+    background-color: var(--color-secondary-destructive-dark);
+}
+
+.btn-secondary-destructive.active {
+    background-color: var(--color-secondary-destructive-dark);
+    transform: scale(0.98);
+}
+
+/* filter buttons  */
+.btn-filter {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border: 1.5px solid var(--color-primary);
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    margin-bottom: 8px;
+}
+
+.btn-filter:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-filter.active {
+    background-color: var(--color-primary-dark);
+    color: white;
+}
+
+form {
+    background-color: var(--color-card-background);
+    border-radius: var(--radius);
+    padding: 1rem;
+    padding-bottom: 0.25rem;
+    /* margin: 1rem; */
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card {
+    background-color: var(--color-card-background);
+    border-radius: var(--radius);
+    padding: 1rem;
+    padding-bottom: 0.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    font-family: var(--font-heading);
+    margin-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-body {
+    font-family: var(--font-body);
+}
+
+.card-links {
+    margin-top: 0.5rem;
+}
+
+.card-actions {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 8px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #999
+}
+
+.card-links a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ride-title {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.ride-title-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.ride-title-link:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
+
+.ride-info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    color: var(--color-text);
+    font-size: 16px;
+    /* margin-top: 10px; */
+}
+
+
+.visibility-tag {
+  font-size: 0.9rem;
+  padding: 2px 8px;
+  border-radius: var(--radius);
+  /* font-weight: 500; */
+}
+
+
+.public {
+  background-color: #e0f3e0;
+  /* color: #1e7a1e; */
+}
+
+.private {
+  background-color: #f5e0e0;
+  /* color: #b21e1e; */
+}
+
+/* to wrap around loading spinner when we want it centered on page */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 200px;
+}
+
+.home-description {
+    /* font-weight: bold; */
+    font-size: 16px;
+    font-family: var(--font-heading);
+    margin-bottom: 20px;
+    margin-left: 0.5rem;
+}
+
+.home-action-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    background-color: var(--color-card-background);
+    /* background-color: white; */
+    border-radius: 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1)
+}
+
+.home-action-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-action-card span {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.link-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+
+}
+
+.link {
+    /* text-decoration: underline; */
+    text-decoration: none;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+.link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}

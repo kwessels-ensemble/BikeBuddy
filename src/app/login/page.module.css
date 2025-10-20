@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400;
+    margin-bottom: 4rem;
+}
+
+.invalid {
+    border: 1px solid red;
+}
+
+.error {
+    color: red;
+}

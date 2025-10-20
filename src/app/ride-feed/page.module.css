@@ -1,0 +1,20 @@
+.timeFilters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filterButton {
+    padding: 8px 16px;
+    border: 1px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.filterButton:hover {
+    background-color: rgb(164, 161, 161)
+}
+
+.active {
+    background-color: rgb(152, 152, 154);
+}

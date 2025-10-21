@@ -121,7 +121,7 @@ The next stage of development will include expanding unit and integration test c
 
 ## Deployment
 
-The app is currently deployed on vercel (https://bikebuddy-dev.vercel.app/).
+The app is currently deployed on vercel (https://bikebuddy.vercel.app/).
 
 ## MVP Summary
 - Riders can create an account and securely access the BikeBuddy app.
